@@ -1,3 +1,6 @@
+![Static Badge](https://img.shields.io/badge/Google%20Play-logo?style=for-the-badge&logo=googleplay&logoColor=%23000000&color=%23ffffff&link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.dertefter.ficus)
+
+
 # NETI Клиент
 
 ![Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
