@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/scheduleFragment">
+
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.dertefter.ficus.fragments.schedule.ScheduleFragment"
+        android:label="fragment_schedule"
+        tools:layout="@layout/fragment_schedule" >
+        <action
+            android:id="@+id/action_scheduleFragment_to_searchGroupFragment"
+            app:destination="@id/searchGroupFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim"
+            app:popUpTo="@id/scheduleFragment" />
+        <action
+            android:id="@+id/action_scheduleFragment_to_searchPersonFragment"
+            app:destination="@id/searchPersonFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.dertefter.ficus.fragments.news.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/action_newsFragment_to_readNewsFragment"
+            app:destination="@id/readNewsFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="com.dertefter.ficus.fragments.messages.MessagesFragment"
+        android:label="fragment_messages"
+        tools:layout="@layout/fragment_messages" >
+        <action
+            android:id="@+id/action_messagesFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_messagesFragment_to_messagesChatViewFragment"
+            app:destination="@id/messagesChatViewFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.dertefter.ficus.fragments.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_searchPersonFragment"
+            app:destination="@id/searchPersonFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_profileFragment_to_filesFragment"
+            app:destination="@id/filesFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_profileFragment_to_sessiaResultsFragment"
+            app:destination="@id/sessiaResultsFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_profileFragment_to_campusPassFragment"
+            app:destination="@id/campusPassFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim"
+
+            />
+        <action
+            android:id="@+id/action_profileFragment_to_moneyFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim"
+            app:destination="@id/moneyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.dertefter.ficus.fragments.auth.AuthFragment"
+        android:label="AuthFragment" />
+    <fragment
+        android:id="@+id/searchGroupFragment"
+        android:name="com.dertefter.ficus.fragments.search_group.SearchGroupFragment"
+        android:label="SearchGroupFragment" />
+    <fragment
+        android:id="@+id/searchPersonFragment"
+        android:name="com.dertefter.ficus.fragments.search_person.SearchPersonFragment"
+        android:label="SearchPersonFragment" >
+        <action
+            android:id="@+id/action_searchPersonFragment_to_personPageFragment"
+            app:destination="@id/personPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/readNewsFragment"
+        android:name="com.dertefter.ficus.fragments.news.ReadNewsFragment"
+        android:label="ReadNewsFragment" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="newsid"
+            app:argType="string" />
+        <argument
+            android:name="date"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="color"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/messagesChatViewFragment"
+        android:name="com.dertefter.ficus.fragments.messages.chat_view.MessagesChatViewFragment"
+        android:label="MessagesChatViewFragment" >
+        <argument
+            android:name="chatItem"
+            app:argType="com.dertefter.neticore.data.messages.SenderPerson" />
+        <action
+            android:id="@+id/action_messagesChatViewFragment_to_readMessageFragment"
+            app:destination="@id/readMessageFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/readMessageFragment"
+        android:name="com.dertefter.ficus.fragments.messages.read_message.ReadMessageFragment"
+        android:label="ReadMessageFragment" >
+        <argument
+            android:name="mesId"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.dertefter.ficus.fragments.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/personPageFragment"
+        android:name="com.dertefter.ficus.fragments.search_person.person_page.PersonPageFragment"
+        android:label="PersonPageFragment" >
+        <argument
+            android:name="person"
+            app:argType="com.dertefter.neticore.data.Person" />
+        <action
+            android:id="@+id/action_personPageFragment_to_personScheduleFragment"
+            app:destination="@id/personScheduleFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/personScheduleFragment"
+        android:name="com.dertefter.ficus.fragments.schedule.person_schedule.PersonScheduleFragment"
+        android:label="PersonScheduleFragment" >
+        <argument
+            android:name="person"
+            app:argType="com.dertefter.neticore.data.Person" />
+    </fragment>
+    <fragment
+        android:id="@+id/diSpaceSchedule"
+        android:name="com.dertefter.ficus.fragments.dispace.DiSpaceSchedule"
+        android:label="DiSpaceSchedule" />
+    <fragment
+        android:id="@+id/diSpaceCources"
+        android:name="com.dertefter.ficus.fragments.dispace.di_cources.DiSpaceCources"
+        android:label="DiSpaceCources" >
+        <action
+            android:id="@+id/action_diSpaceCources_to_courseViewFragment"
+            app:destination="@id/courseViewFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/diSpaceMessages"
+        android:name="com.dertefter.ficus.fragments.dispace.di_messages.DiSpaceMessages"
+        android:label="fragment_di_space_messages"
+        tools:layout="@layout/fragment_di_space_messages" >
+        <action
+            android:id="@+id/action_diSpaceMessages_to_diChatViewFragment"
+            app:destination="@id/diChatViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/diChatViewFragment"
+        android:name="com.dertefter.ficus.fragments.dispace.di_messages.chat_view.DiChatViewFragment"
+        android:label="DiChatViewFragment" >
+        <argument
+            android:name="person"
+            app:argType="com.dertefter.neticore.data.dispace.di_messages.DiSenderPerson" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseViewFragment"
+        android:name="com.dertefter.ficus.fragments.dispace.di_cources.course_view.CourseViewFragment"
+        android:label="fragment_course_view"
+        tools:layout="@layout/fragment_course_view" >
+        <argument
+            android:name="course"
+            app:argType="com.dertefter.neticore.data.dispace.di_cources.DiCourse" />
+    </fragment>
+    <fragment
+        android:id="@+id/filesFragment"
+        android:name="com.dertefter.ficus.fragments.files.FilesFragment"
+        android:label="FilesFragment" />
+    <fragment
+        android:id="@+id/sessiaResultsFragment"
+        android:name="com.dertefter.ficus.fragments.sessia_results.SessiaResultsFragment"
+        android:label="SessiaResultsFragment" />
+    <fragment
+        android:id="@+id/campusPassFragment"
+        android:name="com.dertefter.ficus.fragments.campus_pass.CampusPassFragment"
+        android:label="CampusPassFragment" />
+    <fragment
+        android:id="@+id/scheduleDayFragment"
+        android:name="com.dertefter.ficus.fragments.schedule.schedule_week_fragment_another.ScheduleDayFragment"
+        android:label="ScheduleDayFragment" >
+        <argument
+            android:name="day"
+            app:argType="com.dertefter.neticore.data.schedule.Day" />
+    </fragment>
+    <fragment
+        android:id="@+id/moneyFragment"
+        android:name="com.dertefter.ficus.fragments.money.MoneyFragment"
+        android:label="MoneyFragment" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.dertefter.ficus.fragments.about.AboutFragment"
+        android:label="AboutFragment" />
+</navigation>

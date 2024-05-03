@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.messages.MessagesFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="false"
+        app:liftOnScrollColor="?attr/colorSurface">
+
+        <com.google.android.material.appbar.SubtitleCollapsingToolbarLayout
+            android:id="@+id/toolbarCollapse"
+            style="@style/Widget.Material3.CollapsingToolbar.Large"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:clipToPadding="true"
+            android:fitsSystemWindows="true"
+            app:expandedTitleMargin="32dp"
+            app:expandedTitleMarginBottom="20dp"
+            app:expandedTitleMarginEnd="16dp"
+            app:expandedTitleMarginStart="16dp"
+            app:expandedTitleMarginTop="14dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:layout_scrollFlags="exitUntilCollapsed|snap"
+            app:maxLines="2"
+            app:titleCollapseMode="scale"
+            app:titleMaxLines="2">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="0dp"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:navigationIcon="@drawable/arrow_back"
+                app:title="Запись в бюро пропусков" />
+        </com.google.android.material.appbar.SubtitleCollapsingToolbarLayout>
+
+        <TextView
+            android:id="@+id/actionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:nestedScrollingEnabled="false"
+            android:text="Выберите дату"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/pass_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.cardview.widget.CardView
+                    style="@style/Widget.Material3.CardView.Filled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                    app:cardCornerRadius="@dimen/corner_radius"
+                    app:contentPadding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@drawable/divider"
+                        android:orientation="vertical"
+                        android:showDividers="middle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Талон"
+                                android:textColor="?attr/colorOnPrimaryContainer"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/number"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="4dp"
+                                android:text="TextView"
+                                android:textColor="?attr/colorOnPrimaryContainer"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:tint="?attr/colorOnPrimaryContainer"
+                                app:srcCompat="@drawable/calendar_month" />
+
+                            <TextView
+                                android:id="@+id/date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="4dp"
+                                android:text="TextView"
+                                android:textColor="?attr/colorOnPrimaryContainer" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:tint="?attr/colorOnPrimaryContainer"
+                                app:srcCompat="@drawable/ic_schedule" />
+
+                            <TextView
+                                android:id="@+id/time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="4dp"
+                                android:text="TextView"
+                                android:textColor="?attr/colorOnPrimaryContainer" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="?attr/colorError"
+                    android:text="Отменить запись"
+                    android:textColor="?attr/colorOnError" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/date_time_selector"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/time_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="true"
+                    android:fitsSystemWindows="false"
+                    android:padding="4dp"
+                    android:paddingBottom="24dp"
+                    android:scrollIndicators="none" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/day_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="true"
+                    android:fitsSystemWindows="false"
+                    android:padding="4dp"
+                    android:paddingBottom="24dp"
+                    android:scrollIndicators="none" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            app:lottie_autoPlay="true"
+            app:lottie_colorFilter="?attr/colorOnSurfaceVariant"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/campus_pass" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Обновление информации..."
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

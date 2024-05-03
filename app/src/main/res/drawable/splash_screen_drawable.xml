@@ -1,0 +1,18 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/newlogo" >
+  <target
+      android:name="part1"
+      android:animation="@animator/splash_new_part1" />
+  <target
+      android:name="part2"
+      android:animation="@animator/splash_new_part1" />
+  <target
+      android:name="part3"
+      android:animation="@animator/splash_new_part1" />
+  <target
+      android:name="part4"
+      android:animation="@animator/splash_new_part1" />
+  <target
+      android:name="part5"
+      android:animation="@animator/splash_new_part1" />
+</animated-vector>

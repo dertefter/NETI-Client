@@ -1,0 +1,111 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <com.dertefter.ficus.NestedScrollableHost
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:isScrollContainer="true"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="always" />
+    </com.dertefter.ficus.NestedScrollableHost>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_or_padding"
+        android:layout_marginTop="@dimen/margin_or_padding"
+        android:layout_marginRight="@dimen/margin_or_padding"
+        android:layout_marginBottom="@dimen/margin_or_padding"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="?attr/colorSurfaceContainer"
+        android:elevation="0dp"
+        android:paddingVertical="2dp"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="?attr/colorPrimary"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="?attr/colorPrimary"
+        app:tabTextColor="?attr/colorOnSurface">
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="74dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@drawable/divider"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/margin_or_padding"
+            android:paddingEnd="@dimen/margin_or_padding"
+            android:showDividers="middle">
+
+            <include layout="@layout/item_lesson_loading" />
+
+            <include layout="@layout/item_lesson_loading" />
+
+            <include layout="@layout/item_lesson_loading" />
+
+            <include layout="@layout/item_lesson_loading" />
+
+            <include layout="@layout/item_lesson_loading" />
+
+            <include layout="@layout/item_lesson_loading" />
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <LinearLayout
+        android:id="@+id/error_view"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Не удалось загрузить расписание"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/retry_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Повторить попытку" />
+    </LinearLayout>
+
+
+</FrameLayout>

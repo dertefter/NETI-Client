@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\Derte\\Documents\\AndroidStudioProjects\\Keys\\keys.jks')
+            storePassword 'zerozero1'
+            keyAlias 'app'
+            keyPassword 'zerozero1'
+        }
+    }
+    namespace 'com.dertefter.ficus.wearable'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.dertefter.ficus"
+        minSdk 28
+        targetSdk 34
+        versionCode 1000
+        versionName "5.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+
+    implementation 'com.google.android.gms:play-services-wearable:18.1.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.wear:wear:1.3.0'
+    implementation project(':app:neticore')
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
+}

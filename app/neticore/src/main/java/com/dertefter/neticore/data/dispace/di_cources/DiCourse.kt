@@ -1,0 +1,51 @@
+package com.dertefter.neticore.data.dispace.di_cources
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class DiCourse(
+    val access_type: String?,
+    val author_id: String?,
+    val award_bronze: String?,
+    val award_description: String?,
+    val award_gold: String?,
+    val award_register: String?,
+    val award_reject: String?,
+    val award_request: String?,
+    val award_silver: String?,
+    val ciu_hash: String?,
+    val ciu_id: String?,
+    val colleague: String?,
+    val competencies: String?,
+    val curs_in_ws: String?,
+    val date_created: String?,
+    val date_finish: String?,
+    val description: String?,
+    val description_en: String?,
+    val description_system: String?,
+    val difficulty: String?,
+    val faculty: String?,
+    val goals: String?,
+    val id: String?,
+    var infav: Int?,
+    val interval_id: String?,
+    val is_dpo: String?,
+    val learning_format: String?,
+    val loads_week: String?,
+    val loads_ze: String?,
+    val logo: String?,
+    val mooc_status: String?,
+    val name: String?,
+    val password: String?,
+    val price: String?,
+    val requirements: String?,
+    val specialties: List<String>?,
+    val specialty: String?,
+    val status: String?,
+    val sync_catalog: String?,
+    val type: String?,
+    val updated_at: String?,
+    val video_preview: String?,
+    val workspaces: String?
+): Parcelable

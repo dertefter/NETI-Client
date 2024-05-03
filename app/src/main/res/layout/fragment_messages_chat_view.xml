@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.messages.chat_view.MessagesChatViewFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/topAppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:overScrollMode="always"
+        app:liftOnScroll="true"
+        app:liftOnScrollColor="?attr/colorSurfaceContainer"
+        app:liftOnScrollTargetViewId="@+id/recycler_view">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_scrollEffect="none"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:navigationIcon="@drawable/arrow_back" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/person_card"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="?attr/colorSurfaceContainer"
+            app:cardCornerRadius="@dimen/corner_radius"
+            app:cardUseCompatPadding="false"
+            app:contentPadding="8dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="0">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/person_avatar_background"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:layout_weight="0"
+                        android:background="?attr/colorOnSurfaceVariant"
+                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                        app:srcCompat="@drawable/account_circle_filled"
+                        app:strokeColor="?attr/colorSurfaceContainer"
+                        app:strokeWidth="10dp"
+                        app:tint="?attr/colorSurface" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/person_avatar_placeholder"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:layout_weight="0"
+                        android:visibility="visible"
+                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                        app:strokeColor="?attr/colorSurfaceContainer"
+                        app:strokeWidth="10dp" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:id="@+id/person_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:lines="1"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="Имя"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/person_mail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:lines="1"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="Почта"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/scheduleFragment"
+        android:icon="@drawable/nav_schedule"
+        android:title="Расписание" />
+    <item
+        android:id="@id/newsFragment"
+        android:icon="@drawable/ic_newspaper"
+        android:title="Новости" />
+    <item
+        android:id="@id/messagesFragment"
+        android:icon="@drawable/nav_mail"
+        android:title="Сообщения" />
+    <item
+        android:id="@id/profileFragment"
+        android:icon="@drawable/nav_grid"
+        android:title="Профиль" />
+
+
+</menu>

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/profileActionsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_or_padding"
+            android:showDividers="middle|beginning|end">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/auth_error_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="?attr/colorSurfaceContainer"
+                app:cardCornerRadius="@dimen/corner_radius"
+                app:contentPadding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@drawable/divider"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Ошибка авторизации"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="8sp"
+                        android:text="Возможные причины:\n- Неверно введён логин и пароль\n- Ошибка подключения к интернету"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:showDividers="none">
+
+                        <Button
+                            android:id="@+id/buttonLogOut"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="?attr/colorOnError"
+                            android:text="Выйти из акканута"
+                            android:textColor="?attr/colorError" />
+
+                        <Button
+                            android:id="@+id/buttonTryAgain"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:text="Попробовать ещё раз" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:divider="@drawable/divider_horizontal"
+                android:orientation="horizontal"
+                android:showDividers="middle|beginning|end">
+
+                <Button
+                    android:id="@+id/tg"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_weight="1"
+                    android:autoSizeTextType="none"
+                    android:background="@drawable/rounded_background"
+                    android:enabled="true"
+                    android:includeFontPadding="false"
+                    android:text="Подпишитесь на Telegram, чтобы быть в курсе новостей и обновлений!"
+                    android:textAlignment="gravity"
+                    android:textSize="14sp"
+                    app:icon="@drawable/telegram"
+                    app:iconSize="24dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@drawable/divider_horizontal"
+                android:orientation="horizontal"
+                android:showDividers="middle|beginning|end">
+
+                <Button
+                    android:id="@+id/score"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_weight="1"
+                    android:autoSizeTextType="none"
+                    android:background="@drawable/rounded_background"
+                    android:enabled="true"
+                    android:includeFontPadding="false"
+                    android:text="Результаты сессии"
+                    android:textAlignment="gravity"
+                    android:textSize="14sp"
+                    app:icon="@drawable/school"
+                    app:iconSize="24dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_horizontal"
+                android:orientation="horizontal"
+                android:showDividers="middle|beginning|end">
+
+                <Button
+                    android:id="@+id/campusPass"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_weight="1"
+                    android:autoSizeTextType="none"
+                    android:background="@drawable/rounded_background"
+                    android:enabled="true"
+                    android:includeFontPadding="false"
+                    android:text="Бюро пропусков"
+                    android:textAlignment="gravity"
+                    android:textSize="14sp"
+                    app:icon="@drawable/description"
+                    app:iconSize="24dp" />
+
+                <Button
+                    android:id="@+id/docs"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_background"
+                    android:elegantTextHeight="false"
+                    android:enabled="true"
+                    android:includeFontPadding="false"
+                    android:text="Заявки на документы"
+                    android:textSize="14sp"
+                    app:icon="@drawable/description"
+                    app:iconSize="24dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_horizontal"
+                android:orientation="horizontal"
+                android:showDividers="middle|beginning|end">
+
+                <Button
+                    android:id="@+id/searchPerson"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_background"
+                    android:elegantTextHeight="false"
+                    android:enabled="true"
+                    android:includeFontPadding="false"
+                    android:text="Поиск сотрудников"
+                    android:textSize="14sp"
+                    app:icon="@drawable/person_search"
+                    app:iconSize="24dp" />
+
+                <Button
+                    android:id="@+id/money"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_background"
+                    android:elegantTextHeight="false"
+                    android:enabled="true"
+                    android:includeFontPadding="false"
+                    android:text="Стипендии и выплаты"
+                    android:textSize="14sp"
+                    app:icon="@drawable/currency_ruble"
+                    app:iconSize="24dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_horizontal"
+                android:orientation="horizontal"
+                android:showDividers="middle|beginning|end">
+
+                <Button
+                    android:id="@+id/downloads"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_background"
+                    android:elegantTextHeight="false"
+                    android:enabled="true"
+                    android:includeFontPadding="false"
+                    android:text="Загрузки"
+                    android:textSize="14sp"
+                    app:icon="@drawable/download"
+                    app:iconSize="24dp" />
+
+                <Button
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_background"
+                    android:elegantTextHeight="false"
+                    android:enabled="true"
+                    android:includeFontPadding="false"
+                    android:padding="14dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Стипендии и выплаты"
+                    android:textSize="14sp"
+                    android:visibility="invisible"
+                    app:icon="@drawable/currency_ruble"
+                    app:iconSize="24dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/profileTopAppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true"
+        app:liftOnScrollTargetViewId="@+id/profileActionsScrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:paddingHorizontal="16dp"
+                android:text="Профиль и сервисы"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="?attr/colorOnSurface" />
+
+            <FrameLayout
+                android:id="@+id/profile_settings"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="0">
+
+                <ImageView
+                    android:id="@+id/background_anim"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="1"
+                    android:padding="4dp"
+                    android:scaleX="0"
+                    android:scaleY="0"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/anim_avatar_4" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/person_avatar_background"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:background="?attr/colorOnSurfaceVariant"
+                    android:visibility="visible"
+                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                    app:srcCompat="@drawable/account_circle_filled"
+                    app:strokeColor="?attr/colorSurface"
+                    app:strokeWidth="12dp"
+                    app:tint="?attr/colorSurfaceVariant" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/person_avatar_placeholder"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="#FFFFFF"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"
+                    app:contentPaddingTop="3dp"
+                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                    app:strokeColor="@android:color/transparent"
+                    app:strokeWidth="10dp" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

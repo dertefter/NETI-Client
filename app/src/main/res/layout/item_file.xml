@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
+
+    <TextView
+        android:id="@+id/file_ex"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="0"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="?attr/colorSurfaceContainer"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:lines="1"
+        android:singleLine="true"
+        android:text="pdf"
+        android:textColor="?attr/colorPrimary" />
+
+    <TextView
+        android:id="@+id/file_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:paddingStart="4dp"
+        android:paddingEnd="8dp"
+        android:text="TextView"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="16sp" />
+</LinearLayout>

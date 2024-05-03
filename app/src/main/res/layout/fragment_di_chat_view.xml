@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <FrameLayout
+        android:id="@+id/date_container"
+        android:layout_width="100dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="110dp"
+        android:layout_weight="1"
+        android:elevation="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            app:srcCompat="@drawable/rounded_background"
+            app:tint="?attr/colorSurfaceContainer" />
+
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="1 февраля"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurfaceContainer"
+        android:padding="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/text_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="Сообщение..."
+                android:inputType="textMultiLine"
+                android:maxLines="8"
+                android:padding="8dp"
+                android:textColor="?attr/colorOnSurface"
+                android:textColorHint="?attr/colorOnSurfaceVariant"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/send_button"
+                style="?attr/materialIconButtonFilledStyle"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="top"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                app:icon="@drawable/send" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fitsSystemWindows="false"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context="fragments.news.NewsFragment">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurfaceContainer"
+            android:fitsSystemWindows="true"
+            android:overScrollMode="always"
+            app:liftOnScroll="true"
+            app:liftOnScrollColor="?attr/colorSurfaceContainer"
+            app:liftOnScrollTargetViewId="@+id/recycler_view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                app:layout_scrollFlags="noScroll">
+
+                <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:padding="12dp"
+                    app:srcCompat="@drawable/arrow_back" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/person_avatar_background"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="?attr/colorOnSurfaceVariant"
+                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                        app:srcCompat="@drawable/account_circle_filled"
+                        app:strokeColor="?attr/colorSurfaceContainer"
+                        app:strokeWidth="11dp"
+                        app:tint="?attr/colorSurface" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/person_avatar_placeholder"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:visibility="visible"
+                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                        app:strokeColor="?attr/colorSurfaceContainer"
+                        app:strokeWidth="9dp" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:gravity="center_vertical"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:visibility="visible"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:stackFromEnd="true" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

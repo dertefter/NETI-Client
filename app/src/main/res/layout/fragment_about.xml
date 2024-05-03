@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:fitsSystemWindows="false"
+    tools:context="fragments.about.AboutFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:overScrollMode="always"
+        android:visibility="visible"
+        app:liftOnScroll="true"
+        app:liftOnScrollColor="?attr/colorSurfaceContainer"
+        app:liftOnScrollTargetViewId="@+id/scrollView">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="@style/Widget.Material3.CollapsingToolbar.Large"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            app:expandedTitleMargin="32dp"
+            app:expandedTitleMarginBottom="20dp"
+            app:expandedTitleMarginEnd="16dp"
+            app:expandedTitleMarginStart="16dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:maxLines="2"
+            app:titleCollapseMode="scale">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="0dp"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/arrow_back"
+                app:title="О приложении" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Важно!"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Приложение NETI Клиент не связано с НГТУ (НЭТИ), а также не одобрено НГТУ (НЭТИ). Если вы хотите скачать официальное приложение НГТУ (НЭТИ) - скачайте YourNETI, которое доступно в Google Play и App Store."
+                android:textColor="?attr/colorOnSurface" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:lineSpacingExtra="8sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Что такое NETI Клиент? "
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="NETI Клиент - это неофициальное приложение для студентов НГТУ (НЭТИ), созданное студентами этого учебного заведения."
+                android:textColor="?attr/colorOnSurface" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:lineSpacingExtra="8sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Зачем?"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Идея появилась задолго до появления официального приложения. В то время личный кабинет студента был слабо адаптирован под мобильные версии. Поэтому нам захотелось сделать что-то… более удобное (?). Сейчас, когда НГТУ (НЭТИ) имеет официальное приложение, смысла в нашем приложении не так уж и много. Однако мы продолжаем развивать наше приложение дальше!  "
+                android:textColor="?attr/colorOnSurface" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:lineSpacingExtra="8sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Поддержка приложения"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Нам важно, чтобы приложение было стабильным. Поэтому мы создали канал в Telegram для быстрой связи с разработчиком. Там публикуется информация о приложении, списки изменений. Комментарии к записям открыты - именно там вы можете оставлять свои идеи, сообщать об ошибках приложения."
+                android:textColor="?attr/colorOnSurface" />
+
+            <Button
+                android:id="@+id/tg"
+                android:layout_width="match_parent"
+                android:layout_height="74dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:autoSizeTextType="none"
+                android:background="@drawable/rounded_background"
+                android:enabled="true"
+                android:includeFontPadding="false"
+                android:text="Подпишитесь на Telegram, чтобы быть в курсе новостей и обновлений!"
+                android:textAlignment="gravity"
+                android:textSize="14sp"
+                app:icon="@drawable/telegram"
+                app:iconSize="24dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

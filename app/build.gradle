@@ -1,0 +1,129 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    signingConfigs {
+        debug {
+            def keystorePropertiesFile = rootProject.file("local.properties")
+            def keystoreProperties = new Properties()
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
+    namespace 'com.dertefter.ficus'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.dertefter.ficus"
+        minSdk 26
+        targetSdk 34
+        versionCode 105
+        versionName "5.3.2"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        renderscriptTargetApi 34
+        renderscriptSupportModeEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    viewBinding {
+        enabled = true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation "androidx.activity:activity-ktx:1.8.2"
+    //implementation "androidx.fragment:fragment-ktx:1.7.0-alpha10"
+    //implementation "androidx.transition:transition-ktx:1.5.0-alpha06"
+
+    //оно тут было
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation project(':app:neticore')
+    implementation 'androidx.activity:activity-ktx:1.8.2'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.9.22'
+
+
+    //палетка
+    implementation 'androidx.palette:palette-ktx:1.0.0'
+
+    //свайп рефреш
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //шиммер шиммер и мы дымим русский дрилл на сцене ммммммм
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //лотти
+    implementation 'com.airbnb.android:lottie:6.3.0'
+
+    //пикассо (пикчи)
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //адроид веар
+    implementation 'com.google.android.gms:play-services-wearable:18.1.0'
+
+    //навигейшн
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.7"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.7"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.7.7"
+
+    //сплешскрин
+    implementation "androidx.core:core-splashscreen:1.0.1"
+
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3'
+
+    //SubtitleCollapsingToolbarLayout? дада, ради одного subtitle я подключаю целую библиотеку
+    implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.5.0"
+
+    implementation "com.bartoszlipinski:viewpropertyobjectanimator:1.5.0"
+
+    //красивые волны
+    implementation 'com.github.john990:WaveView:0.9'
+
+    //не помню зачем добавил это и что это вообще
+    implementation 'com.github.SmartToolFactory:Compose-Extended-Colors:1.0.0-alpha07'
+
+
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okio:okio:2.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'org.jsoup:jsoup:1.16.1'
+
+    implementation 'com.ms-square:etsyblur:0.2.1'
+
+    //хз надо это здесь или нет
+    wearApp project(':app:wearable')
+}

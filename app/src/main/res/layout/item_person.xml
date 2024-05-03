@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Material3.CardView.Filled"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardCornerRadius="@dimen/corner_radius"
+    app:cardUseCompatPadding="false">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <FrameLayout
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_weight="0">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/person_avatar_background"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_weight="0"
+                android:background="?attr/colorOnSurfaceVariant"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                app:srcCompat="@drawable/account_circle_filled"
+                app:strokeColor="?attr/colorSurface"
+                app:strokeWidth="10dp"
+                app:tint="?attr/colorSurfaceContainer" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/person_avatar_placeholder"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_weight="0"
+                android:visibility="visible"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                app:strokeColor="?attr/colorSurface"
+                app:strokeWidth="10dp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/person_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:lines="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Тестовое сообщение рдивдововиа вмвмшвмшрывщшрмв мврвмшрмвшомвдщомывщзомвыщо мвтщшврвыщ мтшлвмщы мщшымщшы мршщвырмщшвыромщшврмщш мрщрмлрл вмилврмвшмалв мпшвепывлатыв"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/person_mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:lines="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Тестовое сообщение рдивдововиа вмвмшвмшрывщшрмв мврвмшрмвшомвдщомывщзомвыщо мвтщшврвыщ мтшлвмщы мщшымщшы мршщвырмщшвыромщшврмщш мрщрмлрл вмилврмвшмалв мпшвепывлатыв"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

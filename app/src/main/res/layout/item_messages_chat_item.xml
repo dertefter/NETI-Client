@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    style="@style/Widget.Material3.CardView.Filled"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:clickable="true"
+    android:focusable="auto"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="?attr/colorSurfaceContainer"
+    app:cardCornerRadius="@dimen/corner_radius"
+    app:contentPadding="14dp">
+
+    <ImageView
+        android:id="@+id/isNew"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="4dp"
+        app:srcCompat="@drawable/rounded_background"
+        app:tint="?attr/colorPrimary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="-4.5dp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_weight="0">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/person_avatar_background"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:background="?attr/colorOnSurfaceVariant"
+                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                    app:srcCompat="@drawable/account_circle_filled"
+                    app:strokeColor="?attr/colorSurfaceContainer"
+                    app:strokeWidth="10dp"
+                    app:tint="?attr/colorSurface" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/person_avatar_placeholder"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:visibility="visible"
+                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                    app:srcCompat="@drawable/ic_launcher_background"
+                    app:strokeColor="?attr/colorSurfaceContainer"
+                    app:strokeWidth="10dp" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0"
+                android:orientation="vertical"
+                android:showDividers="middle|beginning|end">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:lines="1"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:text="Иванов И. И."
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:lines="1"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:text="20.12.24"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/last_message_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:text="Тема сообщения бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/last_message_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="4sp"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:text="Текст сообщения бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла  бла бла бла  бла бла бла   бла бла бла  бла"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
