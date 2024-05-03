@@ -1,5 +1,5 @@
-![Static Badge](https://img.shields.io/badge/Google%20Play-logo?style=for-the-badge&logo=googleplay&logoColor=%23000000&color=%23ffffff&link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.dertefter.ficus)
-
+![Static Badge]()
+[![GP](https://img.shields.io/badge/Google%20Play-logo?style=for-the-badge&logo=googleplay&logoColor=%23000000&color=%23ffffff&link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.dertefter.ficus)](https://play.google.com/store/apps/details?id=com.dertefter.ficus)
 
 # NETI Клиент
 
