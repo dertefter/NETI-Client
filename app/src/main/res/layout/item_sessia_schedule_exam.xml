@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp">
+
+        <TextView
+            android:id="@+id/dayName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="Понедельник"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="right"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="01.06"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:text="11:45"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="auto"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+            app:cardCornerRadius="@dimen/corner_radius"
+            app:contentPadding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:divider="@drawable/divider"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="title"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    android:textSize="14sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_weight="0"
+                                android:background="?attr/colorOnSurfaceVariant"
+                                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                                app:srcCompat="@drawable/account_circle_filled"
+                                app:strokeColor="?attr/colorPrimaryContainer"
+                                app:strokeWidth="6dp"
+                                app:tint="?attr/colorSurface" />
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/person_avatar_placeholder"
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_weight="0"
+                                android:visibility="visible"
+                                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                                app:strokeColor="?attr/colorPrimaryContainer"
+                                app:strokeWidth="6dp" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:visibility="gone">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_weight="0"
+                                android:background="?attr/colorOnSurfaceVariant"
+                                app:contentPadding="4dp"
+                                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                                app:srcCompat="@drawable/more_horiz"
+                                app:strokeColor="?attr/colorPrimaryContainer"
+                                app:strokeWidth="6dp"
+                                app:tint="?attr/colorSurface" />
+
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/rounded_background"
+                            android:backgroundTint="?attr/colorPrimary"
+                            android:paddingStart="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="4dp"
+                            android:text="type"
+                            android:textColor="?attr/colorOnPrimary" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/aud"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="?attr/colorPrimary"
+                        android:paddingStart="10dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="4dp"
+                        android:text="aud"
+                        android:textColor="?attr/colorOnPrimary" />
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</LinearLayout>

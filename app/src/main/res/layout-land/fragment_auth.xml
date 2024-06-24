@@ -32,13 +32,15 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="48dp"
+        android:layout_width="54dp"
         android:layout_height="0dp"
         android:layout_marginEnd="32dp"
+        android:scaleX="2"
+        android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/authTV"
-        app:srcCompat="@drawable/ficuslogo_without_padding"
+        app:srcCompat="@mipmap/ic_launcher_monochrome"
         app:tint="?attr/colorPrimary" />
 
     <TextView
@@ -47,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/vfont"
         android:paddingEnd="24dp"
         android:text="Личный кабинет студента НГТУ (НЭТИ)"
         android:textColor="?attr/colorOnSurface"
@@ -60,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/vfont"
         android:text="Авторизация"
         android:textColor="?attr/colorOnSurface"
         android:textSize="24sp"
@@ -90,6 +93,7 @@
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/vfont"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -103,6 +107,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/vfont"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,6 +118,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="12dp"
             android:enabled="false"
+            android:fontFamily="@font/vfont"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
             android:text="Войти" />

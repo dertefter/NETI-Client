@@ -3,6 +3,7 @@ package com.dertefter.neticore
 import android.app.Application
 import android.util.Log
 import com.dertefter.neticore.NETICoreClient.NETICoreClient
+import com.dertefter.neticore.NETICoreClient.PersonHelper
 import com.dertefter.neticore.NETICoreClient.dispace.DiSpaceClient
 import com.dertefter.neticore.data.Event
 import com.dertefter.neticore.data.NETICoreMetaData
@@ -16,16 +17,17 @@ class NETICore {
     var metaData: NETICoreMetaData = NETICoreMetaData()
     var client: NETICoreClient? = null
     var diSpaceClient: DiSpaceClient? = null
-
+    var personHelper: PersonHelper? = null
 
     fun initialize(application: Application){
+
         appPreferences = AppPreferences
         appPreferences?.setup(application)
         client = NETICoreClient(application, appPreferences!!)
         client?.initialize()
         diSpaceClient = DiSpaceClient(application, appPreferences!!)
         diSpaceClient?.initialize()
-
+        personHelper = PersonHelper(application)
 
         checkInitialization()
     }

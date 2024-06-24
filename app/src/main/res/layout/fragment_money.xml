@@ -16,11 +16,12 @@
             style="@style/Widget.Material3.CollapsingToolbar.Large"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            app:collapsedTitleTextAppearance="@style/MyCollapsedTitle"
             app:expandedTitleMargin="32dp"
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleMarginEnd="20dp"
             app:expandedTitleMarginStart="16dp"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:expandedTitleTextAppearance="@style/MyExpandedTitle"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:maxLines="2"
             app:titleCollapseMode="scale">

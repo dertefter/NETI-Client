@@ -10,11 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dertefter.ficus.R
 import com.dertefter.neticore.data.sessia_results.SessiaItem
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.john.waveview.WaveView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 
 class SessiaRecyclerViewAdapter(val fragment: SessiaItemFragment): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -42,7 +37,7 @@ class SessiaRecyclerViewAdapter(val fragment: SessiaItemFragment): RecyclerView.
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_sessia_lesson, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_sessia_result, parent, false)
         return viewHolder(view)
     }
 

@@ -101,6 +101,7 @@
                     android:autoSizeTextType="none"
                     android:background="@drawable/rounded_background"
                     android:enabled="true"
+                    android:gravity="center|start"
                     android:includeFontPadding="false"
                     android:text="Подпишитесь на Telegram, чтобы быть в курсе новостей и обновлений!"
                     android:textAlignment="gravity"

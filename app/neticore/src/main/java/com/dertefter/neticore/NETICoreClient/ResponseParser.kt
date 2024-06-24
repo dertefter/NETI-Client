@@ -21,6 +21,7 @@ import com.dertefter.neticore.data.schedule.Day
 import com.dertefter.neticore.data.schedule.Group
 import com.dertefter.neticore.data.schedule.Lesson
 import com.dertefter.neticore.data.schedule.Schedule
+import com.dertefter.neticore.data.schedule.SessiaScheduleItem
 import com.dertefter.neticore.data.schedule.Week
 import com.dertefter.neticore.data.sessia_results.SessiaItem
 import com.dertefter.neticore.data.sessia_results.SessiaResults
@@ -30,6 +31,7 @@ import okhttp3.ResponseBody
 import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
@@ -85,6 +87,49 @@ class ResponseParser {
             return null
         }
 
+    }
+
+    fun parseSessiaSchedule(input: ResponseBody?): List<SessiaScheduleItem>?{
+        try{
+            val output = mutableListOf<SessiaScheduleItem>()
+            val pretty = input!!.string()
+            val doc: Document = Jsoup.parse(pretty)
+            val table = doc.select("div.schedule__session-body").first()
+            val items = table!!.select("> *")
+            for (i in items){
+                var date = i.select("div.schedule__session-day").first()?.text().toString()
+                val dayName = formatDateDayName(date)
+                date = formatDate(date)
+                val time = i.select("div.schedule__session-time").first()?.text().toString()
+                val name = i.select("div.schedule__session-item").first()?.ownText().toString()
+                val aud = i.select("div.schedule__session-class").first()?.text().toString()
+                val type = i.select("div.schedule__session-label").first()?.text().toString()
+                val personLink = i.select("div.schedule__session-item").first()?.select("a")?.first()?.attr("href")+"/"
+                output.add(SessiaScheduleItem(name, time, date, type, aud, personLink, dayName))
+                Log.e("sesese", "$name")
+            }
+            return output
+        }catch (e: Exception) {
+            return null
+        }
+
+    }
+
+    fun formatDate(dateString: String): String {
+        val locale = Locale("ru", "RU")
+        val inputFormat = SimpleDateFormat("dd.MM.yy", locale)
+        val date = inputFormat.parse(dateString)
+        val outputFormat = SimpleDateFormat("dd.MM", locale)
+        return outputFormat.format(date)
+    }
+
+    fun formatDateDayName(dateString: String): String {
+        val locale = Locale("ru", "RU")
+        val inputFormat = SimpleDateFormat("dd.MM.yy", locale)
+        val date = inputFormat.parse(dateString)
+        val outputFormat = SimpleDateFormat("EEEE", locale)
+        return outputFormat.format(date).toString()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
     }
 
     fun parseIndividualTimetable(input: String?, weekQuery: String): Schedule? {

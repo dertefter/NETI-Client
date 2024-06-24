@@ -19,7 +19,8 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/arrow_back"
-            app:title="Расписание занятий" />
+            app:title="Расписание занятий"
+            app:titleTextAppearance="@style/MyCollapsedTitle" />
 
 
         <com.google.android.material.progressindicator.LinearProgressIndicator

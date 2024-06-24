@@ -224,8 +224,7 @@ class ProfileData : AppCompatActivity() {
                             findViewById(R.id.pr_data_frame),
                             "Изменения сохранены!",
                             Snackbar.LENGTH_SHORT
-                        ).setTextColor(getColor(R.color.md_theme_dark_inverseSurface))
-                            .show()
+                        ).show()
                         spinner?.visibility = View.INVISIBLE
 
                     }
@@ -235,8 +234,7 @@ class ProfileData : AppCompatActivity() {
                     findViewById(R.id.pr_data_frame),
                     "Ошибка! Попробуйте позже...",
                     Snackbar.LENGTH_SHORT
-                ).setTextColor(getColor(R.color.md_theme_dark_inverseSurface))
-                    .show()
+                ).show()
                 spinner?.visibility = View.INVISIBLE
                 editBoolean = true
                 setEdit(true)

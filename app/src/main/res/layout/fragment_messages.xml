@@ -115,6 +115,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/auth_error_card"
+        style="@style/Widget.Material3.CardView.Filled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

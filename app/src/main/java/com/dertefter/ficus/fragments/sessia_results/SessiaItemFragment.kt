@@ -1,7 +1,6 @@
 package com.dertefter.ficus.fragments.sessia_results
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,10 +12,8 @@ import com.dertefter.ficus.R
 import com.dertefter.ficus.databinding.FragmentSessiaItemBinding
 import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.Status
-import com.john.waveview.WaveView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SessiaItemFragment : Fragment(R.layout.fragment_sessia_item) {
@@ -55,7 +52,7 @@ class SessiaItemFragment : Fragment(R.layout.fragment_sessia_item) {
     }
 
     fun observeSessiaInfo(){
-        netiCore?.client?.sessiaViewModel?.sessiaResultsLiveData?.observe(viewLifecycleOwner){
+        netiCore?.client?.sessiaResultsViewModel?.sessiaResultsLiveData?.observe(viewLifecycleOwner){
             when (it.status){
                 Status.LOADING -> {
                     binding.shimmer.visibility = View.VISIBLE

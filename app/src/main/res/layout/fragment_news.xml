@@ -29,11 +29,12 @@
             style="@style/Widget.Material3.CollapsingToolbar.Large"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            app:collapsedTitleTextAppearance="@style/MyCollapsedTitle"
             app:expandedTitleMargin="32dp"
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleMarginEnd="16dp"
             app:expandedTitleMarginStart="16dp"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:expandedTitleTextAppearance="@style/MyExpandedTitle"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleCollapseMode="scale">
 
@@ -44,7 +45,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:title="Новости" />
+                app:title="Новости"
+                app:titleTextAppearance="@style/MyExpandedTitle" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

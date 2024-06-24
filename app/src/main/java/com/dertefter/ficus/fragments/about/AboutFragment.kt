@@ -75,6 +75,11 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/nstumobile_dev/"))
             startActivity(browserIntent)
         }
+        binding.gh.setOnClickListener {
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/dertefter/NETI-Client/"))
+            startActivity(browserIntent)
+        }
 
 
     }

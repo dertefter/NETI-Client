@@ -25,13 +25,11 @@ android {
         applicationId "com.dertefter.ficus"
         minSdk 26
         targetSdk 34
-        versionCode 105
-        versionName "5.3.2"
+        versionCode 107
+        versionName "5.3.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
-        renderscriptTargetApi 34
-        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -57,17 +55,17 @@ android {
 }
 
 dependencies {
-    implementation "androidx.activity:activity-ktx:1.8.2"
+    implementation "androidx.activity:activity-ktx:1.9.0"
     //implementation "androidx.fragment:fragment-ktx:1.7.0-alpha10"
     //implementation "androidx.transition:transition-ktx:1.5.0-alpha06"
 
     //оно тут было
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation project(':app:neticore')
-    implementation 'androidx.activity:activity-ktx:1.8.2'
+    implementation 'androidx.activity:activity-ktx:1.9.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -90,7 +88,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //адроид веар
-    implementation 'com.google.android.gms:play-services-wearable:18.1.0'
+    implementation 'com.google.android.gms:play-services-wearable:18.2.0'
 
     //навигейшн
     implementation "androidx.navigation:navigation-fragment-ktx:2.7.7"
@@ -113,7 +111,8 @@ dependencies {
     //не помню зачем добавил это и что это вообще
     implementation 'com.github.SmartToolFactory:Compose-Extended-Colors:1.0.0-alpha07'
 
-
+    //аватар вью
+    implementation "io.getstream:avatarview-coil:1.0.7"
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

@@ -52,6 +52,11 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
                     findNavController().navigate(action)
                     true
                 }
+                R.id.sessia -> {
+                    val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleSessiaFragment()
+                    findNavController().navigate(action)
+                    true
+                }
                 else -> false
             }
         }

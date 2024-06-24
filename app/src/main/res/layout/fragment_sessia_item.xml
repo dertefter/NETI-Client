@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:listitem="@layout/item_sessia_lesson" />
+        tools:listitem="@layout/item_sessia_result" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer"

@@ -9,7 +9,9 @@ import com.dertefter.neticore.TinyDB
 import com.dertefter.neticore.api.APIService
 import com.dertefter.neticore.data.Event
 import com.dertefter.neticore.data.schedule.Group
+import com.dertefter.neticore.data.schedule.Lesson
 import com.dertefter.neticore.data.schedule.Schedule
+import com.dertefter.neticore.data.schedule.SessiaScheduleItem
 import com.dertefter.neticore.data.schedule.Week
 import com.dertefter.neticore.local.AppPreferences
 import kotlinx.coroutines.CoroutineScope
@@ -28,15 +30,14 @@ class ScheduleViewModel(
 ) : AndroidViewModel(application) {
 
     val weeksLiveData = MutableLiveData<Event<List<Week>>>()
-
+    val sessiaScheduleLiveData = MutableLiveData<Event<List<SessiaScheduleItem>>>()
     val scheduleListLiveData = MutableLiveData<Event<List<Schedule?>?>>()
     var schList: MutableList<Schedule?>? = null
-
     val groupListLiveData = MutableLiveData<Event<List<Group>>>()
-
     var currentGroupLiveData = MutableLiveData<Group>()
     var tinyDB : TinyDB = TinyDB(application.applicationContext)
-    fun loadWeekList(){
+
+        fun loadWeekList(){
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 scheduleListLiveData.postValue(Event.loading())
@@ -65,6 +66,33 @@ class ScheduleViewModel(
             }
         }
     }
+
+    fun loadSessiaSchedule(){
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                sessiaScheduleLiveData.postValue(Event.loading())
+                val url = "https://www.nstu.ru/"
+                val retrofit = Retrofit.Builder().baseUrl(url).client(okHttpClient).build()
+                val service = retrofit.create(APIService::class.java)
+                val response = service.getSessiaSchedule(group = currentGroupLiveData!!.value?.title)
+                if (response.isSuccessful){
+                    val sessiaSchedule = ResponseParser().parseSessiaSchedule(response.body())
+                    Log.e("sesese", sessiaSchedule.toString())
+                    sessiaScheduleLiveData.postValue(Event.success(sessiaSchedule))
+                }
+
+            } catch (e: Exception) {
+                sessiaScheduleLiveData.postValue(Event.error())
+            } catch (e: Error) {
+                sessiaScheduleLiveData.postValue(Event.error())
+            } catch (e: Throwable) {
+                sessiaScheduleLiveData.postValue(Event.error())
+            } catch (e: JSONException) {
+                sessiaScheduleLiveData.postValue(Event.error())
+            }
+        }
+    }
+
 
     fun loadGroupList(searchQuery: String = ""){
         groupListLiveData.postValue(Event.loading())

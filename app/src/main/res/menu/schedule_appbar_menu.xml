@@ -3,10 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/set_group"
-        android:title="Изменить группу"
+        android:title="Поиск группы"
         app:showAsAction="never" />
     <item
         android:id="@+id/search_person"
         android:title="Поиск сотрудников"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sessia"
+        android:icon="@drawable/calendar_month_fill"
+        android:title="Расписание сессии"
         app:showAsAction="never" />
 </menu>

@@ -19,11 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
             android:clipToPadding="true"
+            app:collapsedTitleTextAppearance="@style/MyCollapsedTitle"
             app:expandedTitleMargin="32dp"
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleMarginEnd="16dp"
             app:expandedTitleMarginStart="16dp"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:expandedTitleTextAppearance="@style/MyExpandedTitle"
             app:forceApplySystemWindowInsetTop="true"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:titleCollapseMode="scale">

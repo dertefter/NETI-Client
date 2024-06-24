@@ -26,6 +26,13 @@
             app:exitAnim="@animator/nav_default_exit_anim"
             app:popEnterAnim="@animator/nav_default_pop_enter_anim"
             app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_scheduleFragment_to_scheduleSessiaFragment"
+            app:destination="@id/scheduleSessiaFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
@@ -273,4 +280,16 @@
         android:id="@+id/aboutFragment"
         android:name="com.dertefter.ficus.fragments.about.AboutFragment"
         android:label="AboutFragment" />
+    <fragment
+        android:id="@+id/scheduleSessiaFragment"
+        android:name="com.dertefter.ficus.fragments.schedule.schedule_sessia.ScheduleSessiaFragment"
+        android:label="ScheduleSessiaFragment" />
+    <dialog
+        android:id="@+id/shareSessiaBottomSheet"
+        android:name="com.dertefter.ficus.fragments.sessia_results.share_sessia.ShareSessiaBottomSheet"
+        android:label="ShareSessiaBottomSheet" >
+        <argument
+            android:name="item"
+            app:argType="com.dertefter.neticore.data.schedule.SessiaScheduleItem" />
+    </dialog>
 </navigation>

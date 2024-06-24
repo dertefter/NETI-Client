@@ -48,6 +48,7 @@ import androidx.activity.addCallback
 import androidx.core.os.BuildCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -153,6 +154,7 @@ class MainActivity : AppCompatActivity() {
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val hideNavIds = listOf(R.id.authFragment,
+                R.id.scheduleSessiaFragment,
                 R.id.searchGroupFragment,
                 R.id.searchPersonFragment,
                 R.id.readNewsFragment,

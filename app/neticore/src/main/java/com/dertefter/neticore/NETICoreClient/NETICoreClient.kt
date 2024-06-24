@@ -11,8 +11,7 @@ import com.dertefter.neticore.NETICoreClient.viewmodels.SchedulePersonViewModel
 import com.dertefter.neticore.NETICoreClient.viewmodels.UserInfoViewModel
 import com.dertefter.neticore.NETICoreClient.viewmodels.ScheduleViewModel
 import com.dertefter.neticore.NETICoreClient.viewmodels.SearchPersonViewModel
-import com.dertefter.neticore.NETICoreClient.viewmodels.SessiaViewModel
-import okhttp3.CookieJar
+import com.dertefter.neticore.NETICoreClient.viewmodels.SessiaResultsViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -30,7 +29,7 @@ class NETICoreClient(
     var searchPersonViewModel: SearchPersonViewModel? = null
     var newsViewModel: NewsViewModel? = null
     var messagesViewModel: MessagesViewModel? = null
-    var sessiaViewModel: SessiaViewModel? = null
+    var sessiaResultsViewModel: SessiaResultsViewModel? = null
     var campusPassViewModel: CampusPassViewModel? = null
     var moneyViewModel: MoneyViewModel? = null
 
@@ -77,10 +76,10 @@ class NETICoreClient(
         }else{
             schedulePersonModel?.okHttpClient = okHttpClient!!
         }
-        if (sessiaViewModel == null){
-            sessiaViewModel = SessiaViewModel(application, appPreferences, okHttpClient!!)
+        if (sessiaResultsViewModel == null){
+            sessiaResultsViewModel = SessiaResultsViewModel(application, appPreferences, okHttpClient!!)
         }else{
-            sessiaViewModel?.okHttpClient = okHttpClient!!
+            sessiaResultsViewModel?.okHttpClient = okHttpClient!!
         }
         if (campusPassViewModel == null){
             campusPassViewModel = CampusPassViewModel(application, appPreferences, okHttpClient!!)

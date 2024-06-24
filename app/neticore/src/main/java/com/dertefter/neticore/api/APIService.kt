@@ -53,6 +53,9 @@ interface APIService {
     @GET("news/news_more")
     suspend fun readNews(@Query("idnews") idnews: String?): Response<ResponseBody>
 
+    @GET("studies/schedule/schedule_session/schedule")
+    suspend fun getSessiaSchedule(@Query("group") group: String?): Response<ResponseBody>
+
     @GET("student_study/mess_teacher/view")
     suspend fun readMes(@Query("id") group: String?): Response<ResponseBody>
 

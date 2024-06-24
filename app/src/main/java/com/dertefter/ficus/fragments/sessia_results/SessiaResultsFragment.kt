@@ -8,13 +8,10 @@ import androidx.navigation.fragment.findNavController
 import com.dertefter.ficus.Ficus
 import com.dertefter.ficus.MainActivity
 import com.dertefter.ficus.R
-import com.dertefter.ficus.databinding.FragmentScheduleBinding
 import com.dertefter.ficus.databinding.FragmentSessiaResultsBinding
-import com.dertefter.ficus.fragments.dispace.di_cources.course_view.ModalBottomSheet
 import com.dertefter.ficus.fragments.sessia_results.share_sessia.ShareSessiaBottomSheet
 import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.Status
-import com.dertefter.neticore.data.schedule.Week
 import com.dertefter.neticore.data.sessia_results.SessiaResults
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.tabs.TabLayoutMediator
@@ -35,7 +32,7 @@ class SessiaResultsFragment : Fragment(R.layout.fragment_sessia_results) {
             findNavController().popBackStack()
         }
         binding.appBarLayout.setStatusBarForegroundColor(MaterialColors.getColor(binding.appBarLayout, com.google.android.material.R.attr.colorSurface))
-        netiCore?.client?.sessiaViewModel?.getLink()
+        netiCore?.client?.sessiaResultsViewModel?.getLink()
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId){
                 R.id.share -> {
@@ -48,13 +45,13 @@ class SessiaResultsFragment : Fragment(R.layout.fragment_sessia_results) {
         }
 
 
-        netiCore?.client?.sessiaViewModel?.updateSessiaResults()
+        netiCore?.client?.sessiaResultsViewModel?.updateSessiaResults()
 
         observeSessiaInfo()
     }
 
     fun observeSessiaInfo(){
-        netiCore?.client?.sessiaViewModel?.sessiaResultsLiveData?.observe(viewLifecycleOwner){
+        netiCore?.client?.sessiaResultsViewModel?.sessiaResultsLiveData?.observe(viewLifecycleOwner){
             when (it.status){
                 Status.LOADING -> {
                     setupViewPager(null)

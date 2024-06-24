@@ -2,19 +2,15 @@ package com.dertefter.ficus.fragments.sessia_results.share_sessia
 
 import android.content.ClipboardManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.dertefter.ficus.Ficus
 import com.dertefter.ficus.R
-import com.dertefter.ficus.databinding.DiCourseViewBottomSheetBinding
 import com.dertefter.ficus.databinding.ShareSessiaBottomSheetBinding
 import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.Status
-import com.dertefter.neticore.data.dispace.di_cources.DiCourseView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ShareSessiaBottomSheet : BottomSheetDialogFragment() {
@@ -35,19 +31,19 @@ class ShareSessiaBottomSheet : BottomSheetDialogFragment() {
         netiCore = (activity?.application as Ficus).netiCore
 
         binding.refrashScoreLink.setOnClickListener {
-            netiCore?.client?.sessiaViewModel?.updateLink()
+            netiCore?.client?.sessiaResultsViewModel?.updateLink()
         }
 
         observeSessiaLink()
 
-        if (netiCore?.client?.sessiaViewModel?.sessiaLinkLiveData?.value?.status != Status.SUCCESS){
-            netiCore?.client?.sessiaViewModel?.getLink()
+        if (netiCore?.client?.sessiaResultsViewModel?.sessiaLinkLiveData?.value?.status != Status.SUCCESS){
+            netiCore?.client?.sessiaResultsViewModel?.getLink()
         }
 
     }
 
     fun observeSessiaLink(){
-        netiCore?.client?.sessiaViewModel?.sessiaLinkLiveData?.observe(viewLifecycleOwner){
+        netiCore?.client?.sessiaResultsViewModel?.sessiaLinkLiveData?.observe(viewLifecycleOwner){
             when(it.status){
                 Status.SUCCESS -> {
                     val link = it.data
