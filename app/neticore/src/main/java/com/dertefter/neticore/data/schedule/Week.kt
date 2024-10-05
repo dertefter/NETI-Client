@@ -8,9 +8,6 @@ import kotlinx.parcelize.RawValue
 data class Week(
     var weekQuery: String,
     var weekTitle: String,
-    var isCurrent: Boolean,
-    var groupTitle: String = "",
-    val isIndividual: Boolean,
-    var days: @RawValue List<Day>? = null,
-    var isLoadingSchedule: Boolean = false,
+    var isCurrent: Boolean?,
+    var group: Group?
 ): Parcelable

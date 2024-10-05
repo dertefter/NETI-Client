@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.Material3.CardView.Filled"
+    android:id="@+id/cor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="@dimen/margin_or_padding"
+    android:layout_marginTop="@dimen/margin_or_padding"
+    android:layout_marginRight="@dimen/margin_or_padding"
+    android:layout_marginBottom="@dimen/margin_or_padding"
+    android:layout_weight="1"
     app:cardBackgroundColor="?attr/colorSurfaceContainer"
-    app:cardCornerRadius="@dimen/corner_radius"
-    app:cardUseCompatPadding="false"
-    app:icon="@drawable/download">
+    app:cardPreventCornerOverlap="false"
+    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shim"
@@ -39,6 +40,7 @@
             android:layout_height="36dp"
             android:layout_weight="0"
             android:padding="6dp"
+            android:tint="?attr/colorOnSurface"
             app:srcCompat="@drawable/download" />
 
         <TextView
@@ -51,4 +53,4 @@
             android:text="Блаблабал фАЙЛ НЕЙМ"
             android:textColor="?attr/colorOnSurface" />
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

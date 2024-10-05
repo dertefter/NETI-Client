@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dertefter.ficus.R
 import com.dertefter.ficus.fragments.dispace.di_cources.di_cource_search.DiCourceFavFragment
 import com.dertefter.neticore.data.dispace.di_cources.DiCourse
+import com.google.android.material.button.MaterialButton
 
 class DiCourseListFavAdapter(val fragment: DiCourceFavFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var chatList = mutableListOf<DiCourse>()
@@ -28,7 +29,7 @@ class DiCourseListFavAdapter(val fragment: DiCourceFavFragment) : RecyclerView.A
         val title: TextView = itemView.findViewById(R.id.title)
         val person: TextView = itemView.findViewById(R.id.person)
         val courceId = itemView.findViewById<TextView>(R.id.course_id)
-        val fav: ImageView = itemView.findViewById(R.id.fav)
+        val fav: MaterialButton = itemView.findViewById(R.id.favButton)
 
     }
 
@@ -45,12 +46,12 @@ class DiCourseListFavAdapter(val fragment: DiCourceFavFragment) : RecyclerView.A
         holderCourse.courceId.text = currentItem.id.toString()
         val isFav = currentItem.infav == 1
         if (isFav){
-            holderCourse.fav.setImageResource(R.drawable.fav_fill)
+            holderCourse.fav.setIconResource(R.drawable.favorite_filled)
             holderCourse.fav.setOnClickListener {
                 fragment.removeFav(currentItem)
             }
         }else{
-            holderCourse.fav.setImageResource(R.drawable.fav)
+            holderCourse.fav.setIconResource(R.drawable.favorite)
             holderCourse.fav.setOnClickListener {
                 fragment.addFav(currentItem)
             }

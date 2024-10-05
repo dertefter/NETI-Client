@@ -31,11 +31,12 @@ class DiSpaceMessages : Fragment(R.layout.fragment_di_space_messages) {
 
         binding.appBarLayout.setStatusBarForegroundColor(MaterialColors.getColor(binding.appBarLayout, com.google.android.material.R.attr.colorSurface))
 
+        netiCore?.diSpaceClient?.diMessagesViewModel?.updateSenderList()
+    }
 
-
-        if ( netiCore?.diSpaceClient?.diMessagesViewModel?.chatListLiveData?.value?.data.isNullOrEmpty()){
-            netiCore?.diSpaceClient?.diMessagesViewModel?.updateSenderList()
-        }
+    override fun onResume() {
+        super.onResume()
+        netiCore?.diSpaceClient?.diMessagesViewModel?.updateSenderList()
     }
 
     fun setupRecyclerView(){

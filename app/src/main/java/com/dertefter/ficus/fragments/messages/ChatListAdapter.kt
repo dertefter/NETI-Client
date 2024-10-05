@@ -1,13 +1,17 @@
 package com.dertefter.ficus.fragments.messages
 
 import android.animation.ObjectAnimator
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.dertefter.ficus.MainActivity
 import com.dertefter.ficus.R
+import com.dertefter.neticore.data.Person
 import com.dertefter.neticore.data.messages.SenderPerson
 import com.google.android.material.imageview.ShapeableImageView
 import com.squareup.picasso.Picasso
@@ -28,11 +32,12 @@ class ChatListAdapter(val fragment: MessagesTabFragment) : RecyclerView.Adapter<
 
     class ChatItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.name)
-        val date: TextView = itemView.findViewById(R.id.date)
+        val mail: TextView = itemView.findViewById(R.id.mail)
         val last_message_theme: TextView = itemView.findViewById(R.id.last_message_theme)
         val last_message_text: TextView = itemView.findViewById(R.id.last_message_text)
         val avatar: ShapeableImageView = itemView.findViewById(R.id.person_avatar_placeholder)
         val isNew: View = itemView.findViewById(R.id.isNew)
+        val liveData: MutableLiveData<Person?> = MutableLiveData()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -44,15 +49,8 @@ class ChatListAdapter(val fragment: MessagesTabFragment) : RecyclerView.Adapter<
         val chatItem = chatList[position]
         val chatItemViewHolder = holder as ChatItemViewHolder
         chatItemViewHolder.name.text = chatItem.name
-        chatItemViewHolder.date.text = chatItem.last_message_date
         chatItemViewHolder.last_message_theme.text = chatItem.last_message_theme
         chatItemViewHolder.last_message_text.text = chatItem.last_message_text
-        if (!chatItem.pic.isNullOrEmpty()){
-            Picasso.get().load(chatItem.pic).resize(200,200).centerCrop().into(holder.avatar)
-            holder.avatar.visibility = View.VISIBLE
-        }else{
-            holder.avatar.visibility = View.GONE
-        }
         val isNew = chatItem.messages.any { it.isNew }
         if (isNew){
             chatItemViewHolder.isNew.visibility = View.VISIBLE
@@ -63,11 +61,31 @@ class ChatListAdapter(val fragment: MessagesTabFragment) : RecyclerView.Adapter<
         holder.itemView.setOnClickListener {
             fragment.openChat(holder.itemView, chatItem)
         }
+        (fragment.activity as MainActivity).netiCore!!.personHelper!!.retrivePersonByName(chatItem.name, chatItemViewHolder.liveData)
+        holder.liveData.observeForever {
+            if (it != null){
+                if (!it.pic.isNullOrEmpty()){
+                    Picasso.get().load(it.pic).resize(200,200).centerCrop().into(chatItemViewHolder.avatar)
+                    ObjectAnimator.ofFloat(chatItemViewHolder.avatar, "alpha", 0f, 1f).setDuration(100).start()
+                }
+                chatItemViewHolder.mail.text = it.mail
+                ObjectAnimator.ofFloat(chatItemViewHolder.mail, "alpha", 0f, 1f).setDuration(100).start()
+
+            }
+        }
     }
 
 
     override fun getItemCount(): Int {
         return chatList.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
 }

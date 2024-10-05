@@ -3,35 +3,29 @@ package com.dertefter.ficus
 import android.animation.ObjectAnimator
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.PersistableBundle
 import android.util.Log
-import android.util.TimeUtils
 import android.view.View
-import android.view.ViewTreeObserver
-import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
+import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnStart
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.get
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.Fragment
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.transition.TransitionManager
 import com.dertefter.ficus.databinding.ActivityMainBinding
 import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.AuthorizationState
 import com.dertefter.neticore.data.Status
 import com.dertefter.neticore.local.AppPreferences
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.DataItem
 import com.google.android.gms.wearable.PutDataMapRequest
@@ -39,14 +33,9 @@ import com.google.android.gms.wearable.PutDataRequest
 import com.google.android.gms.wearable.Wearable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.color.DynamicColors
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigationrail.NavigationRailView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import androidx.activity.addCallback
-import androidx.core.os.BuildCompat
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dataClient: DataClient
     var netiCore: NETICore? = null
     lateinit var appPreferences: AppPreferences
-
+    var keepSplashOnScreen = true
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_FicusRebuild)
         appPreferences = AppPreferences
@@ -63,13 +52,15 @@ class MainActivity : AppCompatActivity() {
             DynamicColors.applyToActivityIfAvailable(this)
 
         }
+
         enableEdgeToEdge()
 
-        var keepSplashOnScreen = true
+
+
         val delay = 600L
 
         installSplashScreen().setKeepOnScreenCondition { keepSplashOnScreen }
-        Handler(Looper.getMainLooper()).postDelayed({ keepSplashOnScreen = false }, delay)
+        //Handler(Looper.getMainLooper()).postDelayed({ keepSplashOnScreen = false }, delay)
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -77,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         netiCore = (application as Ficus).netiCore
 
         dataClient = Wearable.getDataClient(this)
-
 
         setupNavigation()
 
@@ -88,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         netiCore?.checkAuthorization()
 
         binding.dispaceButton?.setOnClickListener {
-            changeSpace()
+            showOrHideSwapSpace()
         }
     }
 
@@ -115,174 +105,123 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setupNavigation(){
+        val navOptions = NavOptions.Builder()
+        navOptions.setEnterAnim(R.animator.nav_default_enter_anim).setExitAnim(R.animator.nav_default_exit_anim)
+            .setPopEnterAnim(R.animator.nav_default_pop_enter_anim).setPopExitAnim(R.animator.nav_default_pop_exit_anim)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        var animation: ObjectAnimator? = null
-        if (binding.nav is BottomNavigationView){ //BottomNavigationView
+        if (binding.nav is BottomNavigationView){
+            window.navigationBarColor = MaterialColors.getColor(binding.nav, com.google.android.material.R.attr.colorSurfaceContainer)
             (binding.nav as BottomNavigationView).setupWithNavController(navController)
-            animation = ObjectAnimator.ofFloat(binding.navLayout, "translationY", 0f,1000f).apply {
-                duration = 400
-                doOnStart {
-                    binding.navHostFragment.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                        bottomToBottom = binding.parent.id
-                        bottomToTop = ConstraintLayout.LayoutParams.UNSET
-                    }
+            (binding.nav as BottomNavigationView).setOnItemSelectedListener{ item ->
+                if (item.itemId != (binding.nav as BottomNavigationView).selectedItemId) {
+                    navController.popBackStack(item.itemId, inclusive = true, saveState = false)
+                    navController.navigate(item.itemId, null, navOptions.build())
                 }
-                doOnEnd {
-                    binding.navLayout.visibility = View.GONE
-                    binding.navLayout.translationY = 0f
-                }
-
+                true
             }
         }
-        if (binding.nav is NavigationRailView){ //BottomNavigationView
+        else if (binding.nav  is NavigationRailView){
+            window.navigationBarColor = MaterialColors.getColor(binding.nav, com.google.android.material.R.attr.colorSurface)
             (binding.nav as NavigationRailView).setupWithNavController(navController)
-            animation = ObjectAnimator.ofFloat(binding.navLayout, "translationX", 0f,-1000f).apply {
-                duration = 400
-                doOnStart {
-                    binding.navHostFragment.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                        startToStart = binding.parent.id
-                        startToEnd = ConstraintLayout.LayoutParams.UNSET
-                    }
+            (binding.nav as NavigationRailView).setOnItemSelectedListener{ item ->
+                if (item.itemId != (binding.nav as NavigationRailView).selectedItemId) {
+                    navController.popBackStack(item.itemId, inclusive = true, saveState = false)
+                    navController.navigate(item.itemId)
                 }
-                doOnEnd {
-                    binding.navLayout.visibility = View.GONE
-                    binding.navLayout.translationX = 0f
-                }
-
+                true
             }
         }
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            val hideNavIds = listOf(R.id.authFragment,
-                R.id.scheduleSessiaFragment,
-                R.id.searchGroupFragment,
-                R.id.searchPersonFragment,
-                R.id.readNewsFragment,
-                R.id.readMessageFragment,
-                R.id.settingsFragment,
-                R.id.personPageFragment,
-                R.id.personScheduleFragment,
-                R.id.diChatViewFragment,
-                R.id.messagesChatViewFragment,
-                R.id.filesFragment,
-                R.id.aboutFragment,
-                R.id.sessiaResultsFragment,
-                R.id.moneyFragment,
-                R.id.campusPassFragment,
-                R.id.courseViewFragment)
-            val diSpaceIds = listOf(R.id.diChatViewFragment, R.id.messagesChatViewFragment, R.id.courseViewFragment, R.id.diSpaceCources)
-            if (destination.label!!.contains("di", true)){
-                if (binding.dispaceButton.text.contains("di", true)){
-                    if (binding.nav is BottomNavigationView){
-                        binding.dispaceButton?.text = "Личный кабинет"
-                        (binding.nav as BottomNavigationView).menu.clear()
-                        (binding.nav as BottomNavigationView).inflateMenu(R.menu.bottom_nav_menu_dispace)
-                    }else if (binding.nav is NavigationRailView){
-                        binding.dispaceButton?.text = "ЛК"
-                        (binding.nav as NavigationRailView).menu.clear()
-                        (binding.nav as NavigationRailView).inflateMenu(R.menu.bottom_nav_menu_dispace)
-                    }
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            ViewCompat.setOnApplyWindowInsetsListener(binding.navLayout) { v, windowInsets ->
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+                v.updatePadding(insets.left, insets.top, 0, insets.bottom)
+
+                binding.navHostFragment.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    bottomMargin = insets.bottom
+                    rightMargin = insets.right
                 }
 
-
-
+                WindowInsetsCompat.CONSUMED
             }
-            else{
-                if (!binding.dispaceButton.text.contains("di", true)){
-                    if (binding.nav is BottomNavigationView){
-                        binding.dispaceButton?.text = "DiSpace"
-                        (binding.nav as BottomNavigationView).menu.clear()
-                        (binding.nav as BottomNavigationView).inflateMenu(R.menu.menu_bottom_nav)
-                    }else if (binding.nav is NavigationRailView){
-                        binding.dispaceButton?.text = "Di"
-                        (binding.nav as NavigationRailView).menu.clear()
-                        (binding.nav as NavigationRailView).inflateMenu(R.menu.menu_bottom_nav)
-                    }
-                }
-
-            }
-
-            if (!hideNavIds.contains(destination.id)){
-                animation?.cancel()
-                if (binding.nav is BottomNavigationView){
-                    binding.navHostFragment.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                        bottomToBottom = ConstraintLayout.LayoutParams.UNSET
-                        bottomToTop = binding.navLayout.id
-                    }
-                }else if (binding.nav is NavigationRailView){
-                    binding.navHostFragment.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                        startToStart = ConstraintLayout.LayoutParams.UNSET
-                        startToEnd = binding.navLayout.id
-                    }
-                }
-                binding.navLayout.visibility = View.VISIBLE
-
-            }else{
-                if (R.id.settingsFragment == destination.id){
-                    binding.navLayout!!.visibility = View.GONE
-                }
-                animation?.start()
-            }
-
         }
+    }
 
-
+    fun showOrHideSwapSpace(){
+        val tr = androidx.transition.Fade()
+        tr.duration = 140L
+        TransitionManager.beginDelayedTransition(binding?.changeSpaceLayout!!, tr)
+        if (binding?.changeSpaceLayout?.visibility == View.VISIBLE){
+            binding?.changeSpaceLayout?.visibility = View.GONE
+        }else{
+            binding?.changeSpaceLayout?.visibility = View.VISIBLE
+        }
+        binding.toDi!!.setOnClickListener { changeSpace("DiSpace")  }
+        binding.toLK!!.setOnClickListener { changeSpace("LK")  }
 
     }
 
-    fun changeSpace(){
-        if (binding.dispaceButton?.text == "DiSpace" ||binding.dispaceButton?.text == "Di"){
+    fun changeSpace(s: String){
+        netiCore?.client?.messagesViewModel?.updateMessagesCount()
+        if (s == "DiSpace"){
             if (binding.nav is BottomNavigationView){
-                binding.dispaceButton?.text = "Личный кабинет"
                 (binding.nav as BottomNavigationView).menu.clear()
                 (binding.nav as BottomNavigationView).inflateMenu(R.menu.bottom_nav_menu_dispace)
+                (binding.nav as BottomNavigationView).selectedItemId = (binding.nav as BottomNavigationView).menu[1].itemId
                 (binding.nav as BottomNavigationView).selectedItemId = (binding.nav as BottomNavigationView).menu[0].itemId
             }else if (binding.nav is NavigationRailView){
-                binding.dispaceButton?.text = "ЛК"
                 (binding.nav as NavigationRailView).menu.clear()
                 (binding.nav as NavigationRailView).inflateMenu(R.menu.bottom_nav_menu_dispace)
+                (binding.nav as NavigationRailView).selectedItemId = (binding.nav as NavigationRailView).menu[1].itemId
                 (binding.nav as NavigationRailView).selectedItemId = (binding.nav as NavigationRailView).menu[0].itemId
             }
 
         }
         else{
             if (binding.nav is BottomNavigationView){
-                binding.dispaceButton?.text = "DiSpace"
                 (binding.nav as BottomNavigationView).menu.clear()
                 (binding.nav as BottomNavigationView).inflateMenu(R.menu.menu_bottom_nav)
+                (binding.nav as BottomNavigationView).selectedItemId = (binding.nav as BottomNavigationView).menu[1].itemId
                 (binding.nav as BottomNavigationView).selectedItemId = (binding.nav as BottomNavigationView).menu[0].itemId
             }else if (binding.nav is NavigationRailView){
-                binding.dispaceButton?.text = "Di"
                 (binding.nav as NavigationRailView).menu.clear()
                 (binding.nav as NavigationRailView).inflateMenu(R.menu.menu_bottom_nav)
+                (binding.nav as NavigationRailView).selectedItemId = (binding.nav as NavigationRailView).menu[1].itemId
                 (binding.nav as NavigationRailView).selectedItemId = (binding.nav as NavigationRailView).menu[0].itemId
             }
 
         }
+
     }
 
     fun observeAuthState(){
         lifecycleScope.launch {
             netiCore?.client?.authorizationStateViewModel?.uiState?.collect {
+                Log.e("ddddddd", it.toString())
                 when(it){
                     AuthorizationState.AUTHORIZED -> {
+                        keepSplashOnScreen = false
                         if (netiCore?.client?.isAuthorized != true){
                             netiCore?.client?.initialize(true)
                             createNotificationSnackbar("Успешный вход в аккаунт!", "Авторизация прошла успешно", "success")
                         }
                         observeUserInfo()
                         netiCore?.getUserInfo()
+                        observeMessagesCount()
+                        netiCore?.client?.messagesViewModel?.updateMessagesCount()
                         netiCore?.diSpaceClient?.initialize()
                         netiCore?.diSpaceClient?.auth()
 
 
                     }
                     AuthorizationState.AUTHORIZED_WITH_ERROR -> {
+                        keepSplashOnScreen = false
                         netiCore?.client?.initialize()
                         createNotificationSnackbar("Ошибка авторизации!", "Проверьте логин и пароль", "error")
                         binding.dispaceButton!!.isEnabled = false
                     }
                     AuthorizationState.UNAUTHORIZED -> {
+                        keepSplashOnScreen = false
                         netiCore?.client?.initialize()
                         binding.dispaceButton!!.isEnabled = false
                     }
@@ -301,18 +240,19 @@ class MainActivity : AppCompatActivity() {
     fun observeDiAuthState(){
         lifecycleScope.launch {
             netiCore?.diSpaceClient?.authorizationStateViewModel?.uiState?.collect {
+                Log.e("dispaceeee", it.toString())
                 when(it){
                     AuthorizationState.AUTHORIZED -> {
-                        binding.dispaceButton!!.isEnabled = true
+                        binding.dispaceButton.isEnabled = true
                     }
                     AuthorizationState.AUTHORIZED_WITH_ERROR -> {
-                        binding.dispaceButton!!.isEnabled = false
+                        binding.dispaceButton.isEnabled = false
                     }
                     AuthorizationState.UNAUTHORIZED -> {
-                        binding.dispaceButton!!.isEnabled = false
+                        binding.dispaceButton.isEnabled = false
                     }
                     AuthorizationState.LOADING -> {
-                        binding.dispaceButton!!.isEnabled = false
+                        binding.dispaceButton.isEnabled = false
 
                     }
                 }
@@ -347,6 +287,44 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun observeMessagesCount(){
+        netiCore?.client?.messagesViewModel?.messagesCountLiveData?.observe(this){
+            Log.e("mescount", it.toString())
+            when (it.status){
+                Status.SUCCESS -> {
+                    if (binding.nav is BottomNavigationView){
+                        if (it.data.isNullOrEmpty() || it.data!![0].isNullOrEmpty()){
+                            (binding.nav as BottomNavigationView).removeBadge(R.id.messagesFragment)
+                        }else{
+                            try{
+                                (binding.nav as BottomNavigationView).removeBadge(R.id.messagesFragment)
+                                var badge = (binding.nav as BottomNavigationView).getOrCreateBadge(R.id.messagesFragment)
+                                badge.isVisible = true
+                                badge.text = it.data!![0]
+                            } catch (e: Exception){}
+                        }
+                    }else if (binding.nav is NavigationRailView){
+                        if (it.data.isNullOrEmpty() || it.data!![0].isNullOrEmpty()){
+                            (binding.nav as NavigationRailView).removeBadge(R.id.messagesFragment)
+                        }else{
+                            try{
+                                (binding.nav as NavigationRailView).removeBadge(R.id.messagesFragment)
+                                var badge = (binding.nav as NavigationRailView).getOrCreateBadge(R.id.messagesFragment)
+                                badge.isVisible = true
+                                badge.text = it.data!![0]
+                            } catch (e: Exception){}
+                        }
+                    }
+
+                }
+                Status.ERROR -> {
+                }
+                Status.LOADING -> {
+
+                }
+            }
+        }
+    }
     fun createNotificationSnackbar(title: String, text: String, type: String){
         binding.notificationSnackbar.visibility = View.VISIBLE
         ObjectAnimator.ofFloat(binding.notificationSnackbar, "translationY", 100f, 0f).start()

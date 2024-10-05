@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.Material3.CardView.Filled"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="?attr/colorSurface"
-    app:cardCornerRadius="@dimen/corner_radius"
-    app:cardUseCompatPadding="false">
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false"
+    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
 
     <LinearLayout
@@ -20,29 +21,31 @@
         <FrameLayout
             android:layout_width="54dp"
             android:layout_height="54dp"
-            android:layout_weight="0">
+            android:layout_weight="0"
+            android:padding="2dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/person_avatar_background"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="0"
-                android:background="?attr/colorOnSurfaceVariant"
-                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                app:srcCompat="@drawable/account_circle_filled"
-                app:strokeColor="?attr/colorSurface"
-                app:strokeWidth="10dp"
-                app:tint="?attr/colorSurfaceContainer" />
+                android:background="?attr/colorSurfaceContainer"
+                app:contentPadding="4dp"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                app:srcCompat="@drawable/person"
+                app:strokeColor="@android:color/transparent"
+                app:tint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/person_avatar_placeholder"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:visibility="visible"
-                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                app:strokeColor="?attr/colorSurface"
-                app:strokeWidth="10dp" />
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                app:strokeColor="@android:color/transparent" />
 
         </FrameLayout>
 
@@ -82,4 +85,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

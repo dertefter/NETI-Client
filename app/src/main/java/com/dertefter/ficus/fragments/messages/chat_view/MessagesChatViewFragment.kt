@@ -4,21 +4,16 @@ import android.animation.ObjectAnimator
 import android.animation.TimeInterpolator
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.ChangeBounds
-import androidx.transition.Fade
-import androidx.transition.Transition
 import androidx.transition.TransitionInflater
-import androidx.transition.TransitionSet
 import com.dertefter.ficus.Ficus
 import com.dertefter.ficus.R
 import com.dertefter.ficus.databinding.FragmentMessagesChatViewBinding
 import com.dertefter.neticore.NETICore
+import com.dertefter.neticore.data.Person
 import com.dertefter.neticore.data.messages.Message
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -59,23 +54,28 @@ class MessagesChatViewFragment : Fragment(R.layout.fragment_messages_chat_view) 
             start()
         }
 
-
         binding.personName.text = chatItem.name
-        if (!chatItem.person?.pic.isNullOrEmpty()){
-            Picasso.get().load(chatItem.person?.pic).resize(200,200).centerCrop().into(binding.personAvatarPlaceholder)
-        }
-        if (!chatItem.person?.mail.isNullOrEmpty()){
-            binding.personMail.text = chatItem.person?.mail
-        }else{
-            binding.personMail.text = ""
-        }
-        if (chatItem.person != null){
-            binding.personCard.setOnClickListener {
-                findNavController().navigate(R.id.personPageFragment, Bundle().apply {
-                    putParcelable("person", chatItem.person)
-                })
+        val liveData = MutableLiveData<Person?>()
+        liveData.observeForever {
+            if (it != null){
+                val p = it
+                if (!it.pic.isNullOrEmpty()){
+                    Picasso.get().load(it.pic).resize(200,200).centerCrop().into(binding.personAvatarPlaceholder)
+                    ObjectAnimator.ofFloat(binding.personAvatarPlaceholder, "alpha", 0f, 1f).setDuration(100).start()
+                }
+                binding.mail.text = it.mail
+                ObjectAnimator.ofFloat(binding.mail, "alpha", 0f, 1f).setDuration(100).start()
+                binding.personCard.setOnClickListener {
+                    findNavController().navigate(R.id.personPageFragment, Bundle().apply {
+                        putString("personName", null)
+                        putString("personLink", p.site)
+                    })
+                }
             }
         }
+
+        netiCore!!.personHelper!!.retrivePersonByName(chatItem.name, liveData)
+
         val messages = chatItem.messages
         setupRecyclerView(messages)
         setupAppBar()
@@ -96,11 +96,6 @@ class MessagesChatViewFragment : Fragment(R.layout.fragment_messages_chat_view) 
         val divider = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL /*or LinearLayoutManager.HORIZONTAL*/)
         binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.adapter = adapter
-        val insetTypes =
-            WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
-        val insets = ViewCompat.getRootWindowInsets(activity?.window!!.decorView)
-        val bottom = insets?.getInsets(insetTypes)?.bottom
-        binding.recyclerView.updatePadding(bottom = bottom!!)
     }
 
     fun openMessage(currentItem: Message) {

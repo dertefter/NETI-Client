@@ -41,10 +41,12 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
         binding.appBarLayout.setStatusBarForegroundColor(
             MaterialColors.getColor(binding.appBarLayout, com.google.android.material.R.attr.colorSurface))
         observeAuthState()
+    }
 
-
-
-
+    override fun onResume() {
+        super.onResume()
+        netiCore?.client?.messagesViewModel?.updateMessagesCount()
+        Log.e("fragment_messages", "onResume")
     }
 
     fun setupViewPager(tabList: List<String>?) {

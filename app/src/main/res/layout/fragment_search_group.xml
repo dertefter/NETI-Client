@@ -23,9 +23,9 @@
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/arrow_back" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/search_bar"
-            style="@style/Widget.Material3.CardView.Filled"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -34,7 +34,9 @@
             android:layout_marginBottom="8dp"
             android:backgroundTintMode="screen"
             app:cardBackgroundColor="?attr/colorSurfaceContainer"
-            app:cardCornerRadius="48dp">
+            app:cardPreventCornerOverlap="false"
+            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -67,7 +69,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </com.google.android.material.appbar.AppBarLayout>
 

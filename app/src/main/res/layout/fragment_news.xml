@@ -15,7 +15,9 @@
         android:layout_margin="16dp"
         android:text="Наверх"
         app:backgroundTint="?attr/colorPrimaryContainer"
-        app:icon="@drawable/arrow_upward" />
+        app:icon="@drawable/arrow_upward"
+        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/newsTopAppBarLayout"
@@ -51,6 +53,7 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <com.dertefter.ficus.OnlyVerticalSwipeRefreshLayout
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
@@ -67,7 +70,6 @@
             android:paddingEnd="@dimen/margin_or_padding"
             android:visibility="visible" />
     </com.dertefter.ficus.OnlyVerticalSwipeRefreshLayout>
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

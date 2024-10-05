@@ -62,7 +62,12 @@ class SessiaRecyclerViewAdapter(val fragment: SessiaItemFragment): RecyclerView.
         val progress: Int = if (item?.value?.contains("Н") == true){
             0
         }else{
-            item?.value?.toInt() ?: 0
+            try{
+                item?.value?.toInt() ?: 0
+            } catch (e: Exception){
+                0
+            }
+
         }
         var colorStart: Int = Color.parseColor("#9c2a21")
         var colorEnd: Int = Color.parseColor("#269143")

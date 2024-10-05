@@ -3,6 +3,7 @@ package com.dertefter.ficus.wearable.schedule.schedule_week
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -87,35 +88,29 @@ class ScheduleWeekFragment : Fragment(R.layout.fragment_schedule_week) {
     }
 
     fun observeSchedule(){
-        netiCore?.client?.scheduleViewModel?.scheduleListLiveData?.observe(viewLifecycleOwner){
+        if (weekQuery.isNullOrEmpty()){
+            return
+        }
+        val livedata = netiCore?.client?.scheduleViewModel?.getLiveDataForWeek(weekQuery!!)
+        livedata?.observe(viewLifecycleOwner){
             when (it.status){
                 Status.LOADING -> {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
-                    binding.errorView.visibility = View.VISIBLE
+                    binding.errorView.visibility = View.GONE
                 }
                 Status.SUCCESS -> {
                     try{
+                        binding.progressBar.visibility = View.GONE
+                        binding.recyclerView.visibility = View.VISIBLE
                         binding.errorView.visibility = View.GONE
-                        if (it.data?.get((weekQuery?.toInt() ?: 0) - 1)?.days.isNullOrEmpty()){
-                            binding.errorView.visibility = View.GONE
-                            binding.progressBar.visibility = View.VISIBLE
-                            binding.recyclerView.visibility = View.GONE
-                            if (it.data?.get((weekQuery?.toInt() ?: 0) - 1)?.isError == true){
-                                binding.progressBar.visibility = View.GONE
-                                binding.recyclerView.visibility = View.GONE
-                                binding.errorView.visibility = View.VISIBLE
-                            }
-                        }else{
-                            binding.progressBar.visibility = View.GONE
-                            binding.recyclerView.visibility = View.VISIBLE
-                            adapter?.setDayList(it.data?.get((weekQuery?.toInt() ?: 0) - 1)?.days)
-                        }
+                        adapter?.setDayList(it.data?.days)
 
                     }catch (e: Exception){
                         binding.progressBar.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
                         binding.errorView.visibility = View.VISIBLE
+                        Log.e("observeSchedule", e.stackTraceToString())
                     }
 
 

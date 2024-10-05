@@ -7,6 +7,7 @@ import com.dertefter.neticore.NETICoreClient.PersonHelper
 import com.dertefter.neticore.NETICoreClient.dispace.DiSpaceClient
 import com.dertefter.neticore.data.Event
 import com.dertefter.neticore.data.NETICoreMetaData
+import com.dertefter.neticore.data.Status
 import com.dertefter.neticore.data.schedule.Group
 import com.dertefter.neticore.data.schedule.Week
 import com.dertefter.neticore.local.AppPreferences
@@ -106,6 +107,8 @@ class NETICore {
         appPreferences?.password = null
         appPreferences?.token = null
         appPreferences?.group = null
+        client?.userInfoViewModel?.userInfoLiveData?.postValue(Event.success(null))
+        client?.userInfoViewModel?.userPhotoLiveData?.postValue(Event.success(null))
         client?.authorizationStateViewModel?.setUnauthorized()
     }
 

@@ -17,6 +17,7 @@
             style="@style/Widget.Material3.CollapsingToolbar.Large"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            app:collapsedTitleTextAppearance="@style/MyCollapsedTitle"
             app:expandedTitleMargin="32dp"
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleMarginEnd="16dp"
@@ -31,7 +32,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:title="Сообщения" />
+                app:title="Сообщения"
+                app:titleTextAppearance="@style/MyExpandedTitle" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
@@ -60,9 +62,9 @@
 
     </com.dertefter.ficus.OnlyVerticalSwipeRefreshLayout>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/auth_card"
-        style="@style/Widget.Material3.CardView.Filled"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -111,18 +113,18 @@
                 android:text="Авторизация" />
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/auth_error_card"
-        style="@style/Widget.Material3.CardView.Filled"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="14dp"
         android:visibility="visible"
         app:cardBackgroundColor="?attr/colorSurfaceContainer"
-        app:cardCornerRadius="@dimen/corner_radius"
+        app:cardPreventCornerOverlap="false"
         app:contentPadding="14dp">
 
         <LinearLayout
@@ -164,7 +166,9 @@
                     android:layout_weight="1"
                     android:backgroundTint="?attr/colorOnError"
                     android:text="Выйти из акканута"
-                    android:textColor="?attr/colorError" />
+                    android:textColor="?attr/colorError"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
 
                 <Button
                     android:id="@+id/buttonTryAgain"
@@ -174,10 +178,12 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:text="Попробовать ещё раз" />
+                    android:text="Попробовать ещё раз"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

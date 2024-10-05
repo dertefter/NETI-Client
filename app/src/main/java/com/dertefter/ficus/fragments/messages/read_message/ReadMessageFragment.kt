@@ -47,6 +47,7 @@ class ReadMessageFragment : Fragment(R.layout.fragment_read_message) {
 
         netiCore?.client?.messagesViewModel?.readMessage(mesId = arguments?.getString("mesId")!!)
 
+
     }
 
 
@@ -104,6 +105,7 @@ class ReadMessageFragment : Fragment(R.layout.fragment_read_message) {
         netiCore?.client?.messagesViewModel?.readMessagesLiveData?.observe(viewLifecycleOwner) {
             when (it.status){
                 Status.SUCCESS -> {
+                    netiCore?.client?.messagesViewModel?.updateMessagesCount()
                     binding.progressBar.visibility = View.INVISIBLE
                     binding.contentView.visibility = View.VISIBLE
                     binding.errorView.visibility = View.GONE

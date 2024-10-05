@@ -26,7 +26,7 @@ object AppPreferences {
         get() = Key.MES_AV.getBoolean()
         set(value) = Key.MES_AV.setBoolean(value)
 
-    var compact_schedule: Boolean?
+    var vertical_schedule: Boolean?
         get() = Key.COMPACT_SCHEDULE.getBoolean()
         set(value) = Key.COMPACT_SCHEDULE.setBoolean(value)
 

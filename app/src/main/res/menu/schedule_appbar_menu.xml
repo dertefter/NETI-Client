@@ -2,6 +2,11 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/edit"
+        android:icon="@drawable/edit"
+        android:title="Расписание сессии"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/set_group"
         android:title="Поиск группы"
         app:showAsAction="never" />

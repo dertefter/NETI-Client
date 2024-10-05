@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.Material3.CardView.Filled"
+
     android:layout_width="360dp"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="?attr/colorSurfaceContainer"
-    app:cardCornerRadius="@dimen/corner_radius">
+    app:cardPreventCornerOverlap="false"
+    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.LargeComponent"
+    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
     <LinearLayout
         android:layout_width="360dp"
@@ -21,13 +23,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            style="@style/Widget.Material3.CardView.Filled"
+        <com.google.android.material.card.MaterialCardView
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardBackgroundColor="?attr/colorSurface"
-            app:cardCornerRadius="@dimen/corner_radius"
-            app:contentPadding="4dp">
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
+            app:cardElevation="4dp"
+            app:cardPreventCornerOverlap="false"
+            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
             <LinearLayout
                 android:id="@+id/profile_view"
@@ -39,34 +42,34 @@
                 android:visibility="visible">
 
                 <FrameLayout
-                    android:layout_width="66dp"
-                    android:layout_height="66dp"
+                    android:layout_width="58dp"
+                    android:layout_height="64dp"
                     android:layout_weight="0">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/person_avatar_background"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:background="?attr/colorOnSurfaceVariant"
-                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                        app:srcCompat="@drawable/account_circle_filled"
-                        app:strokeColor="?attr/colorSurface"
-                        app:strokeWidth="11dp"
-                        app:tint="?attr/colorSurfaceContainer" />
+                        android:background="?attr/colorSurfaceContainerHigh"
+                        app:contentPadding="8dp"
+                        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                        app:srcCompat="@drawable/person"
+                        app:strokeWidth="0dp"
+                        app:tint="?attr/colorOnSurfaceVariant" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/person_avatar_placeholder"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:background="#FFFFFF"
-                        android:scaleType="centerInside"
-                        android:visibility="gone"
-                        app:contentPaddingTop="6dp"
-                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                        android:scaleType="centerCrop"
+                        android:visibility="visible"
+                        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
                         app:strokeColor="?attr/colorSurface"
-                        app:strokeWidth="11dp" />
+                        app:strokeWidth="0dp" />
 
                 </FrameLayout>
 
@@ -75,7 +78,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="4dp">
 
                     <TextView
                         android:id="@+id/name"
@@ -98,7 +102,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer"
@@ -108,18 +112,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
                 android:divider="@drawable/divider_horizontal"
                 android:orientation="horizontal"
                 android:showDividers="middle">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
                     android:layout_weight="0"
-                    android:padding="4dp"
-                    app:srcCompat="@drawable/rounded_background"
-                    app:tint="?attr/colorOnSurface" />
+                    android:background="?attr/colorOnSurfaceVariant"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                    app:strokeWidth="11dp"
+                    app:tint="?attr/colorSurfaceContainer" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,14 +166,14 @@
                 android:orientation="vertical"
                 android:showDividers="middle|end">
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/auth_card"
-                    style="@style/Widget.Material3.CardView.Filled"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:cardBackgroundColor="?attr/colorSurface"
-                    app:cardCornerRadius="20dp"
+                    app:cardPreventCornerOverlap="false"
                     app:contentPadding="12dp">
 
                     <LinearLayout
@@ -197,10 +203,11 @@
                             android:id="@+id/button_login"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Авторизация" />
+                            android:text="Авторизация"
+                            app:cornerRadius="8dp" />
 
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -266,4 +273,4 @@
         </ScrollView>
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

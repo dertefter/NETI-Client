@@ -46,48 +46,6 @@ class ScheduleWidget : AppWidgetProvider() {
         Log.e("wwwwwwwwwwwwwwwwwwww", weeks.toString())
         val currentDayIndex = appPreferences.currentDay ?: 0
         val group = appPreferences.group
-        if (group.isNullOrEmpty()){
-            views.setViewVisibility(R.id.no_group, View.VISIBLE)
-            views.setViewVisibility(R.id.timetable, View.GONE)
-            views.setViewVisibility(R.id.week_text_view, View.GONE)
-        }else{
-            views.setViewVisibility(R.id.no_group, View.GONE)
-            views.setViewVisibility(R.id.timetable, View.VISIBLE)
-            views.setViewVisibility(R.id.week_text_view, View.VISIBLE)
-            val currentWeek = weeks.find { it.isCurrent }
-            if (currentWeek != null){
-                if (group == "individual"){
-                    val bodyString = tinyDB.getString("individual_schedule")
-                    val schedule = ResponseParser().parseIndividualTimetable(bodyString, currentWeek.weekQuery)
-                    val dayList = schedule?.days
-                    if ((dayList?.get(currentDayIndex) ?: -1) != -1){
-                        views.setTextViewText(R.id.week_text_view, currentWeek.weekTitle)
-                        views.setTextViewText(R.id.group, currentWeek.groupTitle)
-                        appWidgetManager?.notifyAppWidgetViewDataChanged(appWidgetManager
-                            .getAppWidgetIds(ComponentName(context?.applicationContext?.packageName!!, ScheduleWidget::class.java.name)),
-                            R.id.list_view
-                        )
-                    }
-                }else{
-                    val bodyString = tinyDB.getString("${currentWeek.groupTitle}_${currentWeek.weekQuery}")
-                    val schedule = ResponseParser().parseIndividualTimetable(bodyString, currentWeek.weekQuery)
-                    val dayList = schedule?.days
-                    if (!dayList.isNullOrEmpty() && dayList.get(currentDayIndex) != null){
-                        views.setTextViewText(R.id.week_text_view, currentWeek.weekTitle)
-                        views.setTextViewText(R.id.group, currentWeek.groupTitle)
-                        appWidgetManager?.notifyAppWidgetViewDataChanged(appWidgetManager
-                            .getAppWidgetIds(ComponentName(context?.applicationContext?.packageName!!, ScheduleWidget::class.java.name)),
-                            R.id.list_view
-                        )
-                    }
-                }
-
-            }
-        }
-
-
-
-
         val intent = Intent(context, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(context, 0, intent,
             PendingIntent.FLAG_IMMUTABLE)

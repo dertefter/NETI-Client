@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/scrollUpFab"
@@ -12,9 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:rotation="90"
         app:backgroundTint="?attr/colorSecondaryContainer"
-        app:srcCompat="@drawable/arrow_back"
+        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+        app:srcCompat="@drawable/arrow_upward"
         app:tint="?attr/colorOnSecondaryContainer" />
 
     <com.google.android.material.appbar.AppBarLayout

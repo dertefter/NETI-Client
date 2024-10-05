@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="600"
-    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
-    android:propertyName="fillAlpha"
-    android:repeatCount="0"
-    android:valueFrom="0"
-    android:valueTo="1" />
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator
+        android:duration="600"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:propertyName="fillAlpha"
+        android:repeatCount="0"
+        android:valueFrom="0.5"
+        android:valueTo="1" />
+
+</set>

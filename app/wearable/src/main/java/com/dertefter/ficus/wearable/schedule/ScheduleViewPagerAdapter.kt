@@ -32,10 +32,6 @@ class ScheduleViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Life
         val fragment = ScheduleWeekFragment()
         val bundle = Bundle()
         bundle.putString("weekQuery", week?.weekQuery)
-        bundle.putString("weekTitle", week?.weekTitle)
-        bundle.putBoolean("isCurrent", week?.isCurrent!!)
-        bundle.putString("groupTitle", week?.groupTitle)
-        bundle.putBoolean("isIndividual", week?.isIndividual!!)
         fragment.arguments = bundle
         return fragment
     }

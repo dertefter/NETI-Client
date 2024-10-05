@@ -19,25 +19,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
-    <androidx.cardview.widget.CardView
+    <FrameLayout
         android:id="@+id/notification_snackbar"
-        style="@style/Widget.Material3.CardView.Filled"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurfaceContainer"
         android:elevation="0dp"
         android:fitsSystemWindows="false"
         android:visibility="gone"
-        app:cardBackgroundColor="?attr/colorSurfaceContainer"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="0dp"
-        app:cardMaxElevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/nav_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="horizontal"
             android:padding="8dp">
@@ -83,55 +79,98 @@
                     android:id="@+id/notification_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="test@email.ru"
                     android:textColor="?attr/colorOnSurface" />
             </LinearLayout>
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
     <LinearLayout
+        android:animateLayoutChanges="true"
         android:id="@+id/nav_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorSurfaceContainer"
         android:elevation="0dp"
-        android:orientation="horizontal"
+        android:fitsSystemWindows="false"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/nav"
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/changeSpaceLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:gravity="center_horizontal"
+            android:padding="8dp"
+            android:visibility="gone"
+            app:checkedButton="@id/toLK"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <Button
+                android:id="@+id/toLK"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Личный кабинет" />
+
+            <Button
+                android:id="@+id/toDi"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DiSpace" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTintMode="screen"
-            app:elevation="0dp"
-            app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/menu_bottom_nav">
+            android:orientation="horizontal">
 
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:backgroundTintMode="screen"
+                android:fitsSystemWindows="false"
+                app:elevation="0dp"
+                app:itemActiveIndicatorStyle="@style/Widget.BottomNavigationView.MyActiveIndicator"
+                app:labelVisibilityMode="unlabeled"
+                app:menu="@menu/menu_bottom_nav"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
-        <Button
-            android:id="@+id/dispaceButton"
-            style="@style/Widget.Material3.Button.ElevatedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="top"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="14dp"
-            android:layout_weight="0"
-            android:backgroundTint="?attr/colorPrimary"
-            android:clickable="true"
-            android:elegantTextHeight="true"
-            android:elevation="8dp"
-            android:enabled="true"
-            android:text="DiSpace"
-            android:textColor="?attr/colorOnPrimary"
-            app:cornerRadius="14dp" />
+            </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+            <Button
+                android:id="@+id/dispaceButton"
+                style="?attr/materialIconButtonFilledStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="14dp"
+                android:layout_weight="0"
+                android:clickable="true"
+                android:enabled="true"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                app:icon="@drawable/swap_lk"
+                app:iconSize="32dp"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

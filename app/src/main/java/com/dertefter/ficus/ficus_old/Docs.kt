@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import com.dertefter.ficus.R
 import com.dertefter.neticore.api.APIService
+import com.dertefter.neticore.data.Event
 import com.dertefter.neticore.local.AppPreferences
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.color.DynamicColors
@@ -34,6 +35,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.json.JSONException
 import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.w3c.dom.Text
@@ -188,44 +190,57 @@ class Docs : AppCompatActivity() {
             .build()
         val service = retrofit.create(APIService::class.java)
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.basePage()
-            if (response.isSuccessful) {
-                withContext(Dispatchers.Main){
-                    documents?.removeAllViews()
-                }
-                val pretty = response.body()?.string().toString()
-                var doc = Jsoup.parse(pretty)
-                val table = doc.body().select("table#tutor-messages").first()!!.select("tbody").first()
-                val rows = table!!.select("tr")
-                for (row in rows){
-                    val date = row.select("td#cell-date").first()!!.ownText()
-                    val status = row.select("td#cell-1-mess").first()!!.ownText()
-                    val type = row.select("td#cell-1").first()!!.text().toString()
-                    val id = row.select("td#cell-1").first()!!.select("a").first()!!.attr("href").toString().split("=")[1]
+            try{
+                val response = service.basePage()
+                if (response.isSuccessful) {
                     withContext(Dispatchers.Main){
-                        val item = layoutInflater.inflate(R.layout.item_doc, null)
-                        item.findViewById<TextView>(R.id.date).text = date
-                        item.findViewById<TextView>(R.id.status).text = status
-                        item.findViewById<TextView>(R.id.type).text = type
-                        val button = item.findViewById<Button>(R.id.remove)
-                        button.setOnClickListener {
-                            removeDoc(id)
+                        documents?.removeAllViews()
+                    }
+                    val pretty = response.body()?.string().toString()
+                    var doc = Jsoup.parse(pretty)
+                    val table = doc.body().select("table#tutor-messages").first()!!.select("tbody").first()
+                    val rows = table!!.select("tr")
+                    for (row in rows){
+                        val date = row.select("td#cell-date").first()!!.ownText()
+                        val status = row.select("td#cell-1-mess").first()!!.ownText()
+                        val type = row.select("td#cell-1").first()!!.text().toString()
+                        val id = row.select("td#cell-1").first()!!.select("a").first()!!.attr("href").toString().split("=")[1]
+                        withContext(Dispatchers.Main){
+                            val item = layoutInflater.inflate(R.layout.item_doc, null)
+                            item.findViewById<TextView>(R.id.date).text = date
+                            item.findViewById<TextView>(R.id.status).text = status
+                            item.findViewById<TextView>(R.id.type).text = type
+                            val button = item.findViewById<Button>(R.id.remove)
+                            button.setOnClickListener {
+                                removeDoc(id)
+
+                            }
+                            checkRemovable(button, id)
+                            if (status.contains("Готово") != true){
+                                item.findViewById<ImageView>(R.id.status_icon).setImageResource(R.drawable.ic_schedule)
+                            }
+                            documents?.addView(item)
+                            ObjectAnimator.ofFloat(item, "alpha", 0f, 1f).apply {
+                                duration = 300
+                                start()
+                            }
 
                         }
-                        checkRemovable(button, id)
-                        if (status.contains("Готово") != true){
-                            item.findViewById<ImageView>(R.id.status_icon).setImageResource(R.drawable.ic_schedule)
-                        }
-                        documents?.addView(item)
-                        ObjectAnimator.ofFloat(item, "alpha", 0f, 1f).apply {
-                            duration = 300
-                            start()
-                        }
-
                     }
                 }
+            }catch (e: Exception) {
+
+            } catch (e: Error) {
+
+            } catch (e: Throwable) {
+
+            } catch (e: JSONException) {
+
             }
+
         }
+
+
 
     }
 
@@ -375,47 +390,58 @@ class Docs : AppCompatActivity() {
             .build()
         val service = retrofit.create(APIService::class.java)
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.basePage()
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    spinner?.visibility = View.GONE
-                    val pretty = response.body()?.string().toString()
-                    var doc = Jsoup.parse(pretty)
-                    val types = doc.body().select("select.types").first()
-                    val options = types!!.select("option")
-                    val optionNames = mutableListOf<String>()
-                    val optionValues = mutableListOf<String>()
-                    for (option in options){
-                        optionNames += option.text()
-                        optionValues += option.attr("value")
-                    }
-                    docSelection?.setSimpleItems(optionNames.toTypedArray())
-                    docSelection?.setOnItemClickListener { parent, view, position, id ->
-                        selectedValue = optionValues[position].toString()
-                        if (additionInfoLayout?.visibility == View.GONE){
-                            additionInfoLayout?.visibility = View.VISIBLE
-                            ObjectAnimator.ofFloat(additionInfoLayout, "alpha", 1f).apply {
-                                duration = 300
-                                start()
-                            }
+            try{
+                val response = service.basePage()
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        spinner?.visibility = View.GONE
+                        val pretty = response.body()?.string().toString()
+                        var doc = Jsoup.parse(pretty)
+                        val types = doc.body().select("select.types").first()
+                        val options = types!!.select("option")
+                        val optionNames = mutableListOf<String>()
+                        val optionValues = mutableListOf<String>()
+                        for (option in options){
+                            optionNames += option.text()
+                            optionValues += option.attr("value")
                         }
-                        chaim?.setOnClickListener {
-                            if (selectedValue != ""){
-                                Log.e("selected", selectedValue.toString())
-                                sendClaim(selectedValue, additionalInfo?.text.toString())
-                            }else{
-                                Toast.makeText(this@Docs, "Выберите тип документа", Toast.LENGTH_SHORT).show()
+                        docSelection?.setSimpleItems(optionNames.toTypedArray())
+                        docSelection?.setOnItemClickListener { parent, view, position, id ->
+                            selectedValue = optionValues[position].toString()
+                            if (additionInfoLayout?.visibility == View.GONE){
+                                additionInfoLayout?.visibility = View.VISIBLE
+                                ObjectAnimator.ofFloat(additionInfoLayout, "alpha", 1f).apply {
+                                    duration = 300
+                                    start()
+                                }
                             }
+                            chaim?.setOnClickListener {
+                                if (selectedValue != ""){
+                                    Log.e("selected", selectedValue.toString())
+                                    sendClaim(selectedValue, additionalInfo?.text.toString())
+                                }else{
+                                    Toast.makeText(this@Docs, "Выберите тип документа", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            getAdditionalInfo(selectedValue)
                         }
-                        getAdditionalInfo(selectedValue)
+                        updateDocs()
+                    } else {
+
+                        Log.e("RETROFIT_ERROR", response.code().toString())
+
                     }
-                    updateDocs()
-                } else {
-
-                    Log.e("RETROFIT_ERROR", response.code().toString())
-
                 }
+            }catch (e: Exception) {
+
+            } catch (e: Error) {
+
+            } catch (e: Throwable) {
+
+            } catch (e: JSONException) {
+
             }
+
         }
     }
 

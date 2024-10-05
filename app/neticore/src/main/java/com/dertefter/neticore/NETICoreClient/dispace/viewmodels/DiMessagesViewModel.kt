@@ -14,6 +14,7 @@ import com.dertefter.neticore.local.AppPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import org.json.JSONException
 import retrofit2.Retrofit
@@ -63,6 +64,28 @@ class DiMessagesViewModel(
             } catch (e: JSONException) {
                 Log.e("DiMes Err", e.stackTraceToString())
                 chatListLiveData.postValue(Event.error())
+            }
+        }
+    }
+
+    fun sendmes(mes: String, chatid: String) {
+        var retrofit = Retrofit.Builder()
+            .baseUrl("https://dispace.edu.nstu.ru/diclass/privmsg/proceed/")
+            .client(okHttpClient)
+            .build()
+        val service = retrofit.create(APIService::class.java)
+        val params = HashMap<String?, String?>()
+        params["action"] = "send_msgs"
+        params["rec_students"] = chatid
+        params["message"] = "<p>$mes</p>"
+        params["text_signature"] = ""
+        params["add_signature"] = "false"
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getDispaceMessages(params)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main){
+                    updateMessageList(1, chatid)
+                }
             }
         }
     }

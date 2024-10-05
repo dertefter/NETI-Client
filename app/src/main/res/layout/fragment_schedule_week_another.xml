@@ -4,12 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
-
     <com.dertefter.ficus.NestedScrollableHost
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,27 +21,37 @@
             android:overScrollMode="always" />
     </com.dertefter.ficus.NestedScrollableHost>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cor"
+        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_or_padding"
         android:layout_marginTop="@dimen/margin_or_padding"
         android:layout_marginRight="@dimen/margin_or_padding"
         android:layout_marginBottom="@dimen/margin_or_padding"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/rounded_background"
-        android:backgroundTint="?attr/colorSurfaceContainer"
-        android:elevation="0dp"
-        android:paddingVertical="2dp"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="?attr/colorPrimary"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="?attr/colorPrimary"
-        app:tabTextColor="?attr/colorOnSurface">
+        android:layout_weight="1"
+        app:cardPreventCornerOverlap="false">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="?attr/colorSurfaceContainer"
+            android:elevation="0dp"
+            android:paddingVertical="2dp"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="?attr/colorPrimary"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="?attr/colorPrimary"
+            app:tabTextColor="?attr/colorOnSurface">
 
 
-    </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.tabs.TabLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 
 
     <com.facebook.shimmer.ShimmerFrameLayout

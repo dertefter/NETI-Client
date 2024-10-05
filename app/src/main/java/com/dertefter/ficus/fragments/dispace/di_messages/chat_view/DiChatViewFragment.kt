@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,10 +18,6 @@ import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.Status
 import com.dertefter.neticore.data.dispace.di_messages.DiSenderPerson
 import com.squareup.picasso.Picasso
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent.registerEventListener
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent.setEventListener
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
-import net.yslibrary.android.keyboardvisibilityevent.Unregistrar
 
 
 class DiChatViewFragment : Fragment(R.layout.fragment_di_chat_view) {
@@ -41,7 +34,6 @@ class DiChatViewFragment : Fragment(R.layout.fragment_di_chat_view) {
 
     var remain = 0
 
-    lateinit var unregistrar: Unregistrar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,53 +64,30 @@ class DiChatViewFragment : Fragment(R.layout.fragment_di_chat_view) {
         binding.backButton.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-        val insetTypes =
-            WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
-        val insets = ViewCompat.getRootWindowInsets(activity?.window!!.decorView)
-        val bottom = insets?.getInsets(insetTypes)?.bottom
-        binding.bottomBar.updatePadding(bottom = bottom!!)
 
         binding.textField.doOnTextChanged { text, start, before, count ->
             binding.sendButton.isEnabled = text?.length!! > 0
         }
+        binding.sendButton.setOnClickListener {
+            sendMessage()
+            binding.textField.setText("")
+        }
 
 
-        unregistrar = registerEventListener(
-            requireActivity(),
-            KeyboardVisibilityEventListener {
-                if (it){
-                    val insetTypes =
-                        WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.ime()
-                    val insets = ViewCompat.getRootWindowInsets(activity?.window!!.decorView)
-                    val bottom = insets?.getInsets(insetTypes)?.bottom
-                    binding.bottomBar.updatePadding(bottom = bottom!!)
-                }
-                else{
-                    val insetTypes =
-                        WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
-                    val insets = ViewCompat.getRootWindowInsets(activity?.window!!.decorView)
-                    val bottom = insets?.getInsets(insetTypes)?.bottom
-                    binding.bottomBar.updatePadding(bottom = bottom!!)
-                }
-            })
 
 
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unregistrar.unregister()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unregistrar.unregister()
     }
 
     fun getMessages(){
         Log.e("pageee", page.toString())
         netiCore?.diSpaceClient?.diMessagesViewModel?.updateMessageList(page, person.companion_id)
     }
+
+    fun sendMessage(){
+        netiCore?.diSpaceClient?.diMessagesViewModel?.sendmes(binding.textField.text.toString(), person.companion_id)
+    }
+
 
     fun setupRecyclerView(){
         adapter = DiMessageListAdapter(this, person.companion_id)

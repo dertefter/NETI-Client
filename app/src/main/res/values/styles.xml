@@ -1,5 +1,14 @@
 <resources>
 
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="ModalBottomSheetDialog" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.LargeComponent</item>
+    </style>
+
     <style name="Widget.FicusRebuild.AppWidget.Container" parent="android:Widget">
         <item name="android:id">@android:id/background</item>
         <item name="android:background">?android:attr/colorBackground</item>
@@ -20,5 +29,86 @@
         <item name="fontFamily">@font/vfont</item>
         <item name="android:fontFamily">@font/vfont</item>
         <item name="fontStyle">normal</item>
+    </style>
+
+    <style name="ShapeAppearance.FicusRebuild.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <style name="ShapeAppearance.FicusRebuild.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.FicusRebuild.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="Widget.FicusRebuild.CardView" parent="Widget.Material3.CardView.Filled">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+    </style>
+    <style name="Widget.FicusRebuild.CardView.CutoffRight" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="cornerSizeTopRight">12dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">12dp</item>
+    </style>
+
+    <style name="Widget.FicusRebuild.CardView.Cutoff" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="cornerSizeTopRight">12dp</item>
+        <item name="cornerSizeBottomRight">12dp</item>
+        <item name="cornerSizeTopLeft">12dp</item>
+        <item name="cornerSizeBottomLeft">12dp</item>
+    </style>
+
+    <style name="Widget.FicusRebuild.CardView.CutoffLeft" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">12dp</item>
+        <item name="cornerSizeTopLeft">12dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+    <style name="Widget.FicusRebuild.CardView.CutoffSemi" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">12dp</item>
+        <item name="cornerSizeTopLeft">12dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+    <style name="Widget.FicusRebuild.CardView.Media" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="cornerSizeTopRight">12dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">12dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+    <style name="Widget.FicusRebuild.CardView.CutoffNo" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="Widget.FicusRebuild.CardView.CutoffBottomLeft" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="cornerSizeTopRight">12dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">12dp</item>
+    </style>
+
+    <style name="Widget.BottomNavigationView.MyActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="shapeAppearance">
+            @style/ShapeAppearance.FicusRebuild.SmallComponent
+        </item>
+        <item name="shapeAppearanceOverlay">
+            @style/Widget.FicusRebuild.CardView.CutoffSemi
+        </item>
+        <item name="android:color">?attr/colorSecondaryContainer</item>
     </style>
 </resources>

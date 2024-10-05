@@ -1,5 +1,6 @@
 package com.dertefter.ficus.fragments.files
 
+import android.content.ActivityNotFoundException
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
@@ -80,11 +81,18 @@ class FilesFragment : Fragment(R.layout.fragment_files) {
 
 
     fun openFile(path: String){
-        val uri = FileProvider.getUriForFile(requireContext(), activity?.application?.packageName  + ".provider", File(requireActivity().filesDir.absolutePath+"/down/" + path))
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        intent.setDataAndType(uri, getMimeType(uri))
-        startActivity(intent)
+        try{
+            val uri = FileProvider.getUriForFile(requireContext(), activity?.application?.packageName  + ".provider", File(requireActivity().filesDir.absolutePath+"/down/" + path))
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            intent.setDataAndType(uri, getMimeType(uri))
+            startActivity(intent)
+        }catch (e: ActivityNotFoundException){
+            Toast.makeText(requireContext(), "Нечем открыть файл", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception){
+            Toast.makeText(requireContext(), "Ошибка открытия файла", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     fun setupAppBar(){

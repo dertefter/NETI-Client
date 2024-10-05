@@ -37,30 +37,6 @@ class ScheduleWidgetService : RemoteViewsService() {
 
         override fun onCreate() {
             val weeks = tinyDB.getListObject("weeks", Week::class.java) as ArrayList<Week>
-            if (weeks != null){
-                val currentWeek = weeks.find { it.isCurrent }
-                if (currentWeek != null){
-                    val group = appPreferences.group
-                    if (group != null){
-                        if (group == "individual"){
-                            val bodyString = tinyDB.getString("individual_schedule")
-                            val schedule = ResponseParser().parseIndividualTimetable(bodyString, currentWeek.weekQuery)
-                            val dayList = schedule?.days
-                            if ((dayList?.get(currentDayIndex) ?: -1) != -1){
-                                lessonLiveData.postValue(dayList?.get(currentDayIndex)!!.lessons)
-                            }
-
-                        }
-                    }else{
-                        val bodyString = tinyDB.getString("${currentWeek.groupTitle}_${currentWeek.weekQuery}")
-                        val schedule = ResponseParser().parseIndividualTimetable(bodyString, currentWeek.weekQuery)
-                        val dayList = schedule?.days
-                        if ((dayList?.get(currentDayIndex) ?: -1) != -1){
-                            lessonLiveData.postValue(dayList?.get(currentDayIndex)!!.lessons)
-                        }
-                    }
-                }
-            }
             lessonLiveData.observeForever { list->
                 if (list != null) {
                     updateList(list)
@@ -72,29 +48,6 @@ class ScheduleWidgetService : RemoteViewsService() {
         override fun onDataSetChanged() {
             currentDayIndex = appPreferences.currentDay ?: 0
             val weeks = tinyDB.getListObject("weeks", Week::class.java) as ArrayList<Week>
-            if (weeks != null){
-                val currentWeek = weeks.find { it.isCurrent }
-                if (currentWeek != null){
-                    val group = appPreferences.group
-                    if (group != null){
-                        if (group == "individual"){
-                            val bodyString = tinyDB.getString("individual_schedule")
-                            val schedule = ResponseParser().parseIndividualTimetable(bodyString, currentWeek.weekQuery)
-                            val dayList = schedule?.days
-                            if ((dayList?.get(currentDayIndex) ?: -1) != -1){
-                                lessonLiveData.postValue(dayList?.get(currentDayIndex)!!.lessons)
-                            }
-                        }else{
-                            val bodyString = tinyDB.getString("${currentWeek.groupTitle}_${currentWeek.weekQuery}")
-                            val schedule = ResponseParser().parseIndividualTimetable(bodyString, currentWeek.weekQuery)
-                            val dayList = schedule?.days
-                            if (dayList?.isNotEmpty() == true){
-                                lessonLiveData.postValue(dayList?.get(currentDayIndex)!!.lessons)
-                            }
-                        }
-                    }
-                }
-            }
             if(lessonList.isNotEmpty()) {
                 getViewAt(0)
             }

@@ -1,17 +1,28 @@
 package com.dertefter.ficus.fragments.schedule.schedule_sessia
 
+import android.animation.ObjectAnimator
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.dertefter.ficus.Ficus
 import com.dertefter.ficus.R
 import com.dertefter.ficus.databinding.ScheduleSessiaBottomSheetBinding
+import com.dertefter.ficus.fragments.other.ImageDialogFragment
+import com.dertefter.ficus.fragments.profile.ProfileFragment
+import com.dertefter.ficus.fragments.search_person.SearchPersonFragmentDirections
+import com.dertefter.ficus.fragments.search_person.person_page.PersonPageFragmentDirections
 import com.dertefter.neticore.NETICore
+import com.dertefter.neticore.data.Person
 import com.dertefter.neticore.data.schedule.SessiaScheduleItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -64,7 +75,37 @@ class ScheduleSessiaBottomSheet() : BottomSheetDialogFragment() {
         binding.date.text = formatDate(item.date!!)
         binding.aud.text = item.aud
         binding.type.text = item.type
-        netiCore!!.personHelper!!.retrivePerson(item.personLink, binding.name, binding.personAvatarPlaceholder)
+
+        val liveData = MutableLiveData<Person?>()
+        netiCore!!.personHelper!!.retrivePerson(item.personLink, liveData)
+        liveData.observe(viewLifecycleOwner) {
+            if (it != null){
+                ObjectAnimator.ofFloat(binding.personCard, "alpha", 1f).start()
+                if (item.personLink != null){
+                    binding.personCard.setOnClickListener {
+                        (parentFragment as ScheduleSessiaFragment).openPerson(item.personLink!!)
+                    }
+                }
+
+
+                val p = it
+                binding.name.text = it.shortName
+                if (!p.pic.isNullOrEmpty()){
+                    Picasso.get().load(p.pic).resize(300, 300).centerCrop().into(binding.personAvatarPlaceholder)
+                    binding.personAvatarPlaceholder.setOnClickListener {
+                        val bundle = Bundle()
+                        bundle.putString("image", p.pic)
+                        val imageDialogFragment = ImageDialogFragment()
+                        imageDialogFragment.arguments = bundle
+                        imageDialogFragment.show(parentFragmentManager, "image")
+                    }
+                }
+
+            }
+            else {
+                binding.personCard.alpha = 0f
+            }
+        }
     }
 
     fun formatDate(dateString: String): String {

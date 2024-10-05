@@ -43,7 +43,7 @@ class UserInfoViewModel(
                     val parsedData = ResponseParser().parseUserInfo(response.body())
                     if (parsedData != null){
                         userInfoLiveData.postValue(Event.success(parsedData))
-                        if (userPhotoLiveData.value?.status!= Status.SUCCESS){
+                        if (userPhotoLiveData.value?.status != Status.SUCCESS){
                             updateProfilePhoto()
                         }
                     }

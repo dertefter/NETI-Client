@@ -1,15 +1,19 @@
 package com.dertefter.ficus.fragments.schedule.schedule_sessia
 
+import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import com.google.android.material.card.MaterialCardView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.dertefter.ficus.MainActivity
 import com.dertefter.ficus.R
+import com.dertefter.neticore.data.Person
 import com.dertefter.neticore.data.schedule.SessiaScheduleItem
 import com.google.android.material.imageview.ShapeableImageView
+import com.squareup.picasso.Picasso
 
 class ScheduleSessiaListAdapter(val fragment: ScheduleSessiaFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list = mutableListOf<SessiaScheduleItem>()
@@ -32,7 +36,8 @@ class ScheduleSessiaListAdapter(val fragment: ScheduleSessiaFragment) : Recycler
         val aud: TextView  = itemView.findViewById(R.id.aud)
         val dayName: TextView  = itemView.findViewById(R.id.dayName)
         val avatar: ShapeableImageView = itemView.findViewById(R.id.person_avatar_placeholder)
-        val card: CardView = itemView.findViewById(R.id.card_view)
+        val card: MaterialCardView = itemView.findViewById(R.id.card_view)
+        val liveData: MutableLiveData<Person?> = MutableLiveData()
     }
     class ExamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
@@ -42,7 +47,8 @@ class ScheduleSessiaListAdapter(val fragment: ScheduleSessiaFragment) : Recycler
         val aud: TextView  = itemView.findViewById(R.id.aud)
         val dayName: TextView  = itemView.findViewById(R.id.dayName)
         val avatar: ShapeableImageView = itemView.findViewById(R.id.person_avatar_placeholder)
-        val card: CardView = itemView.findViewById(R.id.card_view)
+        val card: MaterialCardView = itemView.findViewById(R.id.card_view)
+        val liveData: MutableLiveData<Person?> = MutableLiveData()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -68,7 +74,14 @@ class ScheduleSessiaListAdapter(val fragment: ScheduleSessiaFragment) : Recycler
             holder.card.setOnClickListener {
                 (fragment as ScheduleSessiaFragment).openDialog(currentItem)
             }
-            (fragment.activity as MainActivity).netiCore!!.personHelper!!.retrivePerson(currentItem.personLink, null, holder.avatar)
+            (fragment.activity as MainActivity).netiCore!!.personHelper!!.retrivePerson(currentItem.personLink, holder.liveData)
+            holder.liveData.observeForever {
+                if (it != null){
+                    if (!it.pic.isNullOrEmpty()){
+                        Picasso.get().load(it.pic).resize(200,200).centerCrop().into(holder.avatar)
+                    }
+                }
+            }
         }else if  (holder is ExamViewHolder){
             holder.title.text = currentItem.title
             holder.time.text  = if(currentItem.time.isNullOrEmpty()){"--:--"}else{currentItem.time}
@@ -79,7 +92,14 @@ class ScheduleSessiaListAdapter(val fragment: ScheduleSessiaFragment) : Recycler
             holder.card.setOnClickListener {
                 (fragment as ScheduleSessiaFragment).openDialog(currentItem)
             }
-            (fragment.activity as MainActivity).netiCore!!.personHelper!!.retrivePerson(currentItem.personLink, null, holder.avatar)
+            (fragment.activity as MainActivity).netiCore!!.personHelper!!.retrivePerson(currentItem.personLink, holder.liveData)
+            holder.liveData.observeForever {
+                if (it != null){
+                    if (!it.pic.isNullOrEmpty()){
+                        Picasso.get().load(it.pic).resize(200,200).centerCrop().into(holder.avatar)
+                    }
+                }
+            }
         }
     }
 

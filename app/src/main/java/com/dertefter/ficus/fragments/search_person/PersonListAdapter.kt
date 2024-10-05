@@ -57,4 +57,8 @@ class PersonListAdapter(val fragment: SearchPersonFragment) : RecyclerView.Adapt
         return personList.size
     }
 
+    fun getLastPosition(): Int {
+        return personList.size - 1
+    }
+
 }

@@ -9,7 +9,7 @@ import com.dertefter.neticore.data.schedule.Week
 class ScheduleViewPagerPersonAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    val personId: String?
+    val personSite: String?
 ) :
 
     FragmentStateAdapter(fragmentManager, lifecycle) {
@@ -34,11 +34,7 @@ class ScheduleViewPagerPersonAdapter(
         val fragment = SchedulePersonWeekFragment()
         val bundle = Bundle()
         bundle.putString("weekQuery", week?.weekQuery)
-        bundle.putString("weekTitle", week?.weekTitle)
-        bundle.putBoolean("isCurrent", week?.isCurrent!!)
-        bundle.putString("groupTitle", week?.groupTitle)
-        bundle.putBoolean("isIndividual", week?.isIndividual!!)
-        bundle.putString("personId", personId!!)
+        bundle.putString("personId", personSite!!)
         fragment.arguments = bundle
         return fragment
     }

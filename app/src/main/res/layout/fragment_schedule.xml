@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/schedule_fragment_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.schedule.ScheduleFragment">
@@ -10,6 +11,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 
@@ -42,6 +44,33 @@
         </com.google.android.material.appbar.SubtitleCollapsingToolbarLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_or_padding">
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:paddingVertical="4dp"
+                android:src="@drawable/history"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/saved_groups_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="true"
+                android:fadingEdge="horizontal|vertical"
+                android:fadingEdgeLength="@dimen/margin_or_padding"
+                android:paddingRight="@dimen/margin_or_padding"
+                android:requiresFadingEdge="vertical"
+                tools:listitem="@layout/item_saved_group" />
+        </LinearLayout>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
@@ -52,6 +81,7 @@
             app:tabMode="scrollable" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <com.dertefter.ficus.OnlyVerticalSwipeRefreshLayout
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
@@ -60,9 +90,9 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
-            android:fillViewport="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fillViewport="true"
             android:nestedScrollingEnabled="true" />
 
     </com.dertefter.ficus.OnlyVerticalSwipeRefreshLayout>
@@ -101,11 +131,13 @@
         <Button
             android:id="@+id/set_group_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
             android:text="Найти группу"
-            app:icon="@drawable/search" />
+            app:icon="@drawable/search"
+            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
     </LinearLayout>
 
     <LinearLayout
@@ -151,6 +183,8 @@
         android:textColor="?attr/colorOnPrimary"
         app:backgroundTint="?attr/colorPrimary"
         app:icon="@drawable/calendar_month_fill"
-        app:iconTint="?attr/colorOnPrimary" />
+        app:iconTint="?attr/colorOnPrimary"
+        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

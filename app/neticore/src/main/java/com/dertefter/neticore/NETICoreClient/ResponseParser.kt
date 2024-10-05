@@ -13,6 +13,7 @@ import com.dertefter.neticore.data.dispace.di_cources.DiCourseView
 import com.dertefter.neticore.data.dispace.di_messages.DiMessage
 import com.dertefter.neticore.data.dispace.di_messages.DiMessagesData
 import com.dertefter.neticore.data.dispace.di_messages.DiSenderPerson
+import com.dertefter.neticore.data.e_library.ELibrarySearchItem
 import com.dertefter.neticore.data.messages.Message
 import com.dertefter.neticore.data.messages.SenderPerson
 import com.dertefter.neticore.data.news.News
@@ -45,6 +46,21 @@ class ResponseParser {
         return matchResult?.groups?.get(1)?.value
     }
 
+    fun parseELibrarySearch(input: ResponseBody?): List<ELibrarySearchItem>?{
+        try{
+            val list = mutableListOf<ELibrarySearchItem>()
+            val pretty = input?.string().toString()
+            val doc: Document = Jsoup.parse(pretty)
+            val tbody = doc.select("table.second_level").first()!!.select("tbody").first()
+            val items = tbody?.select("> *")
+            for (item in items!!){
+                list.add(ELibrarySearchItem(title = item.html()))
+            }
+            return list
+        }catch (e: Exception){
+            return null
+        }
+    }
     fun parseUserInfo(input: ResponseBody?): User?{
         try{
             val pretty = input?.string().toString()
@@ -59,7 +75,7 @@ class ResponseParser {
         }
     }
 
-    fun parseWeeks(input: ResponseBody?, isIndividual: Boolean = false): List<Week>?{
+    fun parseWeeks(input: ResponseBody?, group: Group): List<Week>?{
         try{
             val pretty = input!!.string()
             val doc: Document = Jsoup.parse(pretty)
@@ -76,7 +92,7 @@ class ResponseParser {
                     isToday = true
                 }
 
-                val week_item = Week(query, title, isToday, groupTitle, isIndividual)
+                val week_item = Week(query, title, isToday, group)
                 if (query.toInt() > 0){
                     output.add(week_item)
                 }
@@ -268,6 +284,7 @@ class ResponseParser {
                 }
             }
             output.days = dayItems
+            output.groupTitle = doc.select("h1.schedule__title-h1").text().split(" ").last()
             return output
         } catch (e: Exception) {
             Log.e("ResponseParser", e.stackTraceToString().toString())
@@ -333,13 +350,38 @@ class ResponseParser {
                 pic = "https://www.nstu.ru/" + pic
             }
 
-            val person = Person(name, mail, site, pic, hasSchedule, id)
-            outputPersonList.add(person)
+
+            val person = Person(
+                name,
+                toShortName(name),
+                mail,
+                site,
+                pic,
+                hasSchedule,
+                id
+            )
+            if (site.isNotEmpty() && !site.contains("null")){
+                outputPersonList.add(person)
+            }
+
         }
         Log.e("personParser", outputPersonList.toString())
         return outputPersonList
 
     }
+
+    fun toShortName(fullName: String): String {
+        val parts = fullName.split(" ")
+        if (parts.size < 3) {
+            return fullName
+        }
+        val lastName = parts[0]
+        val firstNameInitial = parts[1].first().toString()
+        val patronymicInitial = parts[2].first().toString()
+
+        return "$lastName $firstNameInitial.$patronymicInitial."
+    }
+
 
     fun parseNews(input: ResponseBody?): List<News>? {
         val outputNewsList = mutableListOf<News>()
@@ -390,10 +432,10 @@ class ResponseParser {
         }
     }
 
-    fun parseSenderList(input: ResponseBody?, tab: Int): List<SenderPerson> {
+    fun parseSenderList(input: String, tab: Int): List<SenderPerson> {
         val outputSenderList = mutableListOf<SenderPerson>()
         try {
-            val pretty = input?.string().toString()
+            val pretty = input.toString()
             val doc: Document = Jsoup.parse(pretty)
             val tabContainer = if (tab == 0) doc.select("div#tabs1-messages").first() else doc.select("div#tabs2-messages").first()
             val messageItems = tabContainer?.select("div.pad")
@@ -425,6 +467,25 @@ class ResponseParser {
         }
     }
 
+    fun parseMessagesCount(input: String?): List<String?>? {
+        try {
+            val pretty = input.toString()
+            val doc: Document = Jsoup.parse(pretty)
+            val output = mutableListOf<String?>()
+            val all_count = doc.body().select("span.num_of_msg").first()?.ownText()
+            val tab1count = doc.body().select("span.vkl.num_of_msg#vkl1").last()?.ownText()
+            val tab2count = doc.body().select("span.vkl.num_of_msg#vkl2").last()?.ownText()
+            output.add(all_count)
+            output.add(tab1count)
+            output.add(tab2count)
+            return output
+
+        }catch (e: Exception) {
+            Log.e("ResponseParser", e.stackTraceToString().toString())
+            return null
+        }
+    }
+
     fun parseMessage(input: ResponseBody?): String {
         try {
             val pretty = input?.string().toString()
@@ -436,20 +497,6 @@ class ResponseParser {
         catch (e: Exception) {
             return ""
         }
-    }
-
-    fun get18Weeks(): List<Week> {
-        val output = mutableListOf<Week>()
-        for (i in 1..18){
-            val title = "Неделя $i"
-            val query = i.toString()
-            val isToday = false
-            val groupTitle = ""
-            val isIndividual = false
-            val week_item = Week(query, title, isToday, groupTitle, isIndividual)
-            output.add(week_item)
-        }
-        return output
     }
 
     fun parsePersonTimetable(input: ResponseBody?, weekQuery: String): Schedule? {
@@ -865,5 +912,19 @@ class ResponseParser {
         form?.select("br")?.first()?.remove()
         return form.toString()
 
+    }
+
+    fun get18Weeks(): List<Week> {
+        val output = mutableListOf<Week>()
+        for (i in 1..18){
+            val title = "Неделя $i"
+            val query = i.toString()
+            val isToday = false
+            val groupTitle = ""
+            val isIndividual = false
+            val week_item = Week(query, title, group = null, isCurrent = null)
+            output.add(week_item)
+        }
+        return output
     }
 }

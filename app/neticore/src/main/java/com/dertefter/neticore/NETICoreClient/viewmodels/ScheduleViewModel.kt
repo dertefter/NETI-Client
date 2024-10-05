@@ -3,6 +3,7 @@ package com.dertefter.neticore.NETICoreClient.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dertefter.neticore.NETICoreClient.ResponseParser
 import com.dertefter.neticore.TinyDB
@@ -16,6 +17,7 @@ import com.dertefter.neticore.data.schedule.Week
 import com.dertefter.neticore.local.AppPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -31,38 +33,90 @@ class ScheduleViewModel(
 
     val weeksLiveData = MutableLiveData<Event<List<Week>>>()
     val sessiaScheduleLiveData = MutableLiveData<Event<List<SessiaScheduleItem>>>()
-    val scheduleListLiveData = MutableLiveData<Event<List<Schedule?>?>>()
-    var schList: MutableList<Schedule?>? = null
+    val scheduleLiveDataList = mutableMapOf<String, MutableLiveData<Event<Schedule?>>>()
+    val savedGroupsLiveData = MutableLiveData<List<Group>>()
     val groupListLiveData = MutableLiveData<Event<List<Group>>>()
     var currentGroupLiveData = MutableLiveData<Group>()
     var tinyDB : TinyDB = TinyDB(application.applicationContext)
 
-        fun loadWeekList(){
+    fun getLiveDataForWeek(weekQuery: String): MutableLiveData<Event<Schedule?>> {
+        if (scheduleLiveDataList.containsKey(weekQuery)){
+            return scheduleLiveDataList[weekQuery]!!
+        } else {
+            scheduleLiveDataList[weekQuery] = MutableLiveData<Event<Schedule?>>()
+            return scheduleLiveDataList[weekQuery]!!
+        }
+    }
+
+
+    fun saveGroup(group: Group){
+        CoroutineScope(Dispatchers.IO).launch {
+            var saved = tinyDB.getListObject("savedGroups", Group::class.java)
+            if (saved == null){
+                saved = ArrayList()
+            }
+            val index = saved.find { (it as Group).title == group.title }
+            if (index != null){
+                saved.remove(index)
+            }
+            saved.add(group)
+            tinyDB.putListObject("savedGroups", saved as java.util.ArrayList<Any>)
+            getSavedGroups()
+        }
+
+    }
+
+    fun deleteGroup(group: Group){
+        CoroutineScope(Dispatchers.IO).launch {
+            val saved = tinyDB.getListObject("savedGroups", Group::class.java) ?: return@launch
+            val name = group.title
+            val index = saved.find { (it as Group).title == name }
+            if (index != null){
+                saved.remove(index)
+            }
+            tinyDB.putListObject("savedGroups", saved as java.util.ArrayList<Any>)
+            getSavedGroups()
+        }
+
+    }
+
+    fun getSavedGroups() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val saved = tinyDB.getListObject("savedGroups", Group::class.java)?: return@launch
+            savedGroupsLiveData.postValue(saved as List<Group>)
+        }
+    }
+
+
+    fun loadWeekList(){
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                scheduleListLiveData.postValue(Event.loading())
-                weeksLiveData.postValue(Event.loading())
-                val url = "https://nstu.ru/studies/schedule/schedule_classes/"
-                val retrofit = Retrofit.Builder().baseUrl(url).client(okHttpClient).build()
-                val service = retrofit.create(APIService::class.java)
-                val response = service.getWeekList(group = currentGroupLiveData!!.value?.title)
-                if (response.isSuccessful){
-                    val weeks = ResponseParser().parseWeeks(response.body(),  currentGroupLiveData?.value?.isIndividual!!)
-                    val scheduleList = arrayOfNulls<Schedule>(weeks!!.size).toList()
-                    tinyDB.putListObject("weeks", weeks as java.util.ArrayList<Any>)
-                    schList = scheduleList.toMutableList()
-                    scheduleListLiveData.postValue(Event.success(schList))
-                    weeksLiveData.postValue(Event.success(weeks))
-                }
+                if (currentGroupLiveData.value != null){
+                    weeksLiveData.postValue(Event.loading())
+                    val url = "https://nstu.ru/studies/schedule/schedule_classes/"
+                    val retrofit = Retrofit.Builder().baseUrl(url).client(okHttpClient).build()
+                    val service = retrofit.create(APIService::class.java)
+                    val response = service.getWeekList(group = currentGroupLiveData.value?.title)
+                    if (response.isSuccessful){
+                        val weeks = ResponseParser().parseWeeks(response.body(),  currentGroupLiveData.value!!)
+                        tinyDB.putListObject("weeks", weeks as java.util.ArrayList<Any>)
+                        weeksLiveData.postValue(Event.success(weeks))
+                        if (scheduleLiveDataList.isNotEmpty()){
+                            for (i in scheduleLiveDataList.keys){
+                                getLiveDataForWeek(i).postValue(Event.loading())
+                            }
+                        }
 
+                    }
+                }
             } catch (e: Exception) {
-                setError()
+                weeksLiveData.postValue(Event.error())
             } catch (e: Error) {
-                setError()
+                weeksLiveData.postValue(Event.error())
             } catch (e: Throwable) {
-                setError()
+                weeksLiveData.postValue(Event.error())
             } catch (e: JSONException) {
-                setError()
+                weeksLiveData.postValue(Event.error())
             }
         }
     }
@@ -129,47 +183,43 @@ class ScheduleViewModel(
     }
 
     fun setGroup(group: Group?){
+        if (group != null){
+            saveGroup(group)
+        }
         currentGroupLiveData.postValue(group)
-        weeksLiveData.value = (Event.loading())
-        scheduleListLiveData.value = (Event.loading())
         if (group != null){
             if (group.isIndividual){
                 appPreferences.group = "individual"
-                appPreferences?.gr_name = group?.title
+                appPreferences.gr_name = group.title
             }else{
                 appPreferences.group = group.title
-                appPreferences?.gr_name = group?.title
+                appPreferences.gr_name = group.title
             }
         }
 
     }
 
     fun loadScheduleWeek(week: Week){
-        if (week.isIndividual){
+        Log.e("sasasasa days", getLiveDataForWeek(week.weekQuery).value?.data?.days.toString() )
+        Log.e("sasasasa currentGroupLiveData", currentGroupLiveData.value?.title.toString())
+        Log.e("sasasasa group", week.group?.title.toString())
+
+        if (getLiveDataForWeek(week.weekQuery).value?.data?.days?.isEmpty() == false){
+            if (currentGroupLiveData.value?.title == week.group?.title){
+                return
+            }
+        }
+        if (week.group?.isIndividual == true){
             loadIndividualSchedule(week)
         }else{
             loadGroupSchedule(week)
         }
     }
 
-    fun setError(){
-        val fromTiny = tinyDB.getListObject("weeks", Week::class.java)
-        Log.e("tinyShit", "fromTiny: ${fromTiny.toString()}")
-        if (fromTiny != null){
-            schList = arrayOfNulls<Schedule>(fromTiny!!.size).toMutableList()
-            scheduleListLiveData.postValue(Event.success(schList))
-            weeksLiveData.postValue(Event.success(fromTiny as List<Week>))
-        }else{
-            weeksLiveData.postValue(Event.error())
-        }
-
-    }
-
 
     private fun loadIndividualSchedule(week: Week) {
         val weekQuery = week.weekQuery.toInt()
         val weekInArray = weekQuery - 1
-
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val url = "https://ciu.nstu.ru/student_study/timetable/timetable_lessons/"
@@ -181,65 +231,51 @@ class ScheduleViewModel(
                     val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
                     if (schedule != null && !schedule.isError && !schedule.days.isNullOrEmpty()){
                         tinyDB.putString("individual_schedule", bodyString)
-                        schList?.set(weekInArray, schedule)
-                        scheduleListLiveData.postValue(Event.success(schList))
-                    }
-                    else{
-                       throw Exception("Schedule is null")
-
+                        val schedule_with_rules = applyRules(schedule, weekQuery)
+                        getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                     }
                 }else{
-                    Log.e("momomo is not success", "idk")
                     val bodyString = tinyDB.getString("individual_schedule")
                     val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
                     Log.e("load from here", schedule.toString())
                     if (schedule != null){
-                        schList?.set(weekInArray, schedule)
-                        scheduleListLiveData.postValue(Event.success(schList))
+                        val schedule_with_rules = applyRules(schedule, weekQuery)
+                        getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                     }
                     else{
-                        schList?.set(weekInArray, Schedule(isError = true))
-                        scheduleListLiveData.postValue(Event.success(schList))
+                        getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                     }
                 }
 
             } catch (e: Exception) {
                 val bodyString = tinyDB.getString("individual_schedule")
                 val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
-                Log.e("momomo schedule", schedule.toString())
                 if (schedule != null){
-                    schList?.set(weekInArray, schedule)
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    val schedule_with_rules = applyRules(schedule, weekQuery)
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                 }
                 else{
-                    schList?.set(weekInArray, Schedule(isError = true))
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                 }
             } catch (e: Throwable) {
-                Log.e("momomo throwable", "idk")
                 val bodyString = tinyDB.getString("individual_schedule")
                 val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
-                Log.e("load from here", schedule.toString())
                 if (schedule != null){
-                    schList?.set(weekInArray, schedule)
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    val schedule_with_rules = applyRules(schedule, weekQuery)
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                 }
                 else{
-                    schList?.set(weekInArray, Schedule(isError = true))
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                 }
             } catch (e: JSONException) {
-                Log.e("momomo json", "idk")
                 val bodyString = tinyDB.getString("individual_schedule")
                 val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
-                Log.e("load from here", schedule.toString())
                 if (schedule != null){
-                    schList?.set(weekInArray, schedule)
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    val schedule_with_rules = applyRules(schedule, weekQuery)
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                 }
                 else{
-                    schList?.set(weekInArray, Schedule(isError = true))
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                 }
             }
         }
@@ -253,72 +289,105 @@ class ScheduleViewModel(
 
     }
 
+    fun getRules(weekQuery: Int, day: Int): java.util.ArrayList<Lesson>? {
+        var saved = tinyDB.getListObject("scheduleRules$weekQuery$day", Lesson::class.java)
+        if (saved == null){
+            return null
+        } else{
+            return saved as java.util.ArrayList<Lesson>
+        }
+    }
+    fun createRule(lesson: Lesson, customId: String){
+        var saved = tinyDB.getListObject(customId, Lesson::class.java)
+        if (saved == null){
+            saved = ArrayList()
+        }
+        saved.add(lesson)
+        tinyDB.putListObject(customId, saved)
+    }
+
+    fun deleteRule(lesson: Lesson, customId: String) {
+        var saved = tinyDB.getListObject(customId, Lesson::class.java)
+        if (saved == null){
+            return
+        }
+        saved.remove(lesson)
+        tinyDB.putListObject(customId, saved)
+    }
+
+    fun applyRules(schedule: Schedule, weekQuery: Int): Schedule {
+        val modifiedDays = schedule.days!!.toMutableList()
+        for (dayIndex in 0..5){
+            if (!getRules(weekQuery, dayIndex).isNullOrEmpty()){
+                val lessons = modifiedDays[dayIndex].lessons?.toMutableList()
+                getRules(weekQuery, dayIndex)?.let { lessons?.addAll(it) }
+                modifiedDays[dayIndex].lessons = lessons
+            }
+        }
+        return schedule.copy(days = modifiedDays)
+    }
+
     private fun loadGroupSchedule(week: Week) {
-        val weekQuery = week.weekQuery.toInt()
-        val weekInArray = weekQuery - 1
         CoroutineScope(Dispatchers.IO).launch {
+            val weekQuery = week.weekQuery.toInt()
             try {
+                getLiveDataForWeek(week.weekQuery).postValue(Event.loading())
                 val retrofit = Retrofit.Builder()
                     .baseUrl("https://nstu.ru/")
                     .build()
                 val service = retrofit.create(APIService::class.java)
-                val response = service.getScheduleGuest(group = week.groupTitle, week = week.weekQuery)
+                val response = service.getScheduleGuest(group = week.group?.title, week = week.weekQuery)
                 if (response.isSuccessful){
                     val bodyString = response.body()?.string()
-                    tinyDB.putString("${week.groupTitle}_${week.weekQuery}", bodyString)
+                    tinyDB.putString("${week.group?.title}_${week.weekQuery}", bodyString)
                     val schedule = ResponseParser().parseGroupTimetable(bodyString)
                     if (schedule != null){
-                        schList?.set(weekInArray, schedule)
-                        scheduleListLiveData.postValue(Event.success(schList))
+                        val schedule_with_rules = applyRules(schedule, weekQuery)
+                        getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                     }else{
-                        schList?.set(weekInArray, Schedule(isError = true))
-                        scheduleListLiveData.postValue(Event.success(schList))
+                        getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                     }
                 }
 
             }catch (e: Exception) {
-                val bodyString = tinyDB.getString("${week.groupTitle}_${week.weekQuery}")
+                val bodyString = tinyDB.getString("${week.group?.title}_${week.weekQuery}")
                 val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
                 if (schedule != null){
-                    schList?.set(weekInArray, schedule)
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    val schedule_with_rules = applyRules(schedule, weekQuery)
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                 }
                 else{
-                    schList?.set(weekInArray, Schedule(isError = true))
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                 }
             } catch (e: Error) {
-                val bodyString = tinyDB.getString("${week.groupTitle}_${week.weekQuery}")
+                val bodyString = tinyDB.getString("${week.group?.title}_${week.weekQuery}")
                 val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
                 if (schedule != null){
-                    schList?.set(weekInArray, schedule)
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    val schedule_with_rules = applyRules(schedule, weekQuery)
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                 }
                 else{
-                    schList?.set(weekInArray, Schedule(isError = true))
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                 }
             } catch (e: Throwable) {
-                val bodyString = tinyDB.getString("${week.groupTitle}_${week.weekQuery}")
+                val bodyString = tinyDB.getString("${week.group?.title}_${week.weekQuery}")
                 val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
                 if (schedule != null){
-                    schList?.set(weekInArray, schedule)
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    val schedule_with_rules = applyRules(schedule, weekQuery)
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                 }
                 else{
-                    schList?.set(weekInArray, Schedule(isError = true))
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                 }
             } catch (e: JSONException) {
-                val bodyString = tinyDB.getString("${week.groupTitle}_${week.weekQuery}")
+                val bodyString = tinyDB.getString("${week.group?.title}_${week.weekQuery}")
                 val schedule = ResponseParser().parseIndividualTimetable(bodyString, week.weekQuery)
                 if (schedule != null){
-                    schList?.set(weekInArray, schedule)
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    val schedule_with_rules = applyRules(schedule, weekQuery)
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.success(schedule_with_rules))
                 }
                 else{
-                    schList?.set(weekInArray, Schedule(isError = true))
-                    scheduleListLiveData.postValue(Event.success(schList))
+                    getLiveDataForWeek(week.weekQuery).postValue(Event.error())
                 }
             }
         }

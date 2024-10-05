@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    style="@style/Widget.Material3.CardView.Filled"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
@@ -11,56 +11,59 @@
     android:focusable="auto"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="?attr/colorSurfaceContainer"
-    app:cardCornerRadius="@dimen/corner_radius"
-    app:contentPadding="14dp">
+    app:cardPreventCornerOverlap="false">
 
     <ImageView
         android:id="@+id/isNew"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_gravity="top|end"
-        android:layout_margin="4dp"
-        app:srcCompat="@drawable/rounded_background"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/anim_avatar_3"
         app:tint="?attr/colorPrimary" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@drawable/divider"
         android:orientation="vertical"
         android:showDividers="middle">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="-4.5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
             android:orientation="horizontal">
 
             <FrameLayout
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_weight="0">
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:padding="2dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/person_avatar_background"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:background="?attr/colorOnSurfaceVariant"
-                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                    app:srcCompat="@drawable/account_circle_filled"
-                    app:strokeColor="?attr/colorSurfaceContainer"
-                    app:strokeWidth="10dp"
-                    app:tint="?attr/colorSurface" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorSurface"
+                    app:contentPadding="4dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                    app:srcCompat="@drawable/person"
+                    app:strokeColor="@android:color/transparent"
+                    app:strokeWidth="0dp"
+                    app:tint="?attr/colorOnSurfaceVariant" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/person_avatar_placeholder"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:visibility="visible"
-                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                    app:srcCompat="@drawable/ic_launcher_background"
-                    app:strokeColor="?attr/colorSurfaceContainer"
-                    app:strokeWidth="10dp" />
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                    app:strokeColor="@android:color/transparent"
+                    app:strokeWidth="0dp" />
 
             </FrameLayout>
 
@@ -76,7 +79,7 @@
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/vfont"
                     android:lines="1"
                     android:paddingStart="4dp"
                     android:paddingEnd="4dp"
@@ -85,7 +88,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/mail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -93,36 +96,58 @@
                     android:lines="1"
                     android:paddingStart="4dp"
                     android:paddingEnd="4dp"
-                    android:text="20.12.24"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/last_message_theme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
-            android:text="Тема сообщения бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="14sp" />
+        <com.google.android.material.card.MaterialCardView
 
-        <TextView
-            android:id="@+id/last_message_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lineSpacingExtra="4sp"
-            android:maxLines="2"
-            android:singleLine="false"
-            android:text="Текст сообщения бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла  бла бла бла  бла бла бла   бла бла бла  бла"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="14sp" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/last_message_theme"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/vfont"
+                    android:maxLines="1"
+                    android:text="Тема сообщения бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/last_message_text"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="4sp"
+                    android:maxLines="2"
+                    android:singleLine="false"
+                    android:text="Текст сообщения бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла  бла бла бла  бла бла бла   бла бла бла  бла"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

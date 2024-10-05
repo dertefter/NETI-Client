@@ -4,6 +4,7 @@ import android.app.Application
 import com.dertefter.neticore.local.AppPreferences
 import com.dertefter.neticore.NETICoreClient.viewmodels.AuthorizationStateViewModel
 import com.dertefter.neticore.NETICoreClient.viewmodels.CampusPassViewModel
+import com.dertefter.neticore.NETICoreClient.viewmodels.ELibraryViewModel
 import com.dertefter.neticore.NETICoreClient.viewmodels.MessagesViewModel
 import com.dertefter.neticore.NETICoreClient.viewmodels.MoneyViewModel
 import com.dertefter.neticore.NETICoreClient.viewmodels.NewsViewModel
@@ -32,6 +33,7 @@ class NETICoreClient(
     var sessiaResultsViewModel: SessiaResultsViewModel? = null
     var campusPassViewModel: CampusPassViewModel? = null
     var moneyViewModel: MoneyViewModel? = null
+    var elibraryViewModel: ELibraryViewModel? = null
 
     var isAuthorized: Boolean = false
 
@@ -51,6 +53,12 @@ class NETICoreClient(
             userInfoViewModel?.okHttpClient = okHttpClient!!
         }
 
+        if (elibraryViewModel == null){
+            elibraryViewModel = ELibraryViewModel(application, appPreferences, okHttpClient!!)
+        }
+        else{
+            elibraryViewModel?.okHttpClient = okHttpClient!!
+        }
 
         if (scheduleViewModel == null){
             scheduleViewModel = ScheduleViewModel(application, appPreferences, okHttpClient!!)

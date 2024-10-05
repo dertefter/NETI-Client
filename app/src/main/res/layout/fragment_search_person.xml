@@ -23,9 +23,9 @@
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/arrow_back" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/search_bar"
-            style="@style/Widget.Material3.CardView.Filled"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -34,7 +34,8 @@
             android:layout_marginBottom="8dp"
             android:backgroundTintMode="screen"
             app:cardBackgroundColor="?attr/colorSurfaceContainer"
-            app:cardCornerRadius="48dp">
+            app:cardPreventCornerOverlap="false"
+            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -67,8 +68,17 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:background="?attr/colorSurface"
+            android:indeterminate="true"
+            app:indicatorColor="?attr/colorSecondary" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -113,13 +123,5 @@
             android:textColor="?attr/colorOnSurface" />
 
     </LinearLayout>
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progressBar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:layout_weight="0"
-        android:indeterminate="true" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

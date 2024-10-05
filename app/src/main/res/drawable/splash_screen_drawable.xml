@@ -2,7 +2,7 @@
     android:drawable="@drawable/newlogo" >
   <target
       android:name="part1"
-      android:animation="@animator/splash_new_part1" />
+      android:animation="@animator/rotation" />
   <target
       android:name="part2"
       android:animation="@animator/splash_new_part1" />

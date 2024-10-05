@@ -1,15 +1,22 @@
 package com.dertefter.ficus.fragments.schedule
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
+import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.dertefter.ficus.Ficus
 import com.dertefter.ficus.MainActivity
 import com.dertefter.ficus.R
 import com.dertefter.ficus.databinding.FragmentScheduleBinding
+import com.dertefter.ficus.fragments.schedule.schedule_rules_dialog.ScheduleRulesDialogFragment
 import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.Status
 import com.dertefter.neticore.data.schedule.Week
@@ -30,15 +37,18 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
 
     var adapter: ScheduleViewPagerAdapter? = null
 
+    var savedGroupsAdapter: SavedGroupsAdapter? = null
+
     var currentWeek: Int? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentScheduleBinding.bind(view)
-        adapter = ScheduleViewPagerAdapter(childFragmentManager, lifecycle, AppPreferences.compact_schedule == true)
+        adapter = ScheduleViewPagerAdapter(childFragmentManager, lifecycle, AppPreferences.vertical_schedule == false)
+        savedGroupsAdapter = SavedGroupsAdapter(this)
         binding.viewPager.adapter = adapter
+        binding.savedGroupsRecyclerview.adapter = savedGroupsAdapter
+        binding.savedGroupsRecyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false )
         netiCore = (activity?.application as Ficus).netiCore
-
-
         binding?.todayWeekFab?.hide()
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId){
@@ -57,6 +67,11 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
                     findNavController().navigate(action)
                     true
                 }
+                R.id.edit -> {
+                    val dialog = ScheduleRulesDialogFragment()
+                    dialog.show(childFragmentManager, "schedule_rules_dialog")
+                    true
+                }
                 else -> false
             }
         }
@@ -68,18 +83,28 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
         })
         observeGroupInfo()
         observeUserInfo()
-
+        observeWeeksInfo()
+        observeSavedGroups()
     }
 
+    fun updateSavedGroups(){
+        netiCore?.client?.scheduleViewModel?.getSavedGroups()
+    }
+    override fun onResume() {
+        super.onResume()
+        updateSavedGroups()
+    }
 
-
+    fun observeSavedGroups(){
+        netiCore?.client?.scheduleViewModel?.savedGroupsLiveData?.observe(viewLifecycleOwner){
+            savedGroupsAdapter?.setData(it)
+        }
+    }
     fun observeGroupInfo(){
         netiCore?.client?.scheduleViewModel?.currentGroupLiveData?.observe(viewLifecycleOwner){
             if (it != null && it.title.isNotEmpty()){
-                if (netiCore?.client?.scheduleViewModel?.weeksLiveData?.value?.data?.get(0)?.groupTitle != it.title){
-                    netiCore?.client?.updateWeeks()
-                }
-                observeWeeksInfo()
+                netiCore?.client?.updateWeeks()
+                setupAppBar(it.title, it.isIndividual)
                 binding.noGroup.visibility = View.GONE
             }else{
                 binding.setGroupButton.setOnClickListener {
@@ -93,15 +118,14 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
 
     fun observeWeeksInfo(){
         netiCore?.client?.scheduleViewModel?.weeksLiveData?.observe(viewLifecycleOwner){
+            Log.e("observeWeeksInfo", it.toString())
             when (it.status){
                 Status.LOADING -> {
                     binding.swiperefresh.isRefreshing = true
-                    setupViewPager(null)
                 }
                 Status.ERROR -> {
                     binding.swiperefresh.isRefreshing = false
-                    setupViewPager(null)
-                    (activity as MainActivity).createNotificationSnackbar("Ошибка загрузки расписания!", "Проверьте подключение к интернету", "error")
+                    (activity as MainActivity).createNotificationSnackbar("Что-то пошло не так", "Ошибка загрузки учебных недель", "error")
 
                 }
                 Status.SUCCESS -> {
@@ -115,28 +139,20 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
     }
 
     fun setupViewPager(weeks: List<Week>?) {
+        currentWeek = weeks?.indexOfFirst { it.isCurrent == true }
         adapter?.setWeeks(weeks)
-        if (binding.viewPager.adapter == null){
-            binding.viewPager.adapter = adapter
-        }
 
+        binding.viewPager.offscreenPageLimit = 4
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = weeks?.get(position)?.weekTitle
-            if (weeks?.get(position)?.isCurrent == true){
-                currentWeek = position
-                tab.setCustomView(R.layout.tab_item2)
-                tab.view.findViewById<android.widget.TextView>(R.id.text).text = weeks[position].weekTitle
-            }
         }.attach()
-        if (currentWeek != null){
-            binding.tabLayout.getTabAt(currentWeek!!)?.select()
-            binding.todayWeekFab.setOnClickListener {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(currentWeek!!), true)
-            }
-        }
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+                val week = netiCore?.client?.scheduleViewModel?.weeksLiveData?.value?.data?.find { week -> week.weekQuery == (tab.position + 1).toString() }
+                if (week != null){
+                    netiCore?.client?.scheduleViewModel?.loadScheduleWeek(week)
+                }
                 if (tab.position != currentWeek && currentWeek != null){
                     binding?.todayWeekFab?.show()
                 } else{
@@ -146,16 +162,30 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+        if (currentWeek != null){
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(currentWeek!!), true)
+                val week = netiCore?.client?.scheduleViewModel?.weeksLiveData?.value?.data?.find { week -> week.isCurrent == true }
+                if (week != null){
+                    netiCore?.client?.scheduleViewModel?.loadScheduleWeek(week)
+                }
+            }, 300)
+
+            binding.todayWeekFab.setOnClickListener {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(currentWeek!!), true)
+            }
+        }
     }
 
     fun setupAppBar(title: String = "", isIndividual: Boolean){
         CoroutineScope(Dispatchers.Main).launch {
             if (isIndividual){
-                binding.toolbarCollapse.title = "Индивидуальное расписание"
-                binding.toolbarCollapse.subtitle = title
+                binding.toolbarCollapse.subtitle = "Индивидуальное расписание"
+                binding.toolbarCollapse.title = title
             }else{
-                binding.toolbarCollapse.title= "Расписание занятий"
-                binding.toolbarCollapse.subtitle = title
+                binding.toolbarCollapse.subtitle= "Расписание занятий"
+                binding.toolbarCollapse.title = title
             }
 
         }

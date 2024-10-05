@@ -17,7 +17,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.FicusRebuild"
-            >
+            android:taskAffinity="NETI Клиент">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

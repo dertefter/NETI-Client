@@ -17,5 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hapticFeedbackEnabled="true"
-        android:visibility="visible" />
+        android:visibility="visible"
+        app:itemShapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+        app:itemShapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
 </LinearLayout>

@@ -2,6 +2,14 @@
 <resources>
 
     <style name="Base.Theme.FicusRebuild" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:navigationBarColor">@color/md_theme_background</item>
+        <item name="actionOverflowMenuStyle">@style/popupOverflowMenu</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="materialCardViewStyle">@style/Widget.FicusRebuild.CardView</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.FicusRebuild.SmallComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.FicusRebuild.LargeComponent</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.FicusRebuild.SmallComponent</item>
         <item name="fontFamily">@font/vfont</item>
         <item name="android:fontFamily">@font/vfont</item>
         <item name="colorPrimary">@color/md_theme_primary</item>
@@ -50,8 +58,7 @@
         <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
-        <item name="actionOverflowMenuStyle">@style/popupOverflowMenu</item>
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+
 
     </style>
 

@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-    <alpha android:fromAlpha="0.0"
+    <alpha
+        android:interpolator="@android:interpolator/accelerate_decelerate"
+        android:fromAlpha="0.0"
         android:toAlpha="1.0"
-        android:duration="@android:integer/config_mediumAnimTime"
+        android:duration="@android:integer/config_shortAnimTime"
         />
+    <scale
+        android:interpolator="@android:anim/bounce_interpolator"
+        android:duration="@android:integer/config_shortAnimTime"
+        android:fromXScale="0.8"
+        android:fromYScale="0.6"
+        android:toXScale="1.0"
+        android:toYScale="1.0" />
+    <translate
+        android:interpolator="@android:anim/bounce_interpolator"
+        android:duration="@android:integer/config_shortAnimTime"
+        android:fromYDelta="50%"
+        android:toYDelta="0%"
+        android:fromXDelta="10%"
+        android:toXDelta="0%"
+        android:zAdjustment="top" />
 </set>

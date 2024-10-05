@@ -11,5 +11,8 @@ data class Lesson(
     var type: String? = null,
     var aud: String? = null,
     var person: String? = null,
-    var groups: String? = null
+    var groups: String? = null,
+    val isNote: Boolean = false,
+    val isCustom: Boolean = false,
+    var customId: String? = null
 ): Parcelable

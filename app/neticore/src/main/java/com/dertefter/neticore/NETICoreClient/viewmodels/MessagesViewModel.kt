@@ -1,8 +1,10 @@
 package com.dertefter.neticore.NETICoreClient.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.dertefter.neticore.NETICoreClient.PersonHelper
 import com.dertefter.neticore.NETICoreClient.ResponseParser
 import com.dertefter.neticore.api.APIService
 import com.dertefter.neticore.data.Event
@@ -19,19 +21,48 @@ import retrofit2.Retrofit
 
 
 class MessagesViewModel(
-    application: Application,
+    val applicationn: Application,
     val appPreferences: AppPreferences,
     var okHttpClient: OkHttpClient
-) : AndroidViewModel(application) {
+) : AndroidViewModel(applicationn) {
 
     val userInfoLiveData = MutableLiveData<Event<User>>()
-
+    val personHelper = PersonHelper(applicationn)
     val senderListLiveData1 = MutableLiveData<Event<List<SenderPerson>>>()
     val senderListLiveData2 = MutableLiveData<Event<List<SenderPerson>>>()
 
     val readMessagesLiveData = MutableLiveData<Event<String>>()
 
+    val messagesCountLiveData = MutableLiveData<Event<List<String?>>>()
+
     val deleteMessageTaskLiveData = MutableLiveData<Event<Boolean>>()
+
+    fun updateMessagesCount(){
+        Log.e("mescount", "ipdating")
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url1 = "https://ciu.nstu.ru/student_study/"
+                val retrofit = Retrofit.Builder().baseUrl(url1).client(okHttpClient).build()
+                val service = retrofit.create(APIService::class.java)
+                val response = service.messages("-1")
+                if (response.isSuccessful){
+                    val body = response.body()?.string().toString()
+                    val messagesCount = ResponseParser().parseMessagesCount(body)
+                    messagesCountLiveData.postValue(Event.success(messagesCount))
+
+                }
+
+            } catch (e: Exception) {
+                messagesCountLiveData.postValue(Event.error())
+            } catch (e: Error) {
+                messagesCountLiveData.postValue(Event.error())
+            } catch (e: Throwable) {
+                messagesCountLiveData.postValue(Event.error())
+            } catch (e: JSONException) {
+                messagesCountLiveData.postValue(Event.error())
+            }
+        }
+    }
 
     fun updateSenderList(tab: Int){
         val ld = if (tab == 0) senderListLiveData1 else senderListLiveData2
@@ -43,34 +74,10 @@ class MessagesViewModel(
                 val service = retrofit.create(APIService::class.java)
                 val response = service.messages("-1")
                 if (response.isSuccessful){
-                    val senderList = ResponseParser().parseSenderList(response.body(), tab)
+                    val body = response.body()?.string().toString()
+                    val senderList = ResponseParser().parseSenderList(body, tab)
                     ld.postValue(Event.success(senderList))
-                    val senderListWithFullNamesAndAvatars = senderList.toMutableList()
-                    if (appPreferences.messages_avatars != true){
-                        for (it in senderList){
-                            try{
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    val url = "https://www.nstu.ru/"
-                                    val retrofit = Retrofit.Builder().baseUrl(url).build()
-                                    val service = retrofit.create(APIService::class.java)
-                                    val response = service.findPerson(it.name.split(".")[0], "1")
-                                    val parsedData = ResponseParser().parsePersonList(response.body())
-                                    if (parsedData.isNotEmpty()){
-                                        senderListWithFullNamesAndAvatars[senderList.indexOf(it)].name = parsedData[0].name
-                                        senderListWithFullNamesAndAvatars[senderList.indexOf(it)].pic = parsedData[0].pic
-                                        senderListWithFullNamesAndAvatars[senderList.indexOf(it)].person = parsedData[0]
-                                    }
-                                    ld.postValue(Event.success(senderListWithFullNamesAndAvatars))
-                                }
 
-                            } catch (e: Exception) {
-                            } catch (e: Error) {
-                            } catch (e: Throwable) {
-                            } catch (e: JSONException) {
-                            }
-
-                        }
-                    }
                 }
 
             } catch (e: Exception) {

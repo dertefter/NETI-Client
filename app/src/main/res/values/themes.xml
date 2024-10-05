@@ -1,5 +1,13 @@
 <resources>
     <style name="Base.Theme.FicusRebuild" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:navigationBarColor">@color/md_theme_background</item>
+        <item name="actionOverflowMenuStyle">@style/popupOverflowMenu</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="materialCardViewStyle">@style/Widget.FicusRebuild.CardView</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.FicusRebuild.MediumComponent</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.FicusRebuild.SmallComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.FicusRebuild.LargeComponent</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.FicusRebuild.SmallComponent</item>
         <item name="fontFamily">@font/vfont</item>
         <item name="android:fontFamily">@font/vfont</item>
         <item name="colorPrimary">@color/md_theme_primary</item>
@@ -96,7 +104,4 @@
         <item name="appWidgetPadding">16dp</item>
     </style>
 
-    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-    </style>
 </resources>

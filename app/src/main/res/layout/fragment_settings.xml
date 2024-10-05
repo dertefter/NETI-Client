@@ -66,15 +66,16 @@
                 android:text="Аккаунт"
                 android:textColor="?attr/colorPrimary" />
 
-            <androidx.cardview.widget.CardView
-                style="@style/Widget.Material3.CardView.Filled"
+            <com.google.android.material.card.MaterialCardView
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 app:cardBackgroundColor="?attr/colorSurfaceContainer"
-                app:cardCornerRadius="@dimen/corner_radius"
-                app:contentPadding="@dimen/margin_or_padding">
+                app:cardPreventCornerOverlap="false"
+                app:contentPadding="12dp"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -111,10 +112,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Авторизация"
-                        app:cornerRadius="@dimen/corner_radius" />
+                        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -197,41 +199,44 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:paddingStart="16dp"
+                android:paddingTop="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="0dp"
                 android:text="Расписание занятий"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="18sp" />
+                android:textColor="?attr/colorPrimary" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@drawable/divider_horizontal"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:showDividers="middle">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/schedule_without_tabs"
-                    style="@style/Widget.Material3.CardView.Filled"
-                    android:layout_width="100dp"
-                    android:layout_height="160dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:foreground="@drawable/schedule_like_1"
-                    android:foregroundTint="?attr/colorPrimary"
-                    app:cardBackgroundColor="?attr/colorPrimaryContainer"
-                    app:cardCornerRadius="8dp"
-                    app:contentPadding="4dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/schedule_with_tabs"
-                    style="@style/Widget.Material3.CardView.Filled"
-                    android:layout_width="100dp"
-                    android:layout_height="160dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:foreground="@drawable/schedule_like_2"
-                    android:foregroundTint="?attr/colorOnSurfaceVariant"
-                    app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                    app:cardCornerRadius="8dp"
-                    app:contentPadding="4dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Вертикальное расписание"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_schedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:checked="false" />
             </LinearLayout>
 
             <TextView

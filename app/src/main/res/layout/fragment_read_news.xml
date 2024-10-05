@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurfaceContainer"
-    android:fitsSystemWindows="true">
+    android:background="?attr/colorSurfaceContainer">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/scrollUpFab"
@@ -13,9 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:rotation="90"
         app:backgroundTint="?attr/colorPrimaryContainer"
-        app:srcCompat="@drawable/arrow_back" />
+        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+        app:srcCompat="@drawable/arrow_upward" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -52,7 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="8dp"
-                app:icon="@drawable/share" />
+                app:icon="@drawable/share"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
 
             <Button
                 android:id="@+id/back_button"
@@ -60,7 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                app:icon="@drawable/arrow_back" />
+                app:icon="@drawable/arrow_back"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent" />
 
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -82,7 +85,6 @@
             android:layout_marginHorizontal="@dimen/margin_or_padding"
             android:background="?attr/colorSurfaceContainer"
             android:fontFamily="sans-serif-medium"
-            android:paddingHorizontal="@dimen/margin_or_padding"
             android:paddingVertical="@dimen/margin_or_padding"
             android:text="ттттт\nkgkgkgojgjgli\njvihfdhbdfhbdfhibdfhbdfhibdfhibdfhibhi"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -112,20 +114,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8sp"
-                android:paddingHorizontal="@dimen/margin_or_padding"
                 android:text="fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
                 android:textColor="?attr/colorOnSurface"
                 android:textIsSelectable="true"
                 android:textSize="16sp" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/contacts_card"
-                style="@style/Widget.Material3.CardView.Filled"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="100dp"
                 app:cardBackgroundColor="?attr/colorSurface"
-                app:cardCornerRadius="@dimen/corner_radius"
+                app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="false"
                 app:contentPadding="14dp">
 
@@ -155,7 +157,7 @@
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

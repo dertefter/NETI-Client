@@ -1,34 +1,20 @@
 package com.dertefter.ficus.fragments.search_person
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowInsets
-import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dertefter.ficus.Ficus
-import com.dertefter.ficus.MainActivity
 import com.dertefter.ficus.R
-import com.dertefter.ficus.databinding.FragmentScheduleBinding
-import com.dertefter.ficus.databinding.FragmentSearchGroupBinding
 import com.dertefter.ficus.databinding.FragmentSearchPersonBinding
 import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.Person
 import com.dertefter.neticore.data.Status
-import com.dertefter.neticore.data.schedule.Group
-import com.dertefter.neticore.data.schedule.Week
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.tabs.TabLayoutMediator
 
 class SearchPersonFragment : Fragment(R.layout.fragment_search_person) {
 
@@ -37,7 +23,8 @@ class SearchPersonFragment : Fragment(R.layout.fragment_search_person) {
     lateinit var binding: FragmentSearchPersonBinding
 
     var adapter: PersonListAdapter? = null
-
+    var search_term = ""
+    var page = 1
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         netiCore = (activity?.application as Ficus).netiCore
@@ -47,24 +34,35 @@ class SearchPersonFragment : Fragment(R.layout.fragment_search_person) {
         setupRecyclerView()
         setupSearchbar()
         observePersonList()
+        if (netiCore?.client?.searchPersonViewModel?.personListLiveData?.isInitialized != true){
+            page = 1
+            netiCore?.client?.searchPersonViewModel?.updatePersonList(search_term, page)
+        }
 
-        netiCore?.client?.searchPersonViewModel?.updatePersonList("")
     }
 
 
     fun setupRecyclerView(){
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-        val insetTypes =
-            WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
-        val insets = ViewCompat.getRootWindowInsets(activity?.window!!.decorView)
-        val bottom = insets?.getInsets(insetTypes)?.bottom
-        binding.recyclerView.updatePadding(bottom = bottom!!)
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                val layoutManager = binding.recyclerView.layoutManager as LinearLayoutManager
+                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                if (lastVisibleItemPosition + 3 <= (adapter!!.getLastPosition())) {
+                    page += 1
+                    binding?.progressBar?.visibility = View.VISIBLE
+                    netiCore?.client?.searchPersonViewModel?.updatePersonList(search_term, page)
+                }
+            }
+        })
     }
 
     fun setupSearchbar(){
         binding?.searchEditText?.doOnTextChanged { text, start, before, count ->
-            netiCore?.client?.searchPersonViewModel?.updatePersonList(text.toString())
+            search_term = text.toString()
+            page = 1
+            netiCore?.client?.searchPersonViewModel?.updatePersonList(search_term, page)
         }
     }
 
@@ -83,12 +81,12 @@ class SearchPersonFragment : Fragment(R.layout.fragment_search_person) {
                     binding?.recyclerView?.visibility = View.GONE
                 }
                 Status.SUCCESS -> {
-                    binding?.progressBar?.visibility = View.GONE
+                    binding?.progressBar?.visibility = View.INVISIBLE
                     binding?.recyclerView?.visibility = View.VISIBLE
                     adapter?.setPersonList(it.data)
                 }
                 Status.ERROR -> {
-                    binding?.progressBar?.visibility = View.GONE
+                    binding?.progressBar?.visibility = View.INVISIBLE
                     binding?.recyclerView?.visibility = View.GONE
                 }
             }
@@ -97,7 +95,7 @@ class SearchPersonFragment : Fragment(R.layout.fragment_search_person) {
 
 
     fun openPerson(currentItem: Person) {
-        val action = SearchPersonFragmentDirections.actionSearchPersonFragmentToPersonPageFragment(currentItem)
+        val action = SearchPersonFragmentDirections.actionSearchPersonFragmentToPersonPageFragment(personLink = currentItem.site, personName = null)
         findNavController().navigate(action)
     }
 

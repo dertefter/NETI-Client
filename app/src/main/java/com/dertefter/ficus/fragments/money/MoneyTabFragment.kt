@@ -1,26 +1,16 @@
 package com.dertefter.ficus.fragments.money
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.View
 import androidx.core.text.HtmlCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dertefter.ficus.Ficus
 import com.dertefter.ficus.ImageGetter
 import com.dertefter.ficus.R
-import com.dertefter.ficus.databinding.FragmentMessagesChatListBinding
 import com.dertefter.ficus.databinding.FragmentMoneyTabBinding
-import com.dertefter.ficus.databinding.FragmentScheduleWeekBinding
-import com.dertefter.ficus.fragments.messages.MessagesFragment
 import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.Status
-import com.dertefter.neticore.data.messages.SenderPerson
 
 class MoneyTabFragment : Fragment(R.layout.fragment_money_tab) {
 
@@ -43,15 +33,6 @@ class MoneyTabFragment : Fragment(R.layout.fragment_money_tab) {
         val tab = arguments?.getString("tab")
         observeMoney(tab!!)
         netiCore?.client?.moneyViewModel?.loadYearData(tab)
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            binding.moneyTextView.updatePadding(bottom = insets.bottom + 8)
-            Log.e("bbb", insets.bottom.toString())
-            Log.e("ddd", binding.moneyTextView.paddingBottom.toString())
-            WindowInsetsCompat.CONSUMED
-        }
-
 
     }
 

@@ -1,10 +1,10 @@
 package com.dertefter.ficus.fragments.profile
 
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +16,7 @@ import com.dertefter.ficus.ficus_old.Docs
 import com.dertefter.neticore.NETICore
 import com.dertefter.neticore.data.AuthorizationState
 import com.dertefter.neticore.data.Status
+import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.launch
 
 
@@ -29,6 +30,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         netiCore = (activity?.application as Ficus).netiCore
         binding = FragmentProfileBinding.bind(view)
+        binding.appBarLayout.setStatusBarForegroundColor(MaterialColors.getColor(binding.appBarLayout, com.google.android.material.R.attr.colorSurface))
 
         binding.profileSettings.setOnClickListener {
             val dialogFragment = ProfileDialogFragment()
@@ -40,9 +42,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/nstumobile_dev/"))
             startActivity(browserIntent)
         }
+        binding.tgHelp.setOnClickListener {
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/ficus_debug/"))
+            startActivity(browserIntent)
+        }
 
         binding.searchPerson.setOnClickListener {
             val action = ProfileFragmentDirections.actionProfileFragmentToSearchPersonFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.elibrary?.setOnClickListener {
+            val action = ProfileFragmentDirections.actionProfileFragmentToELibrarySearchFragment()
             findNavController().navigate(action)
         }
 
@@ -70,9 +82,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val action = ProfileFragmentDirections.actionProfileFragmentToMoneyFragment()
             findNavController().navigate(action)
         }
-
-        observeAuthState()
         observePhoto()
+        observeAuthState()
+
     }
 
 
@@ -82,62 +94,33 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.campusPass.isEnabled = v
         binding.score.isEnabled = v
         binding.docs.isEnabled = v
+        binding.elibrary.isEnabled = v
     }
 
     fun navigateToAuthFragment(){
         findNavController().navigate(R.id.action_profileFragment_to_authFragment)
     }
     fun observePhoto(){
-
-        val random_int = (0..4).random()
-        when(random_int){
-            0 -> binding.backgroundAnim.setImageResource(R.drawable.anim_avatar_1)
-            1 -> binding.backgroundAnim.setImageResource(R.drawable.anim_avatar_2)
-            2 -> binding.backgroundAnim.setImageResource(R.drawable.anim_avatar_3)
-            3 -> binding.backgroundAnim.setImageResource(R.drawable.anim_avatar_4)
-            4 -> binding.backgroundAnim.setImageResource(R.drawable.anim_avatar_5)
-        }
-
-        ObjectAnimator.ofFloat(binding.backgroundAnim, "rotation", 0f, 360f).apply {
-            val random_int2 = (2..4).random()
-            repeatCount = ObjectAnimator.INFINITE
-            duration = (3000 * random_int2).toLong()
-            interpolator = android.view.animation.LinearInterpolator()
-            start()
-        }
-
         netiCore?.client?.userInfoViewModel?.userPhotoLiveData?.observe(viewLifecycleOwner){
+            Log.e("observePhoto:", it.status.toString())
             when (it.status){
                 Status.LOADING -> {
-                    binding.personAvatarPlaceholder.visibility = View.GONE
-                    binding.personAvatarBackground.visibility = View.VISIBLE
-                    binding.backgroundAnim.visibility = View.GONE
+                    binding.personAvatarPlaceholder.setImageBitmap(null)
                 }
                 Status.ERROR -> {
-                    binding.personAvatarPlaceholder.visibility = View.GONE
-                    binding.personAvatarBackground.visibility = View.VISIBLE
-                    binding.backgroundAnim.visibility = View.GONE
+                    binding.personAvatarPlaceholder.setImageBitmap(null)
                 }
                 Status.SUCCESS -> {
                     val path = it.data
                     if (path != null){
-                        binding.personAvatarBackground.visibility = View.GONE
-                        binding.personAvatarPlaceholder.visibility = View.VISIBLE
-                        binding.backgroundAnim.visibility = View.VISIBLE
-                        ObjectAnimator.ofFloat(binding.backgroundAnim, "scaleX", 1f).apply {
-                            duration = 300
-                            start()
-                        }
-                        ObjectAnimator.ofFloat(binding.backgroundAnim, "scaleY", 1f).apply {
-                            duration = 300
-                            start()
-                        }
                         val options = BitmapFactory.Options()
                         options.inSampleSize = 1
                         val b = BitmapFactory.decodeFile(path,
                             options
                         )
                         binding.personAvatarPlaceholder.setImageBitmap(b)
+                    } else {
+                        binding.personAvatarPlaceholder.setImageBitmap(null)
                     }
                 }
             }
@@ -155,6 +138,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     AuthorizationState.AUTHORIZED_WITH_ERROR -> {
                         enableButtons(false)
                         binding?.authErrorCard?.visibility = View.VISIBLE
+                        binding.personAvatarPlaceholder.setImageBitmap(null)
                         binding?.buttonLogOut?.setOnClickListener {
                             netiCore?.logOut()
                         }
@@ -163,10 +147,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         }
                     }
                     AuthorizationState.UNAUTHORIZED -> {
+                        binding.personAvatarPlaceholder.setImageBitmap(null)
                         enableButtons(false)
+                        binding.personAvatarPlaceholder.setImageBitmap(null)
                         binding?.authErrorCard?.visibility = View.GONE
                     }
                     AuthorizationState.LOADING -> {
+                        binding.personAvatarPlaceholder.setImageBitmap(null)
                         enableButtons(false)
                         binding?.authErrorCard?.visibility = View.GONE
                     }

@@ -3,10 +3,8 @@ package com.dertefter.ficus.fragments.schedule.schedule_sessia
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dertefter.ficus.Ficus
@@ -44,28 +42,36 @@ class ScheduleSessiaFragment : Fragment(R.layout.fragment_schedule_sessia) {
 
         observeSessia()
         getSessiaSchedule()
-        ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerview) { _, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            binding.recyclerview.updatePadding(bottom = insets.bottom)
-            WindowInsetsCompat.CONSUMED
-        }
-
     }
 
     fun openDialog(item: SessiaScheduleItem){
         val modalBottomSheet = ScheduleSessiaBottomSheet.newInstance(item)
-        modalBottomSheet.show(parentFragmentManager, ScheduleSessiaBottomSheet.TAG)
+        modalBottomSheet.show(childFragmentManager, ScheduleSessiaBottomSheet.TAG)
+    }
+
+    fun openPerson(site: String){
+        val action = ScheduleSessiaFragmentDirections.actionScheduleSessiaFragmentToPersonPageFragment(personLink = site, personName = null)
+        findNavController().navigate(action)
+    }
+
+    fun showEmpty(){
+        binding.emptyView.visibility = View.VISIBLE
     }
     fun observeSessia(){
         netiCore?.client?.scheduleViewModel?.sessiaScheduleLiveData?.observe(viewLifecycleOwner) {
+            binding.emptyView.visibility = View.GONE
             when (it.status) {
                 Status.LOADING -> {binding.loading.visibility = View.VISIBLE}
                 Status.SUCCESS -> {
                     binding.loading.visibility = View.GONE
                     adapter!!.setList(it.data)
-
+                    if (it.data.isNullOrEmpty()){
+                        showEmpty()
+                    }
                 }
-                Status.ERROR -> {binding.loading.visibility = View.GONE}
+                Status.ERROR -> {
+                    showEmpty()
+                    binding.loading.visibility = View.GONE}
             }
         }
     }

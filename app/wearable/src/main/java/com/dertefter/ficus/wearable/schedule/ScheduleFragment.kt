@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.dertefter.ficus.wearable.Ficus
 import com.dertefter.ficus.wearable.R
 import com.dertefter.ficus.wearable.databinding.FragmentScheduleBinding
@@ -30,7 +31,7 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentScheduleBinding.bind(view)
-        adapter = ScheduleViewPagerAdapter(childFragmentManager, lifecycle, AppPreferences.compact_schedule == true)
+        adapter = ScheduleViewPagerAdapter(childFragmentManager, lifecycle, true)
         binding.viewPager.adapter = adapter
 
         netiCore = (activity?.application as Ficus).netiCore
@@ -46,13 +47,12 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
     fun observeGroupInfo(){
         netiCore?.client?.scheduleViewModel?.currentGroupLiveData?.observe(viewLifecycleOwner){
             if (it != null && it.title.isNotEmpty()){
-                if (netiCore?.client?.scheduleViewModel?.weeksLiveData?.value?.data?.get(0)?.groupTitle != it.title){
-                    netiCore?.client?.updateWeeks()
-                }
-                observeWeeksInfo()
+                netiCore?.client?.updateWeeks()
+                setupAppBar(it.title, it.isIndividual)
                 binding.noGroup.visibility = View.GONE
             }else{
                 binding.noGroup.visibility = View.VISIBLE
+
             }
         }
     }

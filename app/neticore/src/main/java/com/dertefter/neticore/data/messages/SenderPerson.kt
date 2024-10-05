@@ -12,6 +12,5 @@ data class SenderPerson(
     val last_message_theme: String = messages.last().title,
     val last_message_text: String = messages.last().text,
     val last_message_date: String = messages.last().date,
-    var pic: String? = null,
-    var person: Person? = null
+    var personLink: String? = null
 ): Parcelable

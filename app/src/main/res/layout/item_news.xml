@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    style="@style/Widget.Material3.CardView.Filled"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="auto"
     app:cardBackgroundColor="?attr/colorSurfaceContainer"
-
-    app:cardCornerRadius="@dimen/corner_radius"
-    tools:context="fragments.news.NewsFragment">
+    app:cardPreventCornerOverlap="false"
+    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:foreground="?attr/selectableItemBackground"
         android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_news"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:background="?attr/colorSurfaceVariant"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.Media" />
 
-            <TextView
-                android:id="@+id/type_news"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="?attr/colorTertiaryContainer"
-                android:paddingStart="12dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="12dp"
-                android:paddingBottom="4dp"
-                android:text="TextView"
-                android:textColor="?attr/colorOnTertiaryContainer" />
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                app:cardPreventCornerOverlap="false"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffBottomLeft">
+
+                <TextView
+                    android:id="@+id/type_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="TextView"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+            </com.google.android.material.card.MaterialCardView>
+
         </FrameLayout>
 
         <LinearLayout
@@ -83,4 +87,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

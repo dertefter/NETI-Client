@@ -1,9 +1,10 @@
 package com.dertefter.ficus.fragments.sessia_results
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dertefter.ficus.Ficus
@@ -42,12 +43,6 @@ class SessiaItemFragment : Fragment(R.layout.fragment_sessia_item) {
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerView.layoutManager = layoutManager
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-
-            binding.recyclerView.setPadding(0, 0, 0, insets.bottom)
-            WindowInsetsCompat.CONSUMED
-        }
         observeSessiaInfo()
     }
 

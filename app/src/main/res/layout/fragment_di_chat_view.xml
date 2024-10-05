@@ -41,7 +41,7 @@
         android:background="?attr/colorSurfaceContainer"
         android:padding="8dp"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -57,7 +57,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
@@ -75,7 +74,6 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="top"
-                android:layout_marginBottom="8dp"
                 android:enabled="false"
                 app:icon="@drawable/send" />
         </LinearLayout>

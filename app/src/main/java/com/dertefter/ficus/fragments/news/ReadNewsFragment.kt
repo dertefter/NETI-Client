@@ -105,51 +105,45 @@ class ReadNewsFragment : Fragment(R.layout.fragment_read_news) {
            return layoutInflater.inflate(R.layout.fragment_read_news, container, false)
        }
         var color = ReadNewsFragmentArgs.fromBundle(requireArguments()).color
-        if (color != Color.GRAY){
-            if (DynamicColors.isDynamicColorAvailable()){
-                val context: Context = DynamicColors.wrapContextIfAvailable(
-                    requireContext(),
-                    DynamicColorsOptions.Builder()
-                        .setContentBasedSource(color)
-                        .build()
-                )
-                return layoutInflater.cloneInContext(context).inflate(R.layout.fragment_read_news, container, false)
-            } else {
-                val context: Context = DynamicColors.wrapContextIfAvailable(
-                    requireContext(),
-                    DynamicColorsOptions.Builder()
-                        .setContentBasedSource(color)
-                        .build()
-                )
-                val cm = getColorTonesMap(Color.valueOf(color))
-                when (context.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
-                    Configuration.UI_MODE_NIGHT_YES -> {
-                        colorPrimary = cm[90]
-                        colorOnPrimary = cm[10]
-                        colorSurface = cm[0]
-                        colorOnSurface = cm[99]
-                        colorPrimaryContainer = cm[20]
-                        colorOnPrimaryContainer = cm[95]
-                        colorSurfaceContainer = cm[3]
-                    }
-                    Configuration.UI_MODE_NIGHT_NO -> {
-                        colorPrimary = cm[40]
-                        colorOnPrimary = cm[95]
-                        colorSurface = cm[100]
-                        colorOnSurface = cm[0]
-                        colorPrimaryContainer = cm[90]
-                        colorOnPrimaryContainer = cm[10]
-                        colorSurfaceContainer = cm[95]
-                    }
-                    Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
+        if (DynamicColors.isDynamicColorAvailable()){
+            val context: Context = DynamicColors.wrapContextIfAvailable(
+                requireContext(),
+                DynamicColorsOptions.Builder()
+                    .setContentBasedSource(color)
+                    .build()
+            )
+            return layoutInflater.cloneInContext(context).inflate(R.layout.fragment_read_news, container, false)
+        } else {
+            val context: Context = DynamicColors.wrapContextIfAvailable(
+                requireContext(),
+                DynamicColorsOptions.Builder()
+                    .setContentBasedSource(color)
+                    .build()
+            )
+            val cm = getColorTonesMap(Color.valueOf(color))
+            when (context.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    colorPrimary = cm[90]
+                    colorOnPrimary = cm[10]
+                    colorSurface = cm[0]
+                    colorOnSurface = cm[99]
+                    colorPrimaryContainer = cm[20]
+                    colorOnPrimaryContainer = cm[95]
+                    colorSurfaceContainer = cm[3]
                 }
-                Log.e("fffffffffffff", cm.toString())
-                return layoutInflater.cloneInContext(context).inflate(R.layout.fragment_read_news, container, false)
-
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    colorPrimary = cm[40]
+                    colorOnPrimary = cm[95]
+                    colorSurface = cm[100]
+                    colorOnSurface = cm[0]
+                    colorPrimaryContainer = cm[90]
+                    colorOnPrimaryContainer = cm[10]
+                    colorSurfaceContainer = cm[95]
+                }
+                Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
             }
+            return layoutInflater.cloneInContext(context).inflate(R.layout.fragment_read_news, container, false)
 
-        }else{
-            return layoutInflater.inflate(R.layout.fragment_read_news, container, false)
         }
 
     }

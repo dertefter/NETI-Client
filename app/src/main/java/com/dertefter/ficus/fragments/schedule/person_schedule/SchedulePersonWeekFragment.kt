@@ -1,11 +1,8 @@
 package com.dertefter.ficus.fragments.schedule.person_schedule
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -41,7 +38,7 @@ class SchedulePersonWeekFragment : Fragment(R.layout.fragment_schedule_week) {
         netiCore = (activity?.application as Ficus).netiCore
 
         binding = FragmentScheduleWeekBinding.bind(view)
-
+        binding.recyclerView.updatePadding(top = 8)
         if (adapter == null){
             adapter = ScheduleWeekRecyclerViewAdapter(this)
         }
@@ -52,19 +49,13 @@ class SchedulePersonWeekFragment : Fragment(R.layout.fragment_schedule_week) {
         itemDecorator.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
         binding.recyclerView.addItemDecoration(itemDecorator)
 
-        val insetTypes =
-            WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
-        val insets = ViewCompat.getRootWindowInsets(activity?.window!!.decorView)
-        val bottom = insets?.getInsets(insetTypes)?.bottom
-        binding.recyclerView.updatePadding(bottom = bottom!!)
-
-
         weekQuery = arguments?.getString("weekQuery")
         weekTitle = arguments?.getString("weekTitle")
         isCurrent = arguments?.getBoolean("isCurrent")
         groupTitle = arguments?.getString("groupTitle")
         isIndividual = arguments?.getBoolean("isIndividual")
-        val personId = arguments?.getString("personId")
+        var personSite = arguments?.getString("personId")!!.split("/")
+        val personId = personSite[personSite.size - 2]
         val week = netiCore?.client?.schedulePersonModel?.weeksLiveData?.value?.data?.find { week -> week.weekQuery == weekQuery }
         netiCore?.client?.schedulePersonModel?.loadScheduleWeek(personId!! , week!!, )
         observeSchedule()

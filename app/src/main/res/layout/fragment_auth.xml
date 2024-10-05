@@ -80,7 +80,9 @@
             android:id="@+id/loginTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Электронная почта">
+            android:hint="Электронная почта"
+            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login"
@@ -95,7 +97,9 @@
             android:id="@+id/passwordTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Пароль">
+            android:hint="Пароль"
+            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffRight">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -107,9 +111,8 @@
         <Button
             android:id="@+id/authButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
             android:enabled="false"
             android:fontFamily="@font/vfont"
             android:paddingLeft="48dp"
@@ -117,7 +120,8 @@
             android:paddingRight="48dp"
             android:paddingBottom="12dp"
             android:text="Войти"
-            app:cornerRadius="@dimen/corner_radius" />
+            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffBottomLeft" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

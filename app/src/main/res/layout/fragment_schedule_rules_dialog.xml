@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:cardBackgroundColor="?attr/colorSurfaceContainer"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="20dp"
+    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Добавить новый элемент в расписание"
+                android:textAppearance="@style/MyCollapsedTitle"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4sp"
+                android:text="Преподаватель назначил занятие не по расписанию? Добавьте его как новую пару чтобы не забыть"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Что вы хотите добавить?"
+                android:textColor="?attr/colorPrimary" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/typeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center_horizontal"
+                android:visibility="visible"
+                app:checkedButton="@id/button_type_lesson"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <Button
+                    android:id="@+id/button_type_lesson"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Новая пара" />
+
+                <Button
+                    android:id="@+id/button_type_note"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Заметка" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <LinearLayout
+                android:id="@+id/edit_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@drawable/divider"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/title_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Название пары"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/title_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="10" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/aud_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Аудитория"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/aud_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/person_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Преподаватель"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/person_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="10" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/time_start_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Время начала"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/time_start_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/time_end_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Время конца"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/time_end_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Выберите недели"
+                    android:textColor="?attr/colorPrimary" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fadeScrollbars="true"
+                    android:fadingEdgeLength="16dp"
+                    android:requiresFadingEdge="horizontal">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/weeks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleLine="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week1"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 1"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week2"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 2"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week3"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 3"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week4"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 4"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week5"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 5"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week6"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 6"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week7"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 7"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week8"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 8"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week9"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 9"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week10"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 10"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week11"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 11"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week12"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 12"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week13"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 13"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week14"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 14"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week15"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 15"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week16"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 16"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week17"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 17"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/week18"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="Неделя 18"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Выберите дни"
+                    android:textColor="?attr/colorPrimary" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fadeScrollbars="true"
+                    android:fadingEdgeLength="16dp"
+                    android:requiresFadingEdge="horizontal">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleLine="true">
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="ПН"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="ВТ"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="СР"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="ЧТ"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="ПТ"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="СБ"
+                            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:divider="@drawable/divider_horizontal"
+                    android:orientation="horizontal"
+                    android:showDividers="middle">
+
+                    <Button
+                        android:id="@+id/cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:backgroundTint="?attr/colorSurfaceVariant"
+                        android:text="Отмена"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+
+                    <Button
+                        android:id="@+id/save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:enabled="false"
+                        android:text="Сохранить"
+                        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</com.google.android.material.card.MaterialCardView>

@@ -39,7 +39,7 @@ class PersonScheduleFragment : Fragment(R.layout.fragment_schedule_person) {
         }
 
         binding.toolbar.title = person.name
-        binding.toolbar.subtitle = "Расписание преподавателя"
+        binding.toolbar.subtitle = "Расписание сотрудника"
 
         netiCore?.client?.schedulePersonModel?.loadWeekList()
     }
@@ -61,15 +61,15 @@ class PersonScheduleFragment : Fragment(R.layout.fragment_schedule_person) {
                 Status.SUCCESS -> {
                     binding.progressBar.visibility = View.INVISIBLE
                     val weeks = it.data
-                    setupViewPager(weeks, person.id!!)
+                    setupViewPager(weeks, person.site)
                 }
 
             }
         }
     }
 
-    fun setupViewPager(weeks: List<Week>?, personId: String? = null) {
-        val adapter = ScheduleViewPagerPersonAdapter(childFragmentManager, lifecycle, personId)
+    fun setupViewPager(weeks: List<Week>?, personSite: String? = null) {
+        val adapter = ScheduleViewPagerPersonAdapter(childFragmentManager, lifecycle, personSite)
         adapter.setWeeks(weeks)
         Log.e("ababababa", weeks.toString())
         binding.viewPager.adapter = adapter

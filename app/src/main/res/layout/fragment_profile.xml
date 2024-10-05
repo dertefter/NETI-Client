@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorSurfaceContainer">
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/profileActionsScrollView"
@@ -20,7 +19,7 @@
             android:padding="@dimen/margin_or_padding"
             android:showDividers="middle|beginning|end">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/auth_error_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,39 +82,50 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/tg"
+                android:layout_width="match_parent"
+                android:layout_height="74dp"
+                android:autoSizeTextType="none"
+                android:enabled="true"
+                android:includeFontPadding="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Подпишитесь на телегу - там всякое интересное"
+                android:textAlignment="gravity"
+                android:textSize="14sp"
+                app:icon="@drawable/telegram"
+                app:iconSize="24dp"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
+
+            <Button
+                android:id="@+id/tg_help"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:autoSizeTextType="none"
+                android:backgroundTint="?attr/colorPrimaryContainer"
+                android:enabled="true"
+                android:includeFontPadding="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Нашли ошибку? Напишите сюда"
+                android:textAlignment="gravity"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="14sp"
+                app:icon="@drawable/telegram"
+                app:iconSize="24dp"
+                app:iconTint="?attr/colorOnPrimaryContainer"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:baselineAligned="false"
                 android:divider="@drawable/divider_horizontal"
                 android:orientation="horizontal"
-                android:showDividers="middle|beginning|end">
-
-                <Button
-                    android:id="@+id/tg"
-                    android:layout_width="match_parent"
-                    android:layout_height="74dp"
-                    android:layout_weight="1"
-                    android:autoSizeTextType="none"
-                    android:background="@drawable/rounded_background"
-                    android:enabled="true"
-                    android:gravity="center|start"
-                    android:includeFontPadding="false"
-                    android:text="Подпишитесь на Telegram, чтобы быть в курсе новостей и обновлений!"
-                    android:textAlignment="gravity"
-                    android:textSize="14sp"
-                    app:icon="@drawable/telegram"
-                    app:iconSize="24dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@drawable/divider_horizontal"
-                android:orientation="horizontal"
-                android:showDividers="middle|beginning|end">
+                android:showDividers="middle">
 
                 <Button
                     android:id="@+id/score"
@@ -124,23 +134,27 @@
                     android:layout_height="74dp"
                     android:layout_weight="1"
                     android:autoSizeTextType="none"
-                    android:background="@drawable/rounded_background"
                     android:enabled="true"
                     android:includeFontPadding="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:text="Результаты сессии"
                     android:textAlignment="gravity"
                     android:textSize="14sp"
                     app:icon="@drawable/school"
-                    app:iconSize="24dp" />
+                    app:iconSize="24dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
+
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:divider="@drawable/divider_horizontal"
                 android:orientation="horizontal"
-                android:showDividers="middle|beginning|end">
+                android:showDividers="middle">
 
                 <Button
                     android:id="@+id/campusPass"
@@ -149,14 +163,16 @@
                     android:layout_height="74dp"
                     android:layout_weight="1"
                     android:autoSizeTextType="none"
-                    android:background="@drawable/rounded_background"
                     android:enabled="true"
                     android:includeFontPadding="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:text="Бюро пропусков"
                     android:textAlignment="gravity"
                     android:textSize="14sp"
-                    app:icon="@drawable/description"
-                    app:iconSize="24dp" />
+                    app:icon="@drawable/credit_card"
+                    app:iconSize="24dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
 
                 <Button
                     android:id="@+id/docs"
@@ -164,23 +180,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="74dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_background"
-                    android:elegantTextHeight="false"
+                    android:autoSizeTextType="none"
                     android:enabled="true"
                     android:includeFontPadding="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:text="Заявки на документы"
+                    android:textAlignment="gravity"
                     android:textSize="14sp"
                     app:icon="@drawable/description"
-                    app:iconSize="24dp" />
+                    app:iconSize="24dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
+
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:divider="@drawable/divider_horizontal"
                 android:orientation="horizontal"
-                android:showDividers="middle|beginning|end">
+                android:showDividers="middle">
 
                 <Button
                     android:id="@+id/searchPerson"
@@ -188,14 +209,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="74dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_background"
                     android:elegantTextHeight="false"
                     android:enabled="true"
                     android:includeFontPadding="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:text="Поиск сотрудников"
                     android:textSize="14sp"
                     app:icon="@drawable/person_search"
-                    app:iconSize="24dp" />
+                    app:iconSize="24dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
 
                 <Button
                     android:id="@+id/money"
@@ -203,23 +226,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="74dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_background"
                     android:elegantTextHeight="false"
                     android:enabled="true"
                     android:includeFontPadding="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:text="Стипендии и выплаты"
                     android:textSize="14sp"
                     app:icon="@drawable/currency_ruble"
-                    app:iconSize="24dp" />
+                    app:iconSize="24dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:divider="@drawable/divider_horizontal"
                 android:orientation="horizontal"
-                android:showDividers="middle|beginning|end">
+                android:showDividers="middle">
 
                 <Button
                     android:id="@+id/downloads"
@@ -227,32 +253,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="74dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_background"
                     android:elegantTextHeight="false"
                     android:enabled="true"
                     android:includeFontPadding="false"
-                    android:text="Загрузки"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Загрузки из DiSpace"
                     android:textSize="14sp"
                     app:icon="@drawable/download"
-                    app:iconSize="24dp" />
+                    app:iconSize="24dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
 
                 <Button
+                    android:id="@+id/elibrary"
                     style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="74dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_background"
                     android:elegantTextHeight="false"
                     android:enabled="true"
                     android:includeFontPadding="false"
-                    android:padding="14dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Стипендии и выплаты"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Поиск по ЭБС НГТУ"
                     android:textSize="14sp"
-                    android:visibility="invisible"
-                    app:icon="@drawable/currency_ruble"
-                    app:iconSize="24dp" />
+                    app:icon="@drawable/local_library"
+                    app:iconSize="24dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent" />
 
             </LinearLayout>
 
@@ -260,10 +287,9 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/profileTopAppBarLayout"
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurfaceContainer"
         android:fitsSystemWindows="true"
         app:liftOnScroll="true"
         app:liftOnScrollTargetViewId="@+id/profileActionsScrollView">
@@ -272,7 +298,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
             android:layout_weight="0"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <TextView
                 android:layout_width="match_parent"
@@ -284,53 +312,46 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="?attr/colorOnSurface" />
 
-            <FrameLayout
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/profile_settings"
-                android:layout_width="74dp"
-                android:layout_height="74dp"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
                 android:layout_gravity="bottom|right"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:layout_weight="0">
-
-                <ImageView
-                    android:id="@+id/background_anim"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="1"
-                    android:padding="4dp"
-                    android:scaleX="0"
-                    android:scaleY="0"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/anim_avatar_4" />
+                android:layout_weight="0"
+                app:cardElevation="8dp"
+                app:cardMaxElevation="14dp"
+                app:cardPreventCornerOverlap="false"
+                app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.LargeComponent"
+                app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/person_avatar_background"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:background="?attr/colorOnSurfaceVariant"
+                    android:background="?attr/colorSurfaceContainerHigh"
                     android:visibility="visible"
-                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                    app:srcCompat="@drawable/account_circle_filled"
-                    app:strokeColor="?attr/colorSurfaceContainer"
-                    app:strokeWidth="12dp"
-                    app:tint="?attr/colorSurfaceVariant" />
+                    app:contentPadding="4dp"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                    app:srcCompat="@drawable/person"
+                    app:strokeColor="@android:color/transparent"
+                    app:tint="?attr/colorOnSurfaceVariant" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/person_avatar_placeholder"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:background="#FFFFFF"
-                    android:scaleType="centerInside"
-                    android:visibility="gone"
-                    app:contentPaddingTop="3dp"
-                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                    app:strokeColor="@android:color/transparent"
-                    app:strokeWidth="10dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|center"
+                    android:scaleType="centerCrop"
+                    android:visibility="visible"
+                    app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+                    app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                    app:strokeColor="@android:color/transparent" />
 
-            </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

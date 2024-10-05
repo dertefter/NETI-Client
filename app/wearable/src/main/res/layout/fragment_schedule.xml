@@ -15,18 +15,22 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:maxLines="2"
+            app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Body2"
             app:title="Расписание"
             app:titleCentered="true"
+            app:titleMargin="0dp"
+            app:titleMarginTop="14dp"
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Body1"
             app:titleTextColor="?attr/colorPrimary" />
 
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:background="@android:color/transparent"
             android:elevation="0dp"
             android:focusable="false"

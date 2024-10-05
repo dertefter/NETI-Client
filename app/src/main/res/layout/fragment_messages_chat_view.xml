@@ -25,18 +25,22 @@
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/arrow_back" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/person_card"
-            style="@style/Widget.Material3.CardView.Filled"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="?attr/colorSurfaceContainer"
-            app:cardCornerRadius="@dimen/corner_radius"
+            app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="false"
-            app:contentPadding="8dp">
+            app:contentPadding="8dp"
+            app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.MediumComponent"
+            app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi">
 
 
             <LinearLayout
@@ -45,31 +49,35 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_weight="0">
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="0"
+                    android:padding="2dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/person_avatar_background"
-                        android:layout_width="54dp"
-                        android:layout_height="54dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="0"
-                        android:background="?attr/colorOnSurfaceVariant"
-                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                        app:srcCompat="@drawable/account_circle_filled"
-                        app:strokeColor="?attr/colorSurfaceContainer"
-                        app:strokeWidth="10dp"
-                        app:tint="?attr/colorSurface" />
+                        android:background="?attr/colorSurface"
+                        app:contentPadding="4dp"
+                        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                        app:srcCompat="@drawable/person"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="0dp"
+                        app:tint="?attr/colorOnSurfaceVariant" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/person_avatar_placeholder"
-                        android:layout_width="54dp"
-                        android:layout_height="54dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="0"
                         android:visibility="visible"
-                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                        app:strokeColor="?attr/colorSurfaceContainer"
-                        app:strokeWidth="10dp" />
+                        app:shapeAppearance="@style/ShapeAppearance.FicusRebuild.SmallComponent"
+                        app:shapeAppearanceOverlay="@style/Widget.FicusRebuild.CardView.CutoffSemi"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="0dp" />
 
                 </FrameLayout>
 
@@ -85,16 +93,16 @@
                         android:id="@+id/person_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/vfont"
                         android:lines="1"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:text="Имя"
                         android:textColor="?attr/colorOnSurface"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/person_mail"
+                        android:id="@+id/mail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -102,14 +110,13 @@
                         android:lines="1"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:text="Почта"
                         android:textColor="?attr/colorOnSurfaceVariant"
                         android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -33,7 +33,17 @@ class SearchPersonViewModel(
                 val response = service.findPerson(search_term, page.toString())
                 if (response.isSuccessful) {
                     val parsedData = ResponseParser().parsePersonList(response.body())
-                    personListLiveData.postValue(Event.success(parsedData))
+                    if (page == 1){
+                        personListLiveData.postValue(Event.success(parsedData))
+                    }else{
+                        val oldValue = personListLiveData.value
+                        if (oldValue != null) {
+                            personListLiveData.postValue(Event.success(oldValue.data?.plus(
+                                parsedData
+                            )))
+                        }
+                    }
+
                 }
             } catch (e: Exception) {
                 setError()
